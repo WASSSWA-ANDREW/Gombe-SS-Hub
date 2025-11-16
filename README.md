@@ -343,4 +343,5 @@ This project is proprietary software for Gombe Secondary School.
 
 For support or inquiries, please contact the development team.
 #   G o m b e - S S - H u b - P r o  
+ #   G o m b e - S S - H u b  
  
