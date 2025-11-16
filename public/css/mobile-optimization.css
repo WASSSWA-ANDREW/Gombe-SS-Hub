@@ -1,0 +1,810 @@
+/* Mobile Optimization CSS for v2.0 */
+
+/* ============================================
+   1. TOUCH-FRIENDLY UI ELEMENTS (44px minimum)
+   ============================================ */
+
+/* Buttons - Ensure minimum 44px touch target */
+button, 
+a.btn, 
+input[type="button"], 
+input[type="submit"],
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-warning {
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+    min-width: 44px;
+}
+
+/* Links that are touch targets */
+a[role="button"],
+a.sidebar-link,
+a.nav-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+}
+
+/* Checkboxes and radio buttons */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin: 0.5rem;
+}
+
+/* Select dropdowns */
+select {
+    min-height: 44px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+}
+
+/* Text inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+textarea {
+    min-height: 44px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+}
+
+textarea {
+    min-height: 120px;
+    line-height: 1.5;
+}
+
+/* ============================================
+   2. MOBILE SPACING & PADDING
+   ============================================ */
+
+/* Mobile-first spacing improvements */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    .p-2 { padding: 0.75rem; }
+    .p-3 { padding: 1rem; }
+    .p-4 { padding: 1.25rem; }
+    .p-6 { padding: 1.5rem; }
+
+    .px-2 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .px-3 { padding-left: 1rem; padding-right: 1rem; }
+    .px-4 { padding-left: 1.25rem; padding-right: 1.25rem; }
+
+    .py-2 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .py-3 { padding-top: 1rem; padding-bottom: 1rem; }
+    .py-4 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+
+    .mb-2 { margin-bottom: 0.75rem; }
+    .mb-3 { margin-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1.25rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+
+    .mt-2 { margin-top: 0.75rem; }
+    .mt-3 { margin-top: 1rem; }
+    .mt-4 { margin-top: 1.25rem; }
+
+    .gap-2 { gap: 0.75rem; }
+    .gap-3 { gap: 1rem; }
+    .gap-4 { gap: 1.25rem; }
+}
+
+/* ============================================
+   3. MOBILE TEXT & TYPOGRAPHY
+   ============================================ */
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.75rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 0.875rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        line-height: 1.4;
+        margin-bottom: 0.75rem;
+    }
+
+    p, body {
+        line-height: 1.6;
+    }
+
+    small {
+        font-size: 0.875rem;
+    }
+
+    .text-sm {
+        font-size: 0.875rem;
+    }
+
+    .text-base {
+        font-size: 1rem;
+    }
+
+    .text-lg {
+        font-size: 1.125rem;
+    }
+}
+
+/* ============================================
+   4. MOBILE-FRIENDLY FORMS
+   ============================================ */
+
+@media (max-width: 768px) {
+    form {
+        width: 100%;
+    }
+
+    .form-group,
+    .form-row {
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+
+    .form-group > label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Stack form groups on mobile */
+    .form-group.col-md-6,
+    .form-group.col-lg-4 {
+        width: 100%;
+    }
+
+    /* Horizontal form labels - switch to block on mobile */
+    .form-horizontal .form-group {
+        display: block;
+    }
+
+    .form-horizontal label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    /* Form error messages */
+    .invalid-feedback,
+    .error-message,
+    .form-error {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .form-group.has-error input,
+    .form-group.has-error textarea,
+    .form-group.has-error select {
+        border-color: #dc2626;
+    }
+}
+
+/* ============================================
+   5. MOBILE-FRIENDLY TABLES
+   ============================================ */
+
+@media (max-width: 768px) {
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        font-size: 0.9rem;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tbody,
+    table tr,
+    table td {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        margin-bottom: 1.5rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        padding: 1rem;
+        background: white;
+    }
+
+    table td {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f3f4f6;
+        text-align: left;
+        position: relative;
+        padding-left: 40%;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        width: 35%;
+        text-align: left;
+        color: #4b5563;
+    }
+
+    table td:last-child {
+        border-bottom: none;
+    }
+
+    /* Action buttons in mobile tables */
+    table td.actions {
+        padding-left: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    table td.actions::before {
+        display: none;
+    }
+
+    table a.btn,
+    table button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ============================================
+   6. MOBILE NAVIGATION
+   ============================================ */
+
+@media (max-width: 768px) {
+    .admin-layout-main-bg {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 40;
+        left: 0;
+        top: 0;
+    }
+
+    .admin-sidebar.show {
+        transform: translateX(0);
+    }
+
+    .admin-sidebar nav {
+        padding-bottom: 5rem;
+    }
+
+    #mobileSidebarToggle {
+        display: block;
+        top: 1rem;
+        left: 1rem;
+        z-index: 50;
+    }
+
+    .admin-content {
+        margin-top: 4rem;
+        padding: 1rem;
+    }
+
+    /* Navigation links */
+    .sidebar-link {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    .sidebar-link i {
+        font-size: 1.25rem;
+    }
+
+    details > summary {
+        padding: 1rem;
+    }
+
+    details > ul {
+        padding-left: 2rem;
+    }
+}
+
+/* ============================================
+   7. MOBILE CARDS & CONTAINERS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .card {
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        margin: -1rem -1rem 1rem -1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-footer {
+        padding: 1rem;
+        border-top: 1px solid #e5e7eb;
+        margin: 1rem -1rem -1rem -1rem;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .row > * {
+        flex: 1 1 100%;
+    }
+
+    .col-md-6,
+    .col-md-4,
+    .col-md-3,
+    .col-lg-6,
+    .col-lg-4,
+    .col-lg-3 {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   8. MOBILE MODALS & DIALOGS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal.show {
+        display: flex;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .modal-dialog {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        max-height: 90vh;
+        border-radius: 1.5rem 1.5rem 0 0;
+        background: white;
+        max-width: 100%;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        flex-shrink: 0;
+    }
+
+    .modal-header .btn-close {
+        padding: 0.5rem;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .modal-footer {
+        padding: 1.5rem;
+        border-top: 1px solid #e5e7eb;
+        flex-shrink: 0;
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .modal-footer button {
+        flex: 1;
+    }
+}
+
+/* ============================================
+   9. MOBILE DROPDOWNS & MENUS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-height: 80vh;
+        border-radius: 1.5rem 1.5rem 0 0;
+        overflow-y: auto;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    .dropdown-item {
+        padding: 1rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+    }
+
+    .dropdown-divider {
+        height: 1px;
+        margin: 0;
+        background-color: #e5e7eb;
+    }
+}
+
+/* ============================================
+   10. MOBILE ALERTS & NOTIFICATIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .alert {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0.375rem;
+        font-size: 0.95rem;
+        word-break: break-word;
+    }
+
+    .alert-heading {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .alert button.btn-close {
+        padding: 0.5rem;
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .toast-container {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        z-index: 1050;
+        max-width: 100%;
+    }
+
+    .toast {
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        border-radius: 0.375rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: slideInUp 0.3s ease-out;
+    }
+
+    @keyframes slideInUp {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+}
+
+/* ============================================
+   11. MOBILE GRID LAYOUTS
+   ============================================ */
+
+@media (max-width: 640px) {
+    .grid-cols-1 { grid-template-columns: 1fr; }
+    .grid-cols-2 { grid-template-columns: 1fr; }
+    .grid-cols-3 { grid-template-columns: 1fr; }
+    .grid-cols-4 { grid-template-columns: 1fr; }
+
+    .gap-2 { gap: 0.75rem; }
+    .gap-3 { gap: 1rem; }
+    .gap-4 { gap: 1.25rem; }
+    .gap-6 { gap: 1.5rem; }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+    .grid-cols-1 { grid-template-columns: 1fr; }
+    .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+    .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================
+   12. SAFE AREA SUPPORT
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+        padding-top: max(0.5rem, env(safe-area-inset-top));
+        padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
+
+    .admin-sidebar {
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+
+    .modal-dialog {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ============================================
+   13. TOUCH DEVICE OPTIMIZATIONS
+   ============================================ */
+
+/* Remove hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    button:hover,
+    a:hover,
+    .sidebar-link:hover {
+        background-color: inherit;
+        transform: none;
+    }
+
+    button:active,
+    a:active,
+    .sidebar-link:active {
+        opacity: 0.8;
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Remove selection on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    * {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+        -webkit-user-select: none;
+    }
+
+    input,
+    textarea,
+    select,
+    [contenteditable] {
+        -webkit-user-select: text;
+    }
+}
+
+/* ============================================
+   14. MOBILE STATUS BAR COMPATIBILITY
+   ============================================ */
+
+body {
+    background-color: #f3f4f6;
+    /* Ensure safe viewport area */
+    viewport-fit: cover;
+}
+
+@media (max-width: 768px) {
+    body {
+        overscroll-behavior: none;
+    }
+
+    #mobileSidebarToggle {
+        top: max(0.75rem, env(safe-area-inset-top));
+        left: max(0.75rem, env(safe-area-inset-left));
+    }
+}
+
+/* ============================================
+   15. PREVENT PINCH ZOOM (Optional)
+   ============================================ */
+
+/* Only disable zoom if needed for specific UX (generally not recommended) */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+/* ============================================
+   16. MOBILE BREAKPOINT UTILITIES
+   ============================================ */
+
+/* Extra small devices */
+@media (max-width: 576px) {
+    .d-none-xs { display: none; }
+    .d-block-xs { display: block; }
+    .d-flex-xs { display: flex; }
+    .hide-xs { display: none; }
+    .show-xs { display: block; }
+}
+
+/* Small devices */
+@media (min-width: 577px) and (max-width: 768px) {
+    .d-none-sm { display: none; }
+    .d-block-sm { display: block; }
+    .hide-sm { display: none; }
+    .show-sm { display: block; }
+}
+
+/* Medium devices and up */
+@media (min-width: 769px) {
+    .d-none-md { display: none; }
+    .d-block-md { display: block; }
+    .hide-md { display: none; }
+    .show-md { display: block; }
+}
+
+/* ============================================
+   17. LOADING INDICATORS & SPINNERS
+   ============================================ */
+
+.spinner {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: text-bottom;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+    to { transform: rotate(360deg); }
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+/* ============================================
+   18. MOBILE LANDSCAPE ADJUSTMENTS
+   ============================================ */
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .admin-sidebar {
+        height: auto;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    h1, h2, h3 {
+        margin-bottom: 0.5rem;
+    }
+
+    .card {
+        padding: 0.75rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* ============================================
+   19. HIGH DPI DEVICES
+   ============================================ */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    input,
+    button,
+    select,
+    textarea {
+        border-width: 1px;
+    }
+}
+
+/* ============================================
+   20. PRINT STYLES FOR MOBILE
+   ============================================ */
+
+@media print {
+    .admin-sidebar,
+    #mobileSidebarToggle,
+    .no-print {
+        display: none;
+    }
+
+    body {
+        background: white;
+    }
+
+    .content {
+        padding: 0;
+    }
+}

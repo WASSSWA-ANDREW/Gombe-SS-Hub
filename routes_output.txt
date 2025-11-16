@@ -1,0 +1,265 @@
+
+  GET|HEAD  / ............................................................................ generated::hWGftxqxWjAPfu91
+  GET|HEAD  about-us .............................................................. about.us › LegalController@aboutUs
+  GET|HEAD  admin/alumni ........................................... admin.alumni.index › Admin\AlumniController@index
+  POST      admin/alumni ........................................... admin.alumni.store › Admin\AlumniController@store
+  GET|HEAD  admin/alumni/create .................................. admin.alumni.create › Admin\AlumniController@create
+  GET|HEAD  admin/alumni/export/excel ................. admin.alumni.export.excel › Admin\AlumniController@exportExcel
+  GET|HEAD  admin/alumni/export/pdf ....................... admin.alumni.export.pdf › Admin\AlumniController@exportPdf
+  GET|HEAD  admin/alumni/search .................................. admin.alumni.search › Admin\AlumniController@search
+  GET|HEAD  admin/alumni/stats .................................. admin.alumni.stats › Admin\AlumniController@getStats
+  PUT       admin/alumni/{alumnus} ............................... admin.alumni.update › Admin\AlumniController@update
+  DELETE    admin/alumni/{alumnus} ............................. admin.alumni.destroy › Admin\AlumniController@destroy
+  GET|HEAD  admin/alumni/{alumnus} ................................... admin.alumni.show › Admin\AlumniController@show
+  GET|HEAD  admin/alumni/{alumnus}/edit .............................. admin.alumni.edit › Admin\AlumniController@edit
+  GET|HEAD  admin/backups ......................................... admin.backups.index › Admin\BackupController@index
+  POST      admin/backups ....................................... admin.backups.create › Admin\BackupController@create
+  GET|HEAD  admin/backups/download/{filename} ............... admin.backups.download › Admin\BackupController@download
+  GET|HEAD  admin/backups/metadata/{filename} ............... admin.backups.metadata › Admin\BackupController@metadata
+  DELETE    admin/backups/{filename} .......................... admin.backups.destroy › Admin\BackupController@destroy
+  GET|HEAD  admin/counselling/counselling-tracks admin.counselling.counselling-tracks › Admin\DisciplineController@co…
+  GET|HEAD  admin/counselling/create-counselling-track admin.counselling.create-counselling-track › Admin\DisciplineC…
+  POST      admin/counselling/store-counselling-track admin.counselling.store-counselling-track › Admin\DisciplineCon…
+  GET|HEAD  admin/counselling/tracks ... admin.counselling.tracks.index › Admin\DisciplineController@counsellingTracks
+  POST      admin/counselling/tracks admin.counselling.tracks.store › Admin\DisciplineController@storeCounsellingTrack
+  GET|HEAD  admin/counselling/tracks/create admin.counselling.tracks.create › Admin\DisciplineController@createCounse…
+  GET|HEAD  admin/dashboard ........................................ admin.dashboard › Admin\DashboardController@index
+  GET|HEAD  admin/dashboard/charts .................. admin.dashboard.charts › Admin\DashboardController@getChartsData
+  GET|HEAD  admin/dashboard/recent-activities admin.dashboard.activities › Admin\DashboardController@getRecentActivit…
+  GET|HEAD  admin/dashboard/stats ......................... admin.dashboard.stats › Admin\DashboardController@getStats
+  GET|HEAD  admin/discipline ............................... admin.discipline.index › Admin\DisciplineController@index
+  GET|HEAD  admin/discipline/create-discipline-track admin.discipline.create-discipline-track › Admin\DisciplineContr…
+  GET|HEAD  admin/discipline/discipline-tracks admin.discipline.discipline-tracks › Admin\DisciplineController@discip…
+  GET|HEAD  admin/discipline/records .... admin.discipline.records.index › Admin\DisciplineController@disciplineTracks
+  POST      admin/discipline/records admin.discipline.records.store › Admin\DisciplineController@storeDisciplineTrack
+  GET|HEAD  admin/discipline/records/create admin.discipline.records.create › Admin\DisciplineController@createDiscip…
+  POST      admin/discipline/store-discipline-track admin.discipline.store-discipline-track › Admin\DisciplineControl…
+  GET|HEAD  admin/discipline/student/{studentId}/records admin.discipline.student-records › Admin\DisciplineControlle…
+  GET|HEAD  admin/discipline/tracks ...... admin.discipline.tracks.index › Admin\DisciplineController@disciplineTracks
+  POST      admin/discipline/tracks .. admin.discipline.tracks.store › Admin\DisciplineController@storeDisciplineTrack
+  GET|HEAD  admin/discipline/tracks/create admin.discipline.tracks.create › Admin\DisciplineController@createDiscipli…
+  GET|HEAD  admin/files ......................................... admin.files.index › Admin\FileUploadController@index
+  DELETE    admin/files/delete/{id}/{type} .................... admin.files.delete › Admin\FileUploadController@delete
+  GET|HEAD  admin/files/download/{id}/{type} .............. admin.files.download › Admin\FileUploadController@download
+  GET|HEAD  admin/icon-test .......................................................................... admin.icon-test
+  GET|HEAD  admin/login .............................................. admin.login › AuthController@showAdminLoginForm
+  POST      admin/login ............................................... admin.login.submit › AuthController@adminLogin
+  GET|HEAD  admin/reports ......................................... admin.reports.index › Admin\ReportController@index
+  GET|HEAD  admin/reports/academic-performance admin.reports.academic-performance › Admin\ReportController@academicPe…
+  GET|HEAD  admin/reports/attendance .................... admin.reports.attendance › Admin\ReportController@attendance
+  GET|HEAD  admin/reports/custom ................................ admin.reports.custom › Admin\ReportController@custom
+  GET|HEAD  admin/reports/demographics .............. admin.reports.demographics › Admin\ReportController@demographics
+  POST      admin/reports/export-excel ............... admin.reports.export-excel › Admin\ReportController@exportExcel
+  POST      admin/reports/generate-pdf ............... admin.reports.generate-pdf › Admin\ReportController@generatePdf
+  GET|HEAD  admin/reports/legacy .......................... admin.reports.legacy.index › Admin\ReportsController@index
+  GET|HEAD  admin/reports/legacy/age-groups ...... admin.reports.legacy.age.groups › Admin\ReportsController@ageGroups
+  GET|HEAD  admin/reports/legacy/custom ........... admin.reports.legacy.custom › Admin\ReportsController@customReport
+  GET|HEAD  admin/reports/legacy/districts admin.reports.legacy.districts › Admin\ReportsController@districtStatistics
+  GET|HEAD  admin/reports/legacy/export/{type} .... admin.reports.legacy.export › Admin\ReportsController@exportReport
+  GET|HEAD  admin/reports/legacy/gender-statistics admin.reports.legacy.gender.stats › Admin\ReportsController@gender…
+  POST      admin/reports/legacy/generate ..... admin.reports.legacy.generate › Admin\ReportsController@generateReport
+  GET|HEAD  admin/reports/legacy/religions admin.reports.legacy.religions › Admin\ReportsController@religionStatistics
+  GET|HEAD  admin/reports/legacy/students-per-class admin.reports.legacy.students.class › Admin\ReportsController@stu…
+  GET|HEAD  admin/reports/legacy/teachers-per-department admin.reports.legacy.teachers.department › Admin\ReportsCont…
+  GET|HEAD  admin/reports/staff ............................ admin.reports.staff › Admin\ReportController@staffReports
+  GET|HEAD  admin/reports/student-distribution admin.reports.student-distribution › Admin\ReportController@studentDis…
+  GET|HEAD  admin/settings ..................................... admin.settings.index › Admin\SettingsController@index
+  PUT       admin/settings/backup ............... admin.settings.backup.update › Admin\SettingsController@updateBackup
+  POST      admin/settings/backup ............... admin.settings.backup.create › Admin\SettingsController@createBackup
+  POST      admin/settings/clear-cache .............. admin.settings.clear.cache › Admin\SettingsController@clearCache
+  PUT       admin/settings/email .................. admin.settings.email.update › Admin\SettingsController@updateEmail
+  PUT       admin/settings/general ............ admin.settings.general.update › Admin\SettingsController@updateGeneral
+  PUT       admin/settings/notifications admin.settings.notifications.update › Admin\SettingsController@updateNotific…
+  POST      admin/settings/optimize ................ admin.settings.optimize › Admin\SettingsController@optimizeSystem
+  PUT       admin/settings/security ......... admin.settings.security.update › Admin\SettingsController@updateSecurity
+  PUT       admin/settings/sms ........................ admin.settings.sms.update › Admin\SettingsController@updateSms
+  GET|HEAD  admin/settings/system-info ........... admin.settings.system.info › Admin\SettingsController@getSystemInfo
+  POST      admin/settings/test-email ................. admin.settings.test.email › Admin\SettingsController@testEmail
+  POST      admin/settings/test-sms ....................... admin.settings.test.sms › Admin\SettingsController@testSms
+  PUT       admin/settings/theme .................. admin.settings.theme.update › Admin\SettingsController@updateTheme
+  GET|HEAD  admin/staff .............................................. admin.staff.index › Admin\StaffController@index
+  POST      admin/staff .............................................. admin.staff.store › Admin\StaffController@store
+  GET|HEAD  admin/staff/create ..................................... admin.staff.create › Admin\StaffController@create
+  POST      admin/staff/delete-selected ........... admin.staff.delete.selected › Admin\StaffController@deleteSelected
+  GET|HEAD  admin/staff/export/excel .................... admin.staff.export.excel › Admin\StaffController@exportExcel
+  GET|HEAD  admin/staff/export/pdf .......................... admin.staff.export.pdf › Admin\StaffController@exportPdf
+  POST      admin/staff/export/selected ........... admin.staff.export.selected › Admin\StaffController@exportSelected
+  GET|HEAD  admin/staff/govt ................................ admin.staff.index_govt › Admin\StaffController@indexGovt
+  POST      admin/staff/govt ................................ admin.staff.store_govt › Admin\StaffController@storeGovt
+  GET|HEAD  admin/staff/govt/create ....................... admin.staff.create_govt › Admin\StaffController@createGovt
+  POST      admin/staff/govt/delete-selected admin.staff.delete.selected_govt › Admin\StaffController@deleteSelectedG…
+  GET|HEAD  admin/staff/govt/export/excel ...... admin.staff.export.excel_govt › Admin\StaffController@exportExcelGovt
+  GET|HEAD  admin/staff/govt/export/pdf ............ admin.staff.export.pdf_govt › Admin\StaffController@exportPdfGovt
+  GET|HEAD  admin/staff/govt/import ................... admin.staff.import_govt › Admin\StaffController@importGovtForm
+  POST      admin/staff/govt/import ................. admin.staff.import.store_govt › Admin\StaffController@importGovt
+  GET|HEAD  admin/staff/govt/search ....................... admin.staff.govt.search › Admin\StaffController@searchGovt
+  PUT       admin/staff/govt/{staff} ...................... admin.staff.update_govt › Admin\StaffController@updateGovt
+  DELETE    admin/staff/govt/{staff} .................... admin.staff.destroy_govt › Admin\StaffController@destroyGovt
+  GET|HEAD  admin/staff/govt/{staff}/edit ..................... admin.staff.edit_govt › Admin\StaffController@editGovt
+  GET|HEAD  admin/staff/govt/{staff}/view ..................... admin.staff.show_govt › Admin\StaffController@showGovt
+  GET|HEAD  admin/staff/govt/{staff}/view-pdf ..... admin.staff.view.pdf_govt › Admin\StaffController@viewStaffGovtPdf
+  GET|HEAD  admin/staff/import ................................. admin.staff.import › Admin\StaffController@importForm
+  POST      admin/staff/import ............................... admin.staff.import.store › Admin\StaffController@import
+  GET|HEAD  admin/staff/search ..................................... admin.staff.search › Admin\StaffController@search
+  PUT       admin/staff/{staff} .................................... admin.staff.update › Admin\StaffController@update
+  DELETE    admin/staff/{staff} .................................. admin.staff.destroy › Admin\StaffController@destroy
+  GET|HEAD  admin/staff/{staff}/edit ................................... admin.staff.edit › Admin\StaffController@edit
+  GET|HEAD  admin/staff/{staff}/export-form-pdf .... admin.staff.export.form_pdf › Admin\StaffController@exportFormPdf
+  GET|HEAD  admin/staff/{staff}/view ................................... admin.staff.show › Admin\StaffController@show
+  GET|HEAD  admin/staff/{staff}/view-pdf ................... admin.staff.view.pdf › Admin\StaffController@viewStaffPdf
+  GET|HEAD  admin/students/alevel .................. admin.students.alevel.index › Admin\StudentController@indexAlevel
+  POST      admin/students/alevel .................. admin.students.alevel.store › Admin\StudentController@storeAlevel
+  GET|HEAD  admin/students/alevel/create ......... admin.students.alevel.create › Admin\StudentController@createAlevel
+  POST      admin/students/alevel/delete-selected admin.students.alevel.delete.selected › Admin\StudentController@del…
+  GET|HEAD  admin/students/alevel/export/excel admin.students.alevel.export.excel › Admin\StudentController@exportAle…
+  GET|HEAD  admin/students/alevel/export/pdf admin.students.alevel.export.pdf › Admin\StudentController@exportAlevelP…
+  POST      admin/students/alevel/export/selected admin.students.alevel.export.selected › Admin\StudentController@exp…
+  GET|HEAD  admin/students/alevel/import ..... admin.students.alevel.import › Admin\StudentController@importAlevelForm
+  POST      admin/students/alevel/import ... admin.students.alevel.import.store › Admin\StudentController@importAlevel
+  GET|HEAD  admin/students/alevel/search ......... admin.students.alevel.search › Admin\StudentController@searchAlevel
+  PUT       admin/students/alevel/{student} ...... admin.students.alevel.update › Admin\StudentController@updateAlevel
+  DELETE    admin/students/alevel/{student} .... admin.students.alevel.destroy › Admin\StudentController@destroyAlevel
+  GET|HEAD  admin/students/alevel/{student}/edit ..... admin.students.alevel.edit › Admin\StudentController@editAlevel
+  GET|HEAD  admin/students/alevel/{student}/view ..... admin.students.alevel.show › Admin\StudentController@showAlevel
+  GET|HEAD  admin/students/alevel/{student}/view-pdf admin.students.alevel.view.pdf › Admin\StudentController@viewAle…
+  POST      admin/students/olevel .................. admin.students.olevel.store › Admin\StudentController@storeOlevel
+  GET|HEAD  admin/students/olevel .................. admin.students.olevel.index › Admin\StudentController@indexOlevel
+  GET|HEAD  admin/students/olevel/create ......... admin.students.olevel.create › Admin\StudentController@createOlevel
+  POST      admin/students/olevel/delete-selected admin.students.olevel.delete.selected › Admin\StudentController@del…
+  GET|HEAD  admin/students/olevel/export/excel admin.students.olevel.export.excel › Admin\StudentController@exportOle…
+  GET|HEAD  admin/students/olevel/export/pdf admin.students.olevel.export.pdf › Admin\StudentController@exportOlevelP…
+  POST      admin/students/olevel/export/selected admin.students.olevel.export.selected › Admin\StudentController@exp…
+  GET|HEAD  admin/students/olevel/import ..... admin.students.olevel.import › Admin\StudentController@importOlevelForm
+  POST      admin/students/olevel/import ... admin.students.olevel.import.store › Admin\StudentController@importOlevel
+  GET|HEAD  admin/students/olevel/search ......... admin.students.olevel.search › Admin\StudentController@searchOlevel
+  PUT       admin/students/olevel/{student} ...... admin.students.olevel.update › Admin\StudentController@updateOlevel
+  DELETE    admin/students/olevel/{student} .... admin.students.olevel.destroy › Admin\StudentController@destroyOlevel
+  GET|HEAD  admin/students/olevel/{student}/edit ..... admin.students.olevel.edit › Admin\StudentController@editOlevel
+  GET|HEAD  admin/students/olevel/{student}/view ..... admin.students.olevel.show › Admin\StudentController@showOlevel
+  GET|HEAD  admin/students/olevel/{student}/view-pdf admin.students.olevel.view.pdf › Admin\StudentController@viewOle…
+  GET|HEAD  admin/users ............................................... admin.users.index › Admin\UserController@index
+  POST      admin/users ............................................... admin.users.store › Admin\UserController@store
+  POST      admin/users/bulk-action ........................ admin.users.bulk.action › Admin\UserController@bulkAction
+  GET|HEAD  admin/users/create ...................................... admin.users.create › Admin\UserController@create
+  GET|HEAD  admin/users/{user} .......................................... admin.users.show › Admin\UserController@show
+  PUT       admin/users/{user} ...................................... admin.users.update › Admin\UserController@update
+  DELETE    admin/users/{user} .................................... admin.users.destroy › Admin\UserController@destroy
+  GET|HEAD  admin/users/{user}/edit ..................................... admin.users.edit › Admin\UserController@edit
+  PUT       admin/users/{user}/reset-password ........ admin.users.reset.password › Admin\UserController@resetPassword
+  PUT       admin/users/{user}/toggle-status ........... admin.users.toggle.status › Admin\UserController@toggleStatus
+  GET|HEAD  admin/welcome ................................................. admin.welcome › AuthController@showWelcome
+  GET|HEAD  api/v1/app-info .............................................. api.app.info › Api\ApiController@getAppInfo
+  PUT       api/v1/change-password ............................ api.password.change › Api\ApiController@changePassword
+  GET|HEAD  api/v1/dashboard-stats ............................ api.dashboard.stats › Api\ApiController@dashboardStats
+  POST      api/v1/login ......................................................... api.login › Api\ApiController@login
+  POST      api/v1/logout ...................................................... api.logout › Api\ApiController@logout
+  GET|HEAD  api/v1/profile ................................................... api.profile › Api\ApiController@profile
+  PUT       api/v1/profile ...................................... api.profile.update › Api\ApiController@updateProfile
+  GET|HEAD  api/v1/search/staff ..................................... api.search.staff › Api\ApiController@searchStaff
+  GET|HEAD  api/v1/search/students ............................ api.search.students › Api\ApiController@searchStudents
+  GET|HEAD  api/v1/staff ............................................. api.staff.list › Api\ApiController@getStaffList
+  GET|HEAD  api/v1/staff/{id} ............................................ api.staff.show › Api\ApiController@getStaff
+  GET|HEAD  api/v1/students ........................................ api.students.list › Api\ApiController@getStudents
+  GET|HEAD  api/v1/students/{id} .................................... api.students.show › Api\ApiController@getStudent
+  GET|HEAD  api/v1/system-stats .................................. api.system.stats › Api\ApiController@getSystemStats
+  GET|HEAD  bookmarks ..................................................... bookmarks.index › BookmarkController@index
+  POST      bookmarks ..................................................... bookmarks.store › BookmarkController@store
+  GET|HEAD  bookmarks/categories ............................. bookmarks.categories › BookmarkController@getCategories
+  GET|HEAD  bookmarks/category/{category?} ..................... bookmarks.category › BookmarkController@getByCategory
+  GET|HEAD  bookmarks/check ....................................... bookmarks.check › BookmarkController@checkBookmark
+  GET|HEAD  bookmarks/export ............................................ bookmarks.export › BookmarkController@export
+  POST      bookmarks/import ............................................ bookmarks.import › BookmarkController@import
+  GET|HEAD  bookmarks/search ............................................ bookmarks.search › BookmarkController@search
+  GET|HEAD  bookmarks/suggestions .......................... bookmarks.suggestions › BookmarkController@getSuggestions
+  PUT       bookmarks/{bookmark} ........................................ bookmarks.update › BookmarkController@update
+  DELETE    bookmarks/{bookmark} ...................................... bookmarks.destroy › BookmarkController@destroy
+  GET|HEAD  cookies-policy ............................................ cookies.policy › LegalController@cookiesPolicy
+  GET|HEAD  disclaimer ....................................................... disclaimer › LegalController@disclaimer
+  POST      emergency/call .................................. emergency.call › EmergencyContactController@initiateCall
+  GET|HEAD  emergency/contacts ........................... emergency.contacts › EmergencyContactController@getContacts
+  POST      emergency/email .......................... emergency.email › EmergencyContactController@sendEmergencyEmail
+  GET|HEAD  emergency/history ....................... emergency.history › EmergencyContactController@getContactHistory
+  POST      emergency/settings .......... emergency.settings.update › EmergencyContactController@updateContactSettings
+  GET|HEAD  emergency/statistics ..................... emergency.statistics › EmergencyContactController@getStatistics
+  POST      emergency/test .................................... emergency.test › EmergencyContactController@testSystem
+  POST      emergency/whatsapp ...................... emergency.whatsapp › EmergencyContactController@initiateWhatsApp
+  GET|HEAD  emergency/widget ............................. emergency.widget › EmergencyContactController@getWidgetData
+  POST      export/bulk .................................................... export.bulk › ExportController@bulkExport
+  POST      export/csv ....................................................... export.csv › ExportController@exportCsv
+  POST      export/email ................................................... export.email › ExportController@sendEmail
+  POST      export/excel ................................................. export.excel › ExportController@exportExcel
+  POST      export/pdf ....................................................... export.pdf › ExportController@exportPdf
+  POST      export/print ....................................................... export.print › ExportController@print
+  POST      export/social ............................................ export.social › ExportController@shareViaSocial
+  GET|HEAD  export/templates ........................................ export.templates › ExportController@getTemplates
+  POST      export/whatsapp ...................................... export.whatsapp › ExportController@shareViaWhatsApp
+  GET|HEAD  feedback ....................................................... feedback.index › FeedbackController@index
+  POST      feedback ....................................................... feedback.store › FeedbackController@store
+  GET|HEAD  feedback/all ............................................ feedback.all › FeedbackController@getAllFeedback
+  GET|HEAD  feedback/categories ............................... feedback.categories › FeedbackController@getCategories
+  GET|HEAD  feedback/export ...................................... feedback.export › FeedbackController@exportFeedback
+  GET|HEAD  feedback/statistics ............................... feedback.statistics › FeedbackController@getStatistics
+  GET|HEAD  feedback/templates .................................. feedback.templates › FeedbackController@getTemplates
+  GET|HEAD  feedback/user ......................................... feedback.user › FeedbackController@getUserFeedback
+  PUT       feedback/{feedbackId}/status .................... feedback.status.update › FeedbackController@updateStatus
+  GET|HEAD  language/available ......................... language.available › LanguageController@getAvailableLanguages
+  GET|HEAD  language/current ................................ language.current › LanguageController@getCurrentLanguage
+  GET|HEAD  language/missing/{language} ................. language.missing › LanguageController@getMissingTranslations
+  POST      language/set ............................................... language.set › LanguageController@setLanguage
+  GET|HEAD  language/statistics ....................... language.statistics › LanguageController@getLanguageStatistics
+  POST      language/translation/update ........... language.translation.update › LanguageController@updateTranslation
+  GET|HEAD  language/translations/{language?} ............. language.translations › LanguageController@getTranslations
+  POST      legal/accept-terms ............................................ legal.accept › LegalController@acceptTerms
+  GET|HEAD  legal/acceptance-status .......................... legal.status › LegalController@getLegalAcceptanceStatus
+  GET|HEAD  legal/{type} ........................................... legal.document › LegalController@getLegalDocument
+  GET|HEAD  login ............................................................... login › AuthController@showLoginForm
+  POST      login ................................................................ login.submit › AuthController@login
+  POST      logout .................................................................... logout › AuthController@logout
+  GET|HEAD  map ...................................................................... map.index › MapController@index
+  GET|HEAD  map/combined-data .............................. map.combined.data › MapController@getCombinedLocationData
+  GET|HEAD  map/config ....................................................... map.config › MapController@getMapConfig
+  GET|HEAD  map/heatmap-data ......................................... map.heatmap.data › MapController@getHeatmapData
+  GET|HEAD  map/nearby ................................................. map.nearby › MapController@getNearbyLocations
+  GET|HEAD  map/staff-data ....................................... map.staff.data › MapController@getStaffLocationData
+  GET|HEAD  map/stats-by-district ...................... map.stats.district › MapController@getLocationStatsByDistrict
+  GET|HEAD  map/students-data .............................. map.students.data › MapController@getStudentsLocationData
+  GET|HEAD  notifications ......................................... notifications.index › NotificationController@index
+  POST      notifications ......................................... notifications.store › NotificationController@store
+  DELETE    notifications/clear-all ........................ notifications.clear.all › NotificationController@clearAll
+  GET|HEAD  notifications/create ................................ notifications.create › NotificationController@create
+  POST      notifications/emergency .............. notifications.emergency.send › NotificationController@sendEmergency
+  GET|HEAD  notifications/emergency/create ... notifications.emergency.create › NotificationController@createEmergency
+  POST      notifications/mark-all-read ........... notifications.mark.all.read › NotificationController@markAllAsRead
+  GET|HEAD  notifications/preferences ................. notifications.preferences › NotificationController@preferences
+  PUT       notifications/preferences .... notifications.preferences.update › NotificationController@updatePreferences
+  GET|HEAD  notifications/{notification} ............................ notifications.show › NotificationController@show
+  DELETE    notifications/{notification} ...................... notifications.destroy › NotificationController@destroy
+  PUT       notifications/{notification}/read ................. notifications.read › NotificationController@markAsRead
+  GET|HEAD  privacy-policy ............................................ privacy.policy › LegalController@privacyPolicy
+  GET|HEAD  profile ................................................................. profile › AuthController@profile
+  PUT       profile .................................................... profile.update › AuthController@updateProfile
+  PUT       profile/password ........................................ profile.password › AuthController@updatePassword
+  GET|HEAD  search ................................................................... search › SearchController@index
+  POST      search ........................................................... search.submit › SearchController@search
+  GET|HEAD  search/advanced ........................................ search.advanced › SearchController@advancedSearch
+  GET|HEAD  search/history ........................................ search.history › SearchController@getSearchHistory
+  DELETE    search/history ................................ search.history.clear › SearchController@clearSearchHistory
+  DELETE    search/history/{id} ......................... search.history.delete › SearchController@deleteSearchHistory
+  GET|HEAD  search/suggestions .................................. search.suggestions › SearchController@getSuggestions
+  GET|HEAD  storage/{path} ............................................................................. storage.local
+  GET|HEAD  terms-of-service .......................................... terms.service › LegalController@termsOfService
+  GET|HEAD  theme/available ..................................... theme.available › ThemeController@getAvailableThemes
+  GET|HEAD  theme/current ............................................ theme.current › ThemeController@getCurrentTheme
+  POST      theme/customization ..................... theme.customization.update › ThemeController@updateCustomization
+  GET|HEAD  theme/customization-options ........ theme.customization.options › ThemeController@getCustomizationOptions
+  GET|HEAD  theme/customizations ............................ theme.customizations › ThemeController@getCustomizations
+  GET|HEAD  theme/export ............................................... theme.export › ThemeController@exportSettings
+  POST      theme/import ............................................... theme.import › ThemeController@importSettings
+  POST      theme/reset ................................................. theme.reset › ThemeController@resetToDefault
+  POST      theme/set ........................................................... theme.set › ThemeController@setTheme
+  GET|HEAD  theme/statistics ................................... theme.statistics › ThemeController@getThemeStatistics
+  POST      theme/toggle .................................................. theme.toggle › ThemeController@toggleTheme
+  GET|HEAD  up ........................................................................... generated::jIzbPQc4GZQ8cdzn
+
+                                                                                                  Showing [261] routes
+

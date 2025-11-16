@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="152" height="152" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <!-- Gradient background -->
+    <defs>
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Background -->
+    <rect width="512" height="512" fill="url(#bgGrad)" rx="100"/>
+    
+    <!-- School building icon -->
+    <g transform="translate(256, 256)">
+        <!-- Building outline -->
+        <rect x="-80" y="-60" width="160" height="140" fill="white" opacity="0.9" rx="8"/>
+        
+        <!-- Windows -->
+        <rect x="-60" y="-40" width="30" height="30" fill="#3B82F6" rx="4"/>
+        <rect x="-20" y="-40" width="30" height="30" fill="#3B82F6" rx="4"/>
+        <rect x="20" y="-40" width="30" height="30" fill="#3B82F6" rx="4"/>
+        
+        <rect x="-60" y="0" width="30" height="30" fill="#3B82F6" rx="4"/>
+        <rect x="-20" y="0" width="30" height="30" fill="#3B82F6" rx="4"/>
+        <rect x="20" y="0" width="30" height="30" fill="#3B82F6" rx="4"/>
+        
+        <!-- Door -->
+        <rect x="-25" y="40" width="50" height="50" fill="#8B4513" rx="4"/>
+        <circle cx="-5" cy="65" r="4" fill="#FFD700"/>
+        
+        <!-- Roof -->
+        <polygon points="-80,-60 0,-120 80,-60" fill="#DC2626"/>
+    </g>
+    
+    <!-- App name placeholder -->
+    <text x="256" y="480" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Gombe Hub</text>
+</svg>

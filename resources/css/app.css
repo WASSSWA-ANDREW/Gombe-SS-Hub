@@ -1,0 +1,446 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Theme Styles */
+
+/* Green Theme */
+html.theme-green body {
+    @apply bg-green-50 text-green-900 antialiased;
+}
+html.theme-green .admin-layout-main-bg,
+html.theme-green .admin-content-area-bg {
+    @apply bg-green-100;
+}
+html.theme-green .admin-sidebar {
+    @apply bg-green-800 text-green-50;
+}
+html.theme-green .admin-sidebar .sidebar-link {
+    @apply text-green-50;
+}
+html.theme-green .admin-sidebar .sidebar-link:hover,
+html.theme-green .admin-sidebar .sidebar-link.active {
+    @apply bg-green-700 text-white;
+}
+html.theme-green .admin-header {
+    @apply bg-green-600 text-green-50 shadow-md;
+}
+html.theme-green .admin-header-title {
+    @apply text-green-50;
+}
+html.theme-green .admin-header-welcome {
+    @apply text-green-100;
+}
+html.theme-green #theme-selector .theme-selector-heading {
+    @apply text-green-50;
+}
+html.theme-green #theme-selector .theme-label-text {
+    @apply text-green-50;
+}
+html.theme-green .form-radio {
+    @apply text-green-600 focus:ring-green-500 border-green-400;
+}
+
+/* Green Theme - Text Color Contrast Handling */
+html.theme-green .bg-green-50,
+html.theme-green .bg-green-100,
+html.theme-green .bg-white {
+    color: #1f2937 !important;
+}
+html.theme-green .bg-green-50 p,
+html.theme-green .bg-green-50 span,
+html.theme-green .bg-green-50 a:not(.text-green-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-green .bg-green-50 label,
+html.theme-green .bg-green-50 li,
+html.theme-green .bg-green-100 p,
+html.theme-green .bg-green-100 span,
+html.theme-green .bg-green-100 a:not(.text-green-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-green .bg-green-100 label,
+html.theme-green .bg-white p,
+html.theme-green .bg-white span,
+html.theme-green .bg-white a:not(.text-green-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-green .bg-white label {
+    color: #1f2937 !important;
+}
+html.theme-green .bg-green-800 p,
+html.theme-green .bg-green-800 span,
+html.theme-green .bg-green-800 a:not(.text-green-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600):not(.text-green-400):not(.text-indigo-400),
+html.theme-green .bg-green-800 label,
+html.theme-green .bg-green-800 li,
+html.theme-green .bg-green-700 p,
+html.theme-green .bg-green-700 span,
+html.theme-green .bg-green-700 a:not(.text-green-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600):not(.text-green-400):not(.text-indigo-400),
+html.theme-green .bg-green-700 label {
+    color: #f0fdf4 !important;
+}
+
+/* Cream Theme (using Amber) */
+html.theme-cream body {
+    @apply bg-amber-50 text-amber-900 antialiased;
+}
+html.theme-cream .admin-layout-main-bg,
+html.theme-cream .admin-content-area-bg {
+    @apply bg-amber-100;
+}
+html.theme-cream .admin-sidebar {
+    @apply bg-amber-800 text-amber-50;
+}
+html.theme-cream .admin-sidebar .sidebar-link {
+    @apply text-amber-50;
+}
+html.theme-cream .admin-sidebar .sidebar-link:hover,
+html.theme-cream .admin-sidebar .sidebar-link.active {
+    @apply bg-amber-700 text-white;
+}
+html.theme-cream .admin-header {
+    @apply bg-amber-600 text-amber-50 shadow-md;
+}
+html.theme-cream .admin-header-title {
+    @apply text-amber-50;
+}
+html.theme-cream .admin-header-welcome {
+    @apply text-amber-100;
+}
+html.theme-cream #theme-selector .theme-selector-heading {
+    @apply text-amber-50;
+}
+html.theme-cream #theme-selector .theme-label-text {
+    @apply text-amber-50;
+}
+html.theme-cream .form-radio {
+    @apply text-yellow-500 focus:ring-yellow-400 border-yellow-400;
+}
+
+/* Cream Theme - Text Color Contrast Handling */
+html.theme-cream .bg-amber-50,
+html.theme-cream .bg-amber-100,
+html.theme-cream .bg-white {
+    color: #78350f !important;
+}
+html.theme-cream .bg-amber-50 p,
+html.theme-cream .bg-amber-50 span,
+html.theme-cream .bg-amber-50 a:not(.text-yellow-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-cream .bg-amber-50 label,
+html.theme-cream .bg-amber-50 li,
+html.theme-cream .bg-amber-100 p,
+html.theme-cream .bg-amber-100 span,
+html.theme-cream .bg-amber-100 a:not(.text-yellow-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-cream .bg-amber-100 label,
+html.theme-cream .bg-white p,
+html.theme-cream .bg-white span,
+html.theme-cream .bg-white a:not(.text-yellow-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-cream .bg-white label {
+    color: #78350f !important;
+}
+html.theme-cream .bg-amber-800 p,
+html.theme-cream .bg-amber-800 span,
+html.theme-cream .bg-amber-800 a:not(.text-yellow-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600):not(.text-yellow-300):not(.text-indigo-300),
+html.theme-cream .bg-amber-800 label,
+html.theme-cream .bg-amber-800 li,
+html.theme-cream .bg-amber-700 p,
+html.theme-cream .bg-amber-700 span,
+html.theme-cream .bg-amber-700 a:not(.text-yellow-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600):not(.text-yellow-300):not(.text-indigo-300),
+html.theme-cream .bg-amber-700 label {
+    color: #fef3c7 !important;
+}
+
+/* Blue Theme - Add text color contrast handling */
+html.theme-blue body {
+    @apply bg-blue-50 text-blue-900 antialiased;
+}
+html.theme-blue .admin-sidebar {
+    @apply bg-blue-800 text-blue-50;
+}
+html.theme-blue .admin-sidebar .sidebar-link {
+    @apply text-blue-50;
+}
+html.theme-blue .bg-blue-50,
+html.theme-blue .bg-blue-100,
+html.theme-blue .bg-white {
+    color: #1e3a8a !important;
+}
+html.theme-blue .bg-blue-50 p,
+html.theme-blue .bg-blue-50 span,
+html.theme-blue .bg-blue-50 a:not(.text-blue-600):not(.text-indigo-600):not(.text-red-600),
+html.theme-blue .bg-blue-50 label,
+html.theme-blue .bg-blue-100 p,
+html.theme-blue .bg-blue-100 span,
+html.theme-blue .bg-blue-100 a:not(.text-blue-600):not(.text-indigo-600):not(.text-red-600),
+html.theme-blue .bg-blue-100 label,
+html.theme-blue .bg-white p,
+html.theme-blue .bg-white span,
+html.theme-blue .bg-white a:not(.text-blue-600):not(.text-indigo-600):not(.text-red-600),
+html.theme-blue .bg-white label {
+    color: #1e3a8a !important;
+}
+html.theme-blue .bg-blue-800 p,
+html.theme-blue .bg-blue-800 span,
+html.theme-blue .bg-blue-800 a:not(.text-blue-400):not(.text-indigo-400):not(.text-red-400),
+html.theme-blue .bg-blue-800 label,
+html.theme-blue .bg-blue-900 p,
+html.theme-blue .bg-blue-900 span,
+html.theme-blue .bg-blue-900 a:not(.text-blue-400):not(.text-indigo-400):not(.text-red-400),
+html.theme-blue .bg-blue-900 label {
+    color: #dbeafe !important;
+}
+
+/* High Contrast Theme - Text color handling */
+html.theme-high-contrast body {
+    @apply bg-white text-black antialiased;
+}
+html.theme-high-contrast .bg-white,
+html.theme-high-contrast .bg-gray-50,
+html.theme-high-contrast .bg-gray-100 {
+    color: #000000 !important;
+}
+html.theme-high-contrast .bg-black,
+html.theme-high-contrast .bg-gray-800,
+html.theme-high-contrast .bg-gray-900 {
+    color: #ffffff !important;
+}
+
+/* High Contrast Theme - All Text Elements */
+html.theme-high-contrast p,
+html.theme-high-contrast span,
+html.theme-high-contrast label,
+html.theme-high-contrast li,
+html.theme-high-contrast td,
+html.theme-high-contrast th,
+html.theme-high-contrast button,
+html.theme-high-contrast a,
+html.theme-high-contrast small,
+html.theme-high-contrast .form-text,
+html.theme-high-contrast .alert,
+html.theme-high-contrast .card-body,
+html.theme-high-contrast .modal-body {
+    color: #000000 !important;
+}
+
+html.theme-high-contrast .admin-sidebar {
+    @apply bg-black text-white;
+}
+html.theme-high-contrast .admin-sidebar p,
+html.theme-high-contrast .admin-sidebar span,
+html.theme-high-contrast .admin-sidebar label,
+html.theme-high-contrast .admin-sidebar a {
+    color: #ffffff !important;
+}
+
+/* Preserve Action Button Colors Across All Themes */
+/* View, Edit, Delete, Export buttons maintain their original colors */
+html.theme-green .text-green-600,
+html.theme-green .text-indigo-600,
+html.theme-green .text-red-600,
+html.theme-green .text-blue-600 {
+    color: inherit !important;
+}
+
+html.theme-cream .text-yellow-600,
+html.theme-cream .text-indigo-600,
+html.theme-cream .text-red-600,
+html.theme-cream .text-blue-600 {
+    color: inherit !important;
+}
+
+html.theme-blue .text-blue-600,
+html.theme-blue .text-indigo-600,
+html.theme-blue .text-red-600,
+html.theme-blue .text-green-600 {
+    color: inherit !important;
+}
+
+/* Table Headers and Specific Elements */
+html.theme-blue thead,
+html.theme-green thead,
+html.theme-cream thead {
+    color: #1f2937 !important;
+}
+
+/* Override opacity that might fade text */
+html.theme-green p,
+html.theme-green span,
+html.theme-green label,
+html.theme-green a,
+html.theme-green li,
+html.theme-green td,
+html.theme-green th {
+    opacity: 1 !important;
+}
+
+html.theme-cream p,
+html.theme-cream span,
+html.theme-cream label,
+html.theme-cream a,
+html.theme-cream li,
+html.theme-cream td,
+html.theme-cream th {
+    opacity: 1 !important;
+}
+
+html.theme-blue p,
+html.theme-blue span,
+html.theme-blue label,
+html.theme-blue a,
+html.theme-blue li,
+html.theme-blue td,
+html.theme-blue th {
+    opacity: 1 !important;
+}
+
+/* ========================================= */
+/* HEADINGS - All Themes */
+/* ========================================= */
+
+html.theme-green h1,
+html.theme-green h2,
+html.theme-green h3,
+html.theme-green h4,
+html.theme-green h5,
+html.theme-green h6 {
+    color: #1f2937 !important;
+}
+
+html.theme-cream h1,
+html.theme-cream h2,
+html.theme-cream h3,
+html.theme-cream h4,
+html.theme-cream h5,
+html.theme-cream h6 {
+    color: #78350f !important;
+}
+
+html.theme-blue h1,
+html.theme-blue h2,
+html.theme-blue h3,
+html.theme-blue h4,
+html.theme-blue h5,
+html.theme-blue h6 {
+    color: #1e3a8a !important;
+}
+
+html.theme-high-contrast h1,
+html.theme-high-contrast h2,
+html.theme-high-contrast h3,
+html.theme-high-contrast h4,
+html.theme-high-contrast h5,
+html.theme-high-contrast h6 {
+    color: #000000 !important;
+}
+
+/* ========================================= */
+/* BUTTON TEXT - All Themes (Non-Action) */
+/* ========================================= */
+
+html.theme-green button:not(.text-green-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-green .btn:not(.text-green-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600) {
+    color: #1f2937 !important;
+}
+
+html.theme-cream button:not(.text-yellow-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600),
+html.theme-cream .btn:not(.text-yellow-600):not(.text-indigo-600):not(.text-red-600):not(.text-blue-600) {
+    color: #78350f !important;
+}
+
+html.theme-blue button:not(.text-blue-600):not(.text-indigo-600):not(.text-red-600):not(.text-green-600),
+html.theme-blue .btn:not(.text-blue-600):not(.text-indigo-600):not(.text-red-600):not(.text-green-600) {
+    color: #1e3a8a !important;
+}
+
+/* ========================================= */
+/* ALERTS, CARDS, AND CONTAINERS */
+/* ========================================= */
+
+html.theme-green .alert,
+html.theme-green .card-body,
+html.theme-green .modal-body,
+html.theme-green .popover,
+html.theme-green [role="tooltip"] {
+    color: #1f2937 !important;
+}
+
+html.theme-cream .alert,
+html.theme-cream .card-body,
+html.theme-cream .modal-body,
+html.theme-cream .popover,
+html.theme-cream [role="tooltip"] {
+    color: #78350f !important;
+}
+
+html.theme-blue .alert,
+html.theme-blue .card-body,
+html.theme-blue .modal-body,
+html.theme-blue .popover,
+html.theme-blue [role="tooltip"] {
+    color: #1e3a8a !important;
+}
+
+/* ========================================= */
+/* FORM LABELS AND HELPER TEXT */
+/* ========================================= */
+
+html.theme-green .form-label,
+html.theme-green .form-text,
+html.theme-green .help-text,
+html.theme-green small {
+    color: #1f2937 !important;
+}
+
+html.theme-cream .form-label,
+html.theme-cream .form-text,
+html.theme-cream .help-text,
+html.theme-cream small {
+    color: #78350f !important;
+}
+
+html.theme-blue .form-label,
+html.theme-blue .form-text,
+html.theme-blue .help-text,
+html.theme-blue small {
+    color: #1e3a8a !important;
+}
+
+/* ========================================= */
+/* BADGES AND LABELS */
+/* ========================================= */
+
+html.theme-green .badge:not(.bg-green-600):not(.bg-indigo-600):not(.bg-red-600):not(.bg-blue-600) {
+    color: #1f2937 !important;
+}
+
+html.theme-cream .badge:not(.bg-yellow-600):not(.bg-indigo-600):not(.bg-red-600):not(.bg-blue-600) {
+    color: #78350f !important;
+}
+
+html.theme-blue .badge:not(.bg-blue-600):not(.bg-indigo-600):not(.bg-red-600):not(.bg-green-600) {
+    color: #1e3a8a !important;
+}
+
+/* ========================================= */
+/* BLOCKQUOTES AND EMPHASIS */
+/* ========================================= */
+
+html.theme-green blockquote,
+html.theme-green em,
+html.theme-green i {
+    color: #1f2937 !important;
+}
+
+html.theme-cream blockquote,
+html.theme-cream em,
+html.theme-cream i {
+    color: #78350f !important;
+}
+
+html.theme-blue blockquote,
+html.theme-blue em,
+html.theme-blue i {
+    color: #1e3a8a !important;
+}

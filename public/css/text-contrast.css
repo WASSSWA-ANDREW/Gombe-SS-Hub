@@ -1,0 +1,124 @@
+/* Ensure dark text on white backgrounds for better readability */
+
+/* White background text colors */
+.bg-white,
+.bg-white\/50,
+.bg-white\/75,
+.bg-white\/95 {
+    color: #1f2937 !important; /* text-gray-800 */
+}
+
+.bg-white p,
+.bg-white span,
+.bg-white a,
+.bg-white label,
+.bg-white li,
+.bg-white td,
+.bg-white th,
+.bg-white h1,
+.bg-white h2,
+.bg-white h3,
+.bg-white h4,
+.bg-white h5,
+.bg-white h6 {
+    color: #1f2937 !important; /* text-gray-800 */
+}
+
+/* Light gray backgrounds */
+.bg-gray-50,
+.bg-gray-100 {
+    color: #374151 !important; /* text-gray-700 */
+}
+
+.bg-gray-50 p,
+.bg-gray-50 span,
+.bg-gray-50 a,
+.bg-gray-50 label,
+.bg-gray-100 p,
+.bg-gray-100 span,
+.bg-gray-100 a,
+.bg-gray-100 label {
+    color: #374151 !important;
+}
+
+/* Ensure placeholder text is readable */
+::placeholder {
+    color: #6b7280 !important; /* text-gray-500 */
+    opacity: 1;
+}
+
+/* Override light text on light backgrounds */
+.bg-white .text-gray-300,
+.bg-white .text-gray-400,
+.bg-white .text-gray-500,
+.bg-white .text-gray-600 {
+    color: #1f2937 !important;
+}
+
+.bg-gray-50 .text-gray-300,
+.bg-gray-50 .text-gray-400,
+.bg-gray-50 .text-gray-500,
+.bg-gray-100 .text-gray-300,
+.bg-gray-100 .text-gray-400,
+.bg-gray-100 .text-gray-500 {
+    color: #374151 !important;
+}
+
+/* Ensure shadow text and subtle text is still readable on light backgrounds */
+.bg-white .opacity-70,
+.bg-white .opacity-60,
+.bg-white .opacity-50 {
+    opacity: 1 !important;
+    color: #1f2937 !important;
+}
+
+/* Form inputs on white backgrounds */
+.bg-white input,
+.bg-white textarea,
+.bg-white select {
+    color: #1f2937 !important;
+    background-color: #ffffff !important;
+}
+
+/* Cards and panels */
+.rounded-lg,
+.rounded-xl {
+    color: #1f2937;
+}
+
+/* Ensure linked text has sufficient contrast */
+.bg-white a:not(.text-white):not(.text-blue-600):not(.text-blue-500):not(.text-indigo-600):not(.text-red-600):not(.text-green-600) {
+    color: #1e40af !important; /* blue-800 for better contrast */
+}
+
+/* Statistics and info boxes */
+.stat-box,
+.info-box,
+.card,
+.panel {
+    color: #1f2937 !important;
+}
+
+/* Table text */
+table {
+    color: #1f2937 !important;
+}
+
+table th {
+    color: #111827 !important; /* text-gray-900 */
+    background-color: #f3f4f6 !important; /* bg-gray-100 */
+}
+
+table td {
+    color: #1f2937 !important;
+}
+
+/* List items */
+li {
+    color: #1f2937 !important;
+}
+
+/* Disable any opacity that might fade text */
+p, span, label, a, li, td, th {
+    opacity: 1 !important;
+}

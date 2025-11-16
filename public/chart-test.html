@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart.js Test</title>
+    <!-- Load Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Fallback to local copy if CDN fails -->
+    <script>
+        window.addEventListener('error', function(e) {
+            if (e.target && e.target.tagName === 'SCRIPT') {
+                console.error('Script loading error:', e.target.src);
+                document.getElementById('error-message').textContent = 'Failed to load: ' + e.target.src;
+                document.getElementById('error-message').style.display = 'block';
+            }
+        }, true);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Chart === 'undefined') {
+                console.log('CDN Chart.js failed, trying local copy...');
+                var script = document.createElement('script');
+                script.src = '/js/chart.min.js';
+                script.onload = initChart;
+                script.onerror = function() {
+                    document.getElementById('error-message').textContent = 'Failed to load local Chart.js';
+                    document.getElementById('error-message').style.display = 'block';
+                };
+                document.head.appendChild(script);
+            } else {
+                initChart();
+            }
+        });
+        
+        function initChart() {
+            if (typeof Chart === 'undefined') {
+                document.getElementById('error-message').textContent = 'Chart.js is not available';
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('status').textContent = 'Chart.js loaded successfully!';
+            
+            const ctx = document.getElementById('myChart');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .error {
+            background-color: #ffdddd;
+            color: #ff0000;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .success {
+            background-color: #ddffdd;
+            color: #008800;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chart.js Test Page</h1>
+        <div id="error-message" class="error"></div>
+        <div id="status" class="success">Loading Chart.js...</div>
+        
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
+        </div>
+        
+        <div>
+            <h2>Debugging Information</h2>
+            <p>This page tests if Chart.js is loading correctly.</p>
+            <p>Check the browser console (F12) for more detailed error messages.</p>
+            <p>If the chart appears above, Chart.js is working correctly.</p>
+        </div>
+    </div>
+</body>
+</html>
