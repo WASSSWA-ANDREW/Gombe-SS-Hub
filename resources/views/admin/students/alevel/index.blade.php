@@ -99,10 +99,10 @@
                             @foreach ($students as $student)
                                 <tr class="student-row">
                                     <td class="px-3 py-4 whitespace-nowrap text-center">
-                                        <input type="checkbox" name="selected_students[]" value="{{ $student->admission_number }}" class="student-checkbox form-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700">
+                                        <input type="checkbox" name="selected_students[]" value="{{ $student->id }}" class="student-checkbox form-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700">
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        <a href="{{ route('admin.students.alevel.view.pdf', $student->admission_number) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 hover:underline" target="_blank">
+                                        <a href="{{ route('admin.students.alevel.view.pdf', $student->id) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 hover:underline" target="_blank">
                                             {{ $student->student_name ?? 'N/A' }}
                                         </a>
                                     </td>
@@ -119,9 +119,9 @@
                                         {{ $student->previous_school ?? 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('admin.students.alevel.show', $student->admission_number) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-3">View</a>
-                                        <a href="{{ route('admin.students.alevel.edit', $student->admission_number) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-3">Edit</a>
-                                        <form action="{{ route('admin.students.alevel.destroy', $student->admission_number) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                                        <a href="{{ route('admin.students.alevel.show', $student->id) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-3">View</a>
+                                        <a href="{{ route('admin.students.alevel.edit', $student->id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-3">Edit</a>
+                                        <form action="{{ route('admin.students.alevel.destroy', $student->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this student?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200">Delete</button>
