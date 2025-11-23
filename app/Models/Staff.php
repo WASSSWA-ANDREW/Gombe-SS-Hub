@@ -52,6 +52,7 @@ class Staff extends Model
         'ipps_no',
         'medical_status', // Health field
         'physical_health', // Health field
+        'staff_designation',
         'staff_type',
         'role',
         'employment_type',

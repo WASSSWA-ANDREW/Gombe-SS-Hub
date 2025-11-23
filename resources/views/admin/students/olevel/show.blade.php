@@ -13,10 +13,10 @@
                 <a href="{{ route('admin.students.olevel.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
                     Back to List
                 </a>
-                <a href="{{ route('admin.students.olevel.edit', $student->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
+                <a href="{{ route('admin.students.olevel.edit', $student->admission_number) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
                     Edit
                 </a>
-                <a href="{{ route('admin.students.olevel.view.pdf', $student->id) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out" target="_blank">
+                <a href="{{ route('admin.students.olevel.view.pdf', $student->admission_number) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out" target="_blank">
                     Download PDF
                 </a>
             </div>

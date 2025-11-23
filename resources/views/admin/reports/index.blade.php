@@ -319,9 +319,9 @@
                         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $data['totalMaleStaff'] }}</p>
                         <div class="flex items-center mt-1">
                             <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
-                                <div class="bg-blue-600 h-1.5 rounded-full" style="width: {{ ($data['totalMaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100 }}%"></div>
+                                <div class="bg-blue-600 h-1.5 rounded-full" style="width: {{ ($data['totalMaleStaff'] + $data['totalFemaleStaff']) > 0 ? (($data['totalMaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) : 0 }}%"></div>
                             </div>
-                            <span class="text-xs text-gray-800 dark:text-gray-400 ml-1">{{ round(($data['totalMaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) }}%</span>
+                            <span class="text-xs text-gray-800 dark:text-gray-400 ml-1">{{ ($data['totalMaleStaff'] + $data['totalFemaleStaff']) > 0 ? round(($data['totalMaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) : 0 }}%</span>
                         </div>
                     </div>
                     <div class="text-blue-500 dark:text-blue-400">
@@ -351,9 +351,9 @@
                         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $data['totalFemaleStaff'] }}</p>
                         <div class="flex items-center mt-1">
                             <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
-                                <div class="bg-pink-600 h-1.5 rounded-full" style="width: {{ ($data['totalFemaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100 }}%"></div>
+                                <div class="bg-pink-600 h-1.5 rounded-full" style="width: {{ ($data['totalMaleStaff'] + $data['totalFemaleStaff']) > 0 ? (($data['totalFemaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) : 0 }}%"></div>
                             </div>
-                            <span class="text-xs text-gray-800 dark:text-gray-400 ml-1">{{ round(($data['totalFemaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) }}%</span>
+                            <span class="text-xs text-gray-800 dark:text-gray-400 ml-1">{{ ($data['totalMaleStaff'] + $data['totalFemaleStaff']) > 0 ? round(($data['totalFemaleStaff'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) : 0 }}%</span>
                         </div>
                     </div>
                     <div class="text-pink-500 dark:text-pink-400">
@@ -383,9 +383,9 @@
                         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $data['totalAdministrators'] }}</p>
                         <div class="flex items-center mt-1">
                             <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
-                                <div class="bg-purple-600 h-1.5 rounded-full" style="width: {{ ($data['totalAdministrators'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100 }}%"></div>
+                                <div class="bg-purple-600 h-1.5 rounded-full" style="width: {{ ($data['totalMaleStaff'] + $data['totalFemaleStaff']) > 0 ? (($data['totalAdministrators'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) : 0 }}%"></div>
                             </div>
-                            <span class="text-xs text-gray-800 dark:text-gray-400 ml-1">{{ round(($data['totalAdministrators'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) }}%</span>
+                            <span class="text-xs text-gray-800 dark:text-gray-400 ml-1">{{ ($data['totalMaleStaff'] + $data['totalFemaleStaff']) > 0 ? round(($data['totalAdministrators'] / ($data['totalMaleStaff'] + $data['totalFemaleStaff'])) * 100) : 0 }}%</span>
                         </div>
                     </div>
                     <div class="text-purple-500 dark:text-purple-400">

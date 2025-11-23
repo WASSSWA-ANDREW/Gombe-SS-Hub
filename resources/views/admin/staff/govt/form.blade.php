@@ -134,6 +134,26 @@
                             <option value="Other" {{ old('religion', $staff->religion ?? '') == 'Other' ? 'selected' : '' }}>Other</option>
                         </select>
                     </div>
+                    <div>
+                        <label for="staff_designation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">18. Staff Designation/Role</label>
+                        <select name="staff_designation" id="staff_designation" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base py-3 px-4 bg-white text-gray-900">
+                            <option value="">Select Designation</option>
+                            <option value="HEADMASTER" {{ old('staff_designation', $staff->staff_designation ?? '') == 'HEADMASTER' ? 'selected' : '' }}>HEADMASTER</option>
+                            <option value="DEPUTY HEADMASTER-ADMINISTRATION" {{ old('staff_designation', $staff->staff_designation ?? '') == 'DEPUTY HEADMASTER-ADMINISTRATION' ? 'selected' : '' }}>DEPUTY HEADMASTER-ADMINISTRATION</option>
+                            <option value="DEPUTY HEADMASTER-ACADEMICS" {{ old('staff_designation', $staff->staff_designation ?? '') == 'DEPUTY HEADMASTER-ACADEMICS' ? 'selected' : '' }}>DEPUTY HEADMASTER-ACADEMICS</option>
+                            <option value="DEPUTY HEADMASTER-DISCIPLINE" {{ old('staff_designation', $staff->staff_designation ?? '') == 'DEPUTY HEADMASTER-DISCIPLINE' ? 'selected' : '' }}>DEPUTY HEADMASTER-DISCIPLINE</option>
+                            <option value="DIRECTOR OF STUDIES" {{ old('staff_designation', $staff->staff_designation ?? '') == 'DIRECTOR OF STUDIES' ? 'selected' : '' }}>DIRECTOR OF STUDIES</option>
+                            <option value="DEAN OF STUDENTS" {{ old('staff_designation', $staff->staff_designation ?? '') == 'DEAN OF STUDENTS' ? 'selected' : '' }}>DEAN OF STUDENTS</option>
+                            <option value="SCHOOL-COUNSELOR" {{ old('staff_designation', $staff->staff_designation ?? '') == 'SCHOOL-COUNSELOR' ? 'selected' : '' }}>SCHOOL-COUNSELOR</option>
+                            <option value="DISCIPLINARY OFFICER" {{ old('staff_designation', $staff->staff_designation ?? '') == 'DISCIPLINARY OFFICER' ? 'selected' : '' }}>DISCIPLINARY OFFICER</option>
+                            <option value="CLASS TEACHER" {{ old('staff_designation', $staff->staff_designation ?? '') == 'CLASS TEACHER' ? 'selected' : '' }}>CLASS TEACHER</option>
+                            <option value="PREFECT PATRON" {{ old('staff_designation', $staff->staff_designation ?? '') == 'PREFECT PATRON' ? 'selected' : '' }}>PREFECT PATRON</option>
+                            <option value="WARDEN" {{ old('staff_designation', $staff->staff_designation ?? '') == 'WARDEN' ? 'selected' : '' }}>WARDEN</option>
+                            <option value="HEAD OF DEPARTMENT" {{ old('staff_designation', $staff->staff_designation ?? '') == 'HEAD OF DEPARTMENT' ? 'selected' : '' }}>HEAD OF DEPARTMENT</option>
+                            <option value="LAB TECHNICIAN" {{ old('staff_designation', $staff->staff_designation ?? '') == 'LAB TECHNICIAN' ? 'selected' : '' }}>LAB TECHNICIAN</option>
+                            <option value="LIBRARY OFFICER" {{ old('staff_designation', $staff->staff_designation ?? '') == 'LIBRARY OFFICER' ? 'selected' : '' }}>LIBRARY OFFICER</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 

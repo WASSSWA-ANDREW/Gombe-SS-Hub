@@ -182,10 +182,10 @@
                             <i class="fas fa-inbox text-blue-600 dark:text-blue-400 text-4xl"></i>
                         </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">No Records Found</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-black mb-2">No Records Found</h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-8">Create counselling records to track student sessions and progress.</p>
                     <div>
-                        <a href="{{ route('admin.counselling.tracks.create') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                        <a href="{{ route('admin.counselling.tracks.create') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-black font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                             <i class="fas fa-plus mr-2"></i>Create First Record
                         </a>
                     </div>

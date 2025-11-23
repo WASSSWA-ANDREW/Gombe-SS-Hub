@@ -23,6 +23,7 @@
                         <th class="px-4 py-2 text-left">Subject</th>
                         <th class="px-4 py-2 text-left">Specialty</th>
                         <th class="px-4 py-2 text-left">Classes</th>
+                        <th class="px-4 py-2 text-left">Streams</th>
                         <th class="px-4 py-2 text-center">Actions</th>
                     </tr>
                 </thead>
@@ -57,6 +58,13 @@
                                         -
                                     @endif
                                 </td>
+                                <td class="px-4 py-3 text-gray-800 dark:text-gray-400">
+                                    @if($assignment->streams)
+                                        {{ implode(', ', $assignment->streams) }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td class="px-4 py-3 text-center">
                                     <button onclick="editAssignment({{ $assignment->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs transition">
                                         <i class="fas fa-edit"></i>
@@ -73,7 +81,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="6" class="px-4 py-8 text-center text-gray-800 dark:text-gray-400">
+                            <td colspan="7" class="px-4 py-8 text-center text-gray-800 dark:text-gray-400">
                                 No teacher subject assignments found
                             </td>
                         </tr>
@@ -137,9 +145,15 @@
                 </div>
             </div>
             
-            <div class="mb-4">
-                <label for="classes" class="block text-gray-700 dark:text-gray-300 font-semibold mb-2">Classes (comma-separated)</label>
-                <input type="text" id="classes" name="classes" placeholder="e.g., S1, S2, S3" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:border-blue-500">
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="classes" class="block text-gray-700 dark:text-gray-300 font-semibold mb-2">Classes (comma-separated)</label>
+                    <input type="text" id="classes" name="classes" placeholder="e.g., S1, S2, S3" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="streams" class="block text-gray-700 dark:text-gray-300 font-semibold mb-2">Streams (comma-separated)</label>
+                    <input type="text" id="streams" name="streams" placeholder="e.g., Arts, Science" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
             </div>
             
             <div class="flex justify-end gap-2">
@@ -165,6 +179,7 @@ function openAssignModal() {
     document.getElementById('subjectId').value = '';
     document.getElementById('specialty').value = '';
     document.getElementById('classes').value = '';
+    document.getElementById('streams').value = '';
     updateSubjectDropdown();
 }
 
@@ -225,6 +240,9 @@ function editAssignment(assignmentId) {
             
             const classesArray = Array.isArray(data.classes) ? data.classes : (data.classes ? Object.values(data.classes) : []);
             document.getElementById('classes').value = classesArray.join(', ');
+            
+            const streamsArray = Array.isArray(data.streams) ? data.streams : (data.streams ? Object.values(data.streams) : []);
+            document.getElementById('streams').value = streamsArray.join(', ');
             
             updateSubjectDropdown();
             

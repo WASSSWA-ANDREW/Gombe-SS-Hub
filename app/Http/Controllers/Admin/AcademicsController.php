@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Academics;
-use App\Models\OLevelSubject;
 use App\Models\ALevelSubject;
-use App\Models\Student;
-use App\Models\Staff;
-use App\Models\TeacherSubject;
 use App\Models\MarksEntry;
+use App\Models\OLevelSubject;
+use App\Models\Staff;
+use App\Models\Student;
+use App\Models\StudentPerformance;
+use App\Models\TeacherSubject;
 use Illuminate\Http\Request;
 
 class AcademicsController extends Controller
@@ -138,10 +138,15 @@ class AcademicsController extends Controller
             'level' => 'required|in:olevel,alevel',
             'specialty' => 'nullable|in:arts,science',
             'classes' => 'nullable|string',
+            'streams' => 'nullable|string',
         ]);
 
         if ($validated['classes']) {
             $validated['classes'] = array_map('trim', explode(',', $validated['classes']));
+        }
+
+        if ($validated['streams']) {
+            $validated['streams'] = array_map('trim', explode(',', $validated['streams']));
         }
 
         $teacherSubject = TeacherSubject::create($validated);
@@ -161,6 +166,7 @@ class AcademicsController extends Controller
             'alevel_subject_id' => $assignment->alevel_subject_id,
             'specialty' => $assignment->specialty,
             'classes' => $assignment->classes,
+            'streams' => $assignment->streams,
         ]);
     }
 
@@ -175,10 +181,15 @@ class AcademicsController extends Controller
             'level' => 'required|in:olevel,alevel',
             'specialty' => 'nullable|in:arts,science',
             'classes' => 'nullable|string',
+            'streams' => 'nullable|string',
         ]);
 
         if ($validated['classes']) {
             $validated['classes'] = array_map('trim', explode(',', $validated['classes']));
+        }
+
+        if ($validated['streams']) {
+            $validated['streams'] = array_map('trim', explode(',', $validated['streams']));
         }
 
         $assignment->update($validated);
@@ -215,7 +226,7 @@ class AcademicsController extends Controller
 
         $validated = $request->validate([
             'subject_name' => 'required|string|max:255',
-            'subject_code' => 'nullable|string|max:50|unique:olevel_subjects,subject_code,' . $id,
+            'subject_code' => 'nullable|string|max:50|unique:olevel_subjects,subject_code,'.$id,
             'requires_practical' => 'nullable|boolean',
             'classes' => 'nullable|array',
         ]);
@@ -254,7 +265,7 @@ class AcademicsController extends Controller
 
         $validated = $request->validate([
             'subject_name' => 'required|string|max:255',
-            'subject_code' => 'nullable|string|max:50|unique:olevel_subjects,subject_code,' . $id,
+            'subject_code' => 'nullable|string|max:50|unique:olevel_subjects,subject_code,'.$id,
             'requires_practical' => 'nullable|boolean',
             'classes' => 'nullable|array',
         ]);
@@ -293,7 +304,7 @@ class AcademicsController extends Controller
 
         $validated = $request->validate([
             'subject_name' => 'required|string|max:255',
-            'subject_code' => 'nullable|string|max:50|unique:alevel_subjects,subject_code,' . $id,
+            'subject_code' => 'nullable|string|max:50|unique:alevel_subjects,subject_code,'.$id,
             'classes' => 'nullable|array',
         ]);
 
@@ -331,7 +342,7 @@ class AcademicsController extends Controller
 
         $validated = $request->validate([
             'subject_name' => 'required|string|max:255',
-            'subject_code' => 'nullable|string|max:50|unique:alevel_subjects,subject_code,' . $id,
+            'subject_code' => 'nullable|string|max:50|unique:alevel_subjects,subject_code,'.$id,
             'classes' => 'nullable|array',
         ]);
 
@@ -369,7 +380,7 @@ class AcademicsController extends Controller
 
         $validated = $request->validate([
             'subject_name' => 'required|string|max:255',
-            'subject_code' => 'nullable|string|max:50|unique:alevel_subjects,subject_code,' . $id,
+            'subject_code' => 'nullable|string|max:50|unique:alevel_subjects,subject_code,'.$id,
             'stream' => 'required|in:arts,science',
             'classes' => 'nullable|array',
         ]);
@@ -385,5 +396,89 @@ class AcademicsController extends Controller
         $subject->delete();
 
         return redirect()->route('admin.academics.alevel.subjects')->with('success', 'Subsidiary subject deleted successfully');
+    }
+
+    public function studentPerformance()
+    {
+        $students = Student::with('performances')->get();
+        $olevelStudents = Student::where('level', 'olevel')->get();
+        $alevelStudents = Student::where('level', 'alevel')->get();
+
+        return view('admin.academics.student-performance', compact('students', 'olevelStudents', 'alevelStudents'));
+    }
+
+    public function getStudentPerformanceData($studentId)
+    {
+        $student = Student::findOrFail($studentId);
+        $performances = StudentPerformance::where('student_id', $student->admission_number)
+            ->with(['olevelSubject', 'alevelSubject'])
+            ->orderBy('academic_year', 'desc')
+            ->orderBy('term', 'desc')
+            ->get();
+
+        $performanceBySubject = $performances->groupBy(function ($item) {
+            return $item->level === 'olevel'
+                ? $item->olevelSubject?->subject_name
+                : $item->alevelSubject?->subject_name;
+        })->map(function ($subjectPerformances) {
+            return $subjectPerformances->map(function ($perf) {
+                return [
+                    'academic_year' => $perf->academic_year,
+                    'term' => $perf->term,
+                    'average_marks' => (float) $perf->average_marks,
+                    'grade' => $perf->grade,
+                    'performance_trend' => (float) $perf->performance_trend,
+                    'highest_marks' => (float) $perf->highest_marks,
+                    'lowest_marks' => (float) $perf->lowest_marks,
+                ];
+            })->sortBy(function ($item) {
+                return [$item['academic_year'], $item['term']];
+            })->values()->all();
+        });
+
+        $overallPerformance = [
+            'average_marks' => round($performances->avg('average_marks'), 2),
+            'highest_marks' => $performances->max('highest_marks'),
+            'lowest_marks' => $performances->min('lowest_marks'),
+            'total_subjects' => $performances->groupBy(function ($item) {
+                return $item->level === 'olevel'
+                    ? $item->olevel_subject_id
+                    : $item->alevel_subject_id;
+            })->count(),
+        ];
+
+        $chartLabels = $performances
+            ->map(function ($item) {
+                return $item->academic_year.' - '.($item->term ?? 'Full Year');
+            })
+            ->unique()
+            ->values()
+            ->all();
+
+        $chartData = [];
+        foreach ($performanceBySubject as $subject => $marks) {
+            $chartData[] = [
+                'label' => $subject,
+                'data' => array_map(function ($item) {
+                    return $item['average_marks'];
+                }, $marks),
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'student' => [
+                'id' => $student->admission_number,
+                'name' => $student->student_name,
+                'class' => $student->class,
+                'stream' => $student->stream,
+                'level' => $student->level,
+            ],
+            'performances' => $performances,
+            'performanceBySubject' => $performanceBySubject,
+            'overallPerformance' => $overallPerformance,
+            'chartLabels' => $chartLabels,
+            'chartData' => $chartData,
+        ]);
     }
 }

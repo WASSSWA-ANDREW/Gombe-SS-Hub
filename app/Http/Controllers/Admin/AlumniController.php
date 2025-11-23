@@ -295,4 +295,50 @@ class AlumniController extends Controller
         return redirect()->route('admin.alumni.index')
                         ->with('success', 'Alumni record deleted successfully.');
     }
+
+    /**
+     * Export selected alumni records.
+     */
+    public function exportSelected(Request $request)
+    {
+        $ids = $request->input('selected_ids', []);
+        $format = $request->input('format', 'excel');
+
+        if (empty($ids)) {
+            return back()->with('error', 'No alumni selected for export.');
+        }
+
+        $alumni = Alumni::whereIn('id', $ids)->get();
+
+        if ($format === 'excel') {
+            return Excel::download(new \App\Exports\AlumniExport($alumni), 'selected_alumni.xlsx');
+        }
+
+        $pdf = Pdf::loadView('admin.alumni.pdf_export_template', compact('alumni'));
+        return $pdf->download('selected_alumni.pdf');
+    }
+
+    /**
+     * Delete selected alumni records.
+     */
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('selected_ids', []);
+
+        if (empty($ids)) {
+            return back()->with('error', 'No alumni selected for deletion.');
+        }
+
+        $alumni = Alumni::whereIn('id', $ids)->get();
+
+        foreach ($alumni as $alumnus) {
+            if ($alumnus->photo_path) {
+                \Storage::disk('public')->delete($alumnus->photo_path);
+            }
+            $alumnus->delete();
+        }
+
+        return redirect()->route('admin.alumni.index')
+                        ->with('success', "Successfully deleted " . count($ids) . " alumni record(s).");
+    }
 }

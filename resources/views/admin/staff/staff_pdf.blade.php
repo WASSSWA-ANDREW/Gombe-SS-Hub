@@ -261,6 +261,25 @@
         </div>
     </div>
 
+    <!-- Staff Designation -->
+    <div class="section">
+        <div class="section-title">DESIGNATION</div>
+        <div class="info-grid">
+            <div class="info-row">
+                <div class="info-label">Staff Designation/Role:</div>
+                <div class="info-value">{{ $staff->staff_designation ?? 'N/A' }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Medical Status:</div>
+                <div class="info-value">{{ $staff->medical_status ?? 'N/A' }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Physical Health:</div>
+                <div class="info-value">{{ $staff->physical_health ?? 'N/A' }}</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Education & Qualifications -->
     <div class="section">
         <div class="section-title">EDUCATION & QUALIFICATIONS</div>

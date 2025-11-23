@@ -42,7 +42,7 @@
                     <i class="fas fa-exclamation-triangle section-icon"></i>
                     Discipline Track Records
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 5px;">{{ $student->disciplineTracks->count() }} record{{ $student->disciplineTracks->count() !== 1 ? 's' : '' }}</p>
+                <p style="font-size: 0.85rem; color: #000000; margin-top: 5px;">{{ $student->disciplineTracks->count() }} record{{ $student->disciplineTracks->count() !== 1 ? 's' : '' }}</p>
             </div>
             <a href="{{ route('admin.discipline.create-discipline-track') }}?student={{ $student->id }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add Record
@@ -93,10 +93,52 @@
                             </div>
                         @endif
 
+                        @if($record->attachments && count($record->attachments) > 0)
+                            <div style="margin-top: 15px; padding: 15px; background: #F0F9FF; border-left: 4px solid #3B82F6; border-radius: 6px;">
+                                <p style="font-size: 0.8rem; color: #000000; font-weight: 600; text-transform: uppercase; margin-bottom: 12px;">
+                                    <i class="fas fa-paperclip" style="margin-right: 6px;"></i>Attached Documents
+                                </p>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
+                                    @if(isset($record->attachments['statement_written']))
+                                        <a href="{{ asset('storage/' . $record->attachments['statement_written']['path']) }}" target="_blank" class="attachment-link" style="padding: 10px; background: white; border: 1px solid #DBEAFE; border-radius: 6px; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                                            <i class="fas fa-file-lines" style="color: #3B82F6; font-size: 1rem;"></i>
+                                            <div style="flex: 1; min-width: 0;">
+                                                <p style="font-size: 0.75rem; color: #000000; font-weight: 600; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Written Statement</p>
+                                                <p style="font-size: 0.7rem; color: #000000; margin: 0;">{{ basename($record->attachments['statement_written']['original_name']) }}</p>
+                                            </div>
+                                            <i class="fas fa-download" style="color: #3B82F6; font-size: 0.9rem;"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(isset($record->attachments['caution_document']))
+                                        <a href="{{ asset('storage/' . $record->attachments['caution_document']['path']) }}" target="_blank" class="attachment-link" style="padding: 10px; background: white; border: 1px solid #FEF3C7; border-radius: 6px; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                                            <i class="fas fa-warning" style="color: #EAB308; font-size: 1rem;"></i>
+                                            <div style="flex: 1; min-width: 0;">
+                                                <p style="font-size: 0.75rem; color: #000000; font-weight: 600; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Caution Document</p>
+                                                <p style="font-size: 0.7rem; color: #000000; margin: 0;">{{ basename($record->attachments['caution_document']['original_name']) }}</p>
+                                            </div>
+                                            <i class="fas fa-download" style="color: #EAB308; font-size: 0.9rem;"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(isset($record->attachments['counselling_agreement']))
+                                        <a href="{{ asset('storage/' . $record->attachments['counselling_agreement']['path']) }}" target="_blank" class="attachment-link" style="padding: 10px; background: white; border: 1px solid #DCFCE7; border-radius: 6px; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                                            <i class="fas fa-handshake" style="color: #22C55E; font-size: 1rem;"></i>
+                                            <div style="flex: 1; min-width: 0;">
+                                                <p style="font-size: 0.75rem; color: #000000; font-weight: 600; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Counselling Agreement</p>
+                                                <p style="font-size: 0.7rem; color: #000000; margin: 0;">{{ basename($record->attachments['counselling_agreement']['original_name']) }}</p>
+                                            </div>
+                                            <i class="fas fa-download" style="color: #22C55E; font-size: 0.9rem;"></i>
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+
                         @if($record->recordedBy)
-                            <div style="font-size: 0.85rem; color: var(--text-light); margin-top: 15px; padding-top: 15px; border-top: 1px solid #E5E7EB;">
+                            <div style="font-size: 0.85rem; color: #000000; margin-top: 15px; padding-top: 15px; border-top: 1px solid #E5E7EB;">
                                 <i class="fas fa-user-circle" style="margin-right: 6px;"></i>
-                                Recorded by <strong style="color: var(--text-dark);">{{ $record->recordedBy->staff_name }}</strong> on {{ $record->created_at->format('M d, Y \a\t g:i A') }}
+                                Recorded by <strong style="color: #000000;">{{ $record->recordedBy->staff_name }}</strong> on {{ $record->created_at->format('M d, Y g:i A') }}
                             </div>
                         @endif
                     </div>
@@ -121,7 +163,7 @@
                     <i class="fas fa-heart-pulse section-icon"></i>
                     Counselling Track Records
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 5px;">{{ $student->counsellingTracks->count() }} record{{ $student->counsellingTracks->count() !== 1 ? 's' : '' }}</p>
+                <p style="font-size: 0.85rem; color: #000000; margin-top: 5px;">{{ $student->counsellingTracks->count() }} record{{ $student->counsellingTracks->count() !== 1 ? 's' : '' }}</p>
             </div>
             <a href="{{ route('admin.counselling.tracks.create') }}?student={{ $student->id }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add Record
@@ -136,12 +178,12 @@
                         <!-- Type and Status Badges -->
                         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
                             <span class="badge" style="
-                                @if($record->counselling_type === 'life') background: #E5D4FF; color: #6B21A8;
-                                @elseif($record->counselling_type === 'academic') background: #DBEAFE; color: #0C4A6E;
-                                @elseif($record->counselling_type === 'behavior') background: #FED7AA; color: #92400E;
-                                @elseif($record->counselling_type === 'gender') background: #FCE7F3; color: #831843;
-                                @elseif($record->counselling_type === 'character') background: #D1FAE5; color: #065F46;
-                                @else background: #FEE2E2; color: #7F1D1D; @endif
+                                @if($record->counselling_type === 'life') background: #E5D4FF; color: #000000;
+                                @elseif($record->counselling_type === 'academic') background: #DBEAFE; color: #000000;
+                                @elseif($record->counselling_type === 'behavior') background: #FED7AA; color: #000000;
+                                @elseif($record->counselling_type === 'gender') background: #FCE7F3; color: #000000;
+                                @elseif($record->counselling_type === 'character') background: #D1FAE5; color: #000000;
+                                @else background: #FEE2E2; color: #000000; @endif
                             ">
                                 {{ $record->counselling_type_display }}
                             </span>
@@ -161,7 +203,7 @@
                             @else
                                 <div class="detail-item">
                                     <span class="detail-label">Counsellor</span>
-                                    <span class="detail-value" style="font-style: italic; color: var(--text-light);">Not assigned</span>
+                                    <span class="detail-value" style="font-style: italic; color: #000000;">Not assigned</span>
                                 </div>
                             @endif
                             <div class="detail-item">
@@ -189,8 +231,8 @@
                         <!-- Outcome -->
                         @if($record->outcome)
                             <div style="padding: 15px; background: #E8F5E9; border-left: 4px solid #4CAF50; border-radius: 6px; margin-top: 15px;">
-                                <p style="font-size: 0.8rem; color: #2E7D32; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Session Outcome</p>
-                                <p style="font-size: 0.95rem; color: var(--text-dark); line-height: 1.5;">{{ $record->outcome }}</p>
+                                <p style="font-size: 0.8rem; color: #000000; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Session Outcome</p>
+                                <p style="font-size: 0.95rem; color: #000000; line-height: 1.5;">{{ $record->outcome }}</p>
                             </div>
                         @endif
                     </div>

@@ -80,11 +80,19 @@
                             <option value="G" {{ old('stream', $student->stream ?? '') == 'G' ? 'selected' : '' }}>G</option>
                             <option value="H" {{ old('stream', $student->stream ?? '') == 'H' ? 'selected' : '' }}>H</option>
                             <option value="T" {{ old('stream', $student->stream ?? '') == 'T' ? 'selected' : '' }}>T</option>
+
+                             <option value="X" {{ old('stream', $student->stream ?? '') == 'X' ? 'selected' : '' }}>X</option>
+                            <option value="Y1" {{ old('stream', $student->stream ?? '') == 'Y1' ? 'selected' : '' }}>Y1</option>
+                            <option value="Y2" {{ old('stream', $student->stream ?? '') == 'Y2' ? 'selected' : '' }}>Y2</option>
+                            <option value="W1" {{ old('stream', $student->stream ?? '') == 'W1' ? 'selected' : '' }}>W1</option>
+                            <option value="W2" {{ old('stream', $student->stream ?? '') == 'W2' ? 'selected' : '' }}>W2</option>
+                            <option value="W3" {{ old('stream', $student->stream ?? '') == 'W3' ? 'selected' : '' }}>W3</option>
+                            <option value="W4" {{ old('stream', $student->stream ?? '') == 'W4' ? 'selected' : '' }}>W4</option>
                         </select>
                     </div>
                     <div>
-                        <label for="admission_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Admission Number:</label>
-                        <input type="text" name="admission_number" id="admission_number" value="{{ old('admission_number', $student->admission_number ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base py-3 px-4 bg-white text-gray-900">
+                        <label for="admission_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Admission Number: <span class="text-red-500">*</span></label>
+                        <input type="text" name="admission_number" id="admission_number" required value="{{ old('admission_number', $student->admission_number ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base py-3 px-4 bg-white text-gray-900">
                     </div>
                     <div>
                         <label for="learners_lin" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Learner's LIN:</label>

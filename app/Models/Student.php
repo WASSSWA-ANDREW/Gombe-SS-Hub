@@ -16,7 +16,7 @@ class Student extends Model
      */
     protected $fillable = [
         'student_name',
-        'photo_path', // Added for passport photo
+        'photo_path',
         'gender',
         'learners_lin',
         'learners_nin',
@@ -50,9 +50,9 @@ class Student extends Model
         'uce_literature',
         'uce_other',
         'combination',
-        'pass_slip_path', // Added to store path of uploaded pass slip
-        'medical_status', // Health field
-        'physical_health', // Health field
+        'pass_slip_path',
+        'medical_status',
+        'physical_health',
         'father_full_name',
         'father_mobile_number',
         'father_email',
@@ -78,10 +78,11 @@ class Student extends Model
         'guardian_relationship',
         'guardian_passport_photo_path',
         'official_comment',
-        'level', // Assuming you have a 'level' column to distinguish O'Level, A'Level, etc.
+        'level',
         'class',
         'stream',
-        // Add any other fields that you expect to be mass assignable
+        'promoted_at',
+        'promotion_count',
     ];
 
     /**
@@ -145,6 +146,11 @@ class Student extends Model
     public function marksEntries()
     {
         return $this->hasMany(MarksEntry::class);
+    }
+
+    public function performances()
+    {
+        return $this->hasMany(StudentPerformance::class);
     }
 
     /**

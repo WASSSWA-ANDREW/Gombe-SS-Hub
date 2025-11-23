@@ -10,6 +10,7 @@ use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DisciplineController extends Controller
 {
@@ -139,14 +140,49 @@ class DisciplineController extends Controller
     public function storeDisciplineTrack(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|exists:students,id',
+            'student_id' => 'required|exists:students,admission_number',
             'case_name' => 'required|string|max:255',
             'disciplinary_action' => 'required|in:statement_letter,cautions,active_punishment',
             'resolution' => 'nullable|in:suspension,expulsion',
             'case_status' => 'required|in:pending,sorted',
             'date_of_incident' => 'nullable|date',
             'description' => 'nullable|string',
+            'statement_written' => 'nullable|file|mimes:pdf,doc,docx,txt|max:10240',
+            'caution_document' => 'nullable|file|mimes:pdf,doc,docx,txt|max:10240',
+            'counselling_agreement' => 'nullable|file|mimes:pdf,doc,docx,txt|max:10240',
         ]);
+
+        $attachments = [];
+
+        if ($request->hasFile('statement_written')) {
+            $file = $request->file('statement_written');
+            $path = $file->store('discipline/statements', 'public');
+            $attachments['statement_written'] = [
+                'path' => $path,
+                'original_name' => $file->getClientOriginalName(),
+                'uploaded_at' => now()->toDateTimeString()
+            ];
+        }
+
+        if ($request->hasFile('caution_document')) {
+            $file = $request->file('caution_document');
+            $path = $file->store('discipline/cautions', 'public');
+            $attachments['caution_document'] = [
+                'path' => $path,
+                'original_name' => $file->getClientOriginalName(),
+                'uploaded_at' => now()->toDateTimeString()
+            ];
+        }
+
+        if ($request->hasFile('counselling_agreement')) {
+            $file = $request->file('counselling_agreement');
+            $path = $file->store('discipline/agreements', 'public');
+            $attachments['counselling_agreement'] = [
+                'path' => $path,
+                'original_name' => $file->getClientOriginalName(),
+                'uploaded_at' => now()->toDateTimeString()
+            ];
+        }
 
         DisciplineTrack::create([
             'student_id' => $request->student_id,
@@ -156,7 +192,8 @@ class DisciplineController extends Controller
             'case_status' => $request->case_status,
             'date_of_incident' => $request->date_of_incident,
             'description' => $request->description,
-            'recorded_by' => Auth::id(), // Assuming staff is logged in
+            'recorded_by' => Auth::id(),
+            'attachments' => !empty($attachments) ? $attachments : null,
         ]);
 
         return redirect()->route('admin.discipline.discipline-tracks')
@@ -180,7 +217,7 @@ class DisciplineController extends Controller
     public function storeCounsellingTrack(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|exists:students,id',
+            'student_id' => 'required|exists:students,admission_number',
             'counselling_type' => 'required|in:life,academic,behavior,gender,character,sex',
             'date_of_session' => 'required|date',
             'notes' => 'nullable|string',

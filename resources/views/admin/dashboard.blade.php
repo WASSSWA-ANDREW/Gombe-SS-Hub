@@ -178,13 +178,53 @@
         }
     }
 
-    /* Summary cards - ensure all text is white */
+    /* ====================================== */
+    /* DASHBOARD SUMMARY CARDS - WHITE TEXT & ICONS FOR ALL THEMES */
+    /* ====================================== */
+    
     .flex.flex-wrap.justify-center.gap-6.mb-8 > div {
         color: #ffffff !important;
     }
-    
+
     .flex.flex-wrap.justify-center.gap-6.mb-8 > div * {
         color: #ffffff !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div p,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div span,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div div,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div h1,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div h2,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div h3,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div h4,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div h5,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div h6 {
+        color: #ffffff !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div svg,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div svg * {
+        color: #ffffff !important;
+        stroke: #ffffff !important;
+        fill: #ffffff !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div .opacity-80,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div .opacity-90 {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div,
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div * {
+        color: white !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div p {
+        color: white !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div span {
+        color: white !important;
     }
 </style>
 @endpush
@@ -192,102 +232,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-6">
 
-    <!-- Welcome Message with Dashboard Information -->
-    <div class="bg-white dark:bg-gray-800 welcome-card-gradient shadow-lg rounded-lg p-4 mb-6">
-        <div class="flex flex-col md:flex-row justify-between relative z-10">
-            <!-- Welcome Text -->
-            <div class="md:w-1/3 mb-2 md:mb-0 md:border-r md:border-gray-200 md:dark:border-gray-700 md:pr-4">
-                <div class="flex items-center">
-                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Welcome to Gombe SS Hub Admin!</h2>
-                    <div class="ml-3 p-1.5 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                        <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <p class="mt-1 text-sm text-gray-800 dark:text-gray-300">
-                    Today is <span class="font-semibold">{{ date('l, F j, Y') }}</span> | Manage students, staff, and school operations
-                </p>
-            </div>
-            
-            <!-- Quick Info -->
-            <div class="md:w-1/3 mb-2 md:mb-0 md:border-r md:border-gray-200 md:dark:border-gray-700 md:px-4">
-                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5">School Overview</h3>
-                <div class="grid grid-cols-2 gap-x-2 gap-y-1">
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-1.5"></div>
-                        <span class="text-xs text-gray-800 dark:text-gray-300">O'Level: <span class="font-semibold">{{ $totalOlevelStudents }}</span></span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-red-500 mr-1.5"></div>
-                        <span class="text-xs text-gray-800 dark:text-gray-300">A'Level: <span class="font-semibold">{{ $totalAlevelStudents }}</span></span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></div>
-                        <span class="text-xs text-gray-800 dark:text-gray-300">Govt Staff: <span class="font-semibold">{{ $governmentStaff }}</span></span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-yellow-500 mr-1.5"></div>
-                        <span class="text-xs text-gray-800 dark:text-gray-300">Private Staff: <span class="font-semibold">{{ $privateStaff }}</span></span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Recent Activity -->
-            <div class="md:w-1/3 md:pl-4">
-                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5">Recent Activity</h3>
-                <div class="grid grid-cols-2 gap-x-2 gap-y-1">
-                    @if(count($recentStudents) > 0)
-                        <div class="flex items-center">
-                            <div class="p-0.5 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                                <svg class="w-2.5 h-2.5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <span class="ml-1.5 text-xs text-gray-800 dark:text-gray-300">
-                                New student: <span class="font-semibold">{{ $recentStudents[0]->name }}</span>
-                            </span>
-                        </div>
-                    @endif
-                    
-                    @if(count($recentStaff) > 0)
-                        <div class="flex items-center">
-                            <div class="p-0.5 bg-green-100 dark:bg-green-900/30 rounded-full">
-                                <svg class="w-2.5 h-2.5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <span class="ml-1.5 text-xs text-gray-800 dark:text-gray-300">
-                                New staff: <span class="font-semibold">{{ $recentStaff[0]->name }}</span>
-                            </span>
-                        </div>
-                    @endif
-                    
-                    <div class="flex items-center">
-                        <div class="p-0.5 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                            <svg class="w-2.5 h-2.5 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <span class="ml-1.5 text-xs text-gray-800 dark:text-gray-300">
-                            Files: <span class="font-semibold">{{ $totalFileUploads }}</span> docs
-                        </span>
-                    </div>
-                    
-                    <div class="flex items-center">
-                        <div class="p-0.5 bg-yellow-100 dark:bg-yellow-900/30 rounded-full">
-                            <svg class="w-2.5 h-2.5 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <span class="ml-1.5 text-xs text-gray-800 dark:text-gray-300">
-                            Users: <span class="font-semibold">{{ $totalUsers }}</span> active
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Quick Stats Cards -->
     <div class="flex flex-wrap justify-center gap-6 mb-8">
@@ -297,7 +242,7 @@
                 <div class="bg-blue-400/30 p-3 rounded-full">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 </div>
-                <span class="bg-blue-400/30 text-xs font-semibold px-2.5 py-1 rounded">STUDENTS</span>
+                <span class="bg-blue-400/30 text-xs font-semibold px-2.5 py-1 rounded" style="color: white; font-family: Ubuntu;">STUDENTS</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalStudents }}</p>
@@ -311,7 +256,7 @@
                 <div class="bg-green-400/30 p-3 rounded-full">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </div>
-                <span class="bg-green-400/30 text-xs font-semibold px-2.5 py-1 rounded">STAFF</span>
+                <span class="bg-green-400/30 text-xs font-semibold px-2.5 py-1 rounded" style="color: white; font-family: Ubuntu;">STAFF</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalStaff }}</p>
@@ -325,7 +270,7 @@
                 <div class="bg-yellow-400/30 p-3 rounded-full">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 </div>
-                <span class="bg-yellow-400/30 text-xs font-semibold px-2.5 py-1 rounded">USERS</span>
+                <span class="bg-yellow-400/30 text-xs font-semibold px-2.5 py-1 rounded" style="color: white; font-family: Ubuntu;">USERS</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalUsers }}</p>
@@ -339,7 +284,7 @@
                 <div class="bg-red-400/30 p-3 rounded-full">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                 </div>
-                <span class="bg-red-400/30 text-xs font-semibold px-2.5 py-1 rounded">O'LEVEL</span>
+                <span class="bg-red-400/30 text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">O'LEVEL</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalOlevelStudents }}</p>
@@ -353,7 +298,7 @@
                 <div class="p-3 rounded-full">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">A'LEVEL</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">A'LEVEL</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalAlevelStudents }}</p>
@@ -367,7 +312,7 @@
                 <div class="p-3 rounded-full">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">FILES</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">FILES</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalFileUploads }}</p>
@@ -383,7 +328,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                     </svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">MUSLIM</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">MUSLIM</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalMuslimStudents }}</p>
@@ -399,7 +344,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">CHRISTIAN</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">CHRISTIAN</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalChristianStudents }}</p>
@@ -415,7 +360,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                     </svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">ALUMNI</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">ALUMNI</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalAlumni }}</p>
@@ -435,7 +380,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">DISCIPLINE</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">DISCIPLINE</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalDisciplineRecords ?? 0 }}</p>
@@ -455,7 +400,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                     </svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">COUNSELLING</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">COUNSELLING</span>
             </div>
             <div class="mt-4">
                 <p class="text-4xl font-bold">{{ $totalCounsellingRecords ?? 0 }}</p>
@@ -475,7 +420,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded">PERFORMANCE</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded" style="color: white;">PERFORMANCE</span>
             </div>
             <div class="mt-4">
                 <p class="text-sm opacity-80 mb-2">Best Performing Streams</p>
@@ -496,78 +441,67 @@
 
     </div>
 
-    <!-- File Uploads Summary Card -->
-    @if($recentFileUploads->count() > 0)
-    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 mb-8">
-        <div class="flex justify-between items-center mb-4">
-            <div class="flex items-center">
-                <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-3 rounded-lg mr-3">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white">Recent File Uploads</h3>
-                    <p class="text-sm text-gray-800 dark:text-gray-300">{{ $totalFileUploads }} document{{ $totalFileUploads !== 1 ? 's' : '' }} uploaded</p>
-                </div>
-            </div>
-            <a href="{{ route('admin.files.index') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-                View All
-            </a>
-        </div>
-
-        <!-- File Uploads List -->
-        <div class="space-y-2">
-            @forelse($recentFileUploads as $upload)
-            <a href="{{ route('admin.files.download', ['id' => $upload['id'], 'type' => $upload['type'] === 'student' ? 'students' : 'staff']) }}" 
-               class="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 rounded-lg hover:from-indigo-100 hover:to-indigo-200 dark:hover:from-indigo-900/30 dark:hover:to-indigo-800/30 transition-all duration-200 group">
-                <div class="flex items-center flex-1 min-w-0">
-                    <div class="flex-shrink-0">
-                        @if($upload['type'] === 'student')
-                        <div class="flex items-center justify-center h-10 w-10 rounded-full bg-blue-600 dark:bg-blue-500">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
-                        </div>
-                        @else
-                        <div class="flex items-center justify-center h-10 w-10 rounded-full bg-green-600 dark:bg-green-500">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                        </div>
-                        @endif
+    <!-- Horizontal Line: Recent File Uploads, Student Gender Distribution, Staff Gender Distribution -->
+    <div class="flex flex-nowrap gap-6 mb-8 overflow-x-auto">
+        <!-- File Uploads Summary Card -->
+        @if($recentFileUploads->count() > 0)
+        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 400px; height: 320px; overflow-y: auto;">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center">
+                    <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-3 rounded-lg mr-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
                     </div>
-                    <div class="ml-3 flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-900 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
-                            {{ $upload['name'] }}
-                        </p>
-                        <p class="text-xs text-gray-800 dark:text-gray-400">
-                            {{ ucfirst($upload['type']) }} • {{ $upload['date']->diffForHumans() }}
-                        </p>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 dark:text-white">Recent File Uploads</h3>
+                        <p class="text-sm text-gray-800 dark:text-gray-300">{{ $totalFileUploads }} document{{ $totalFileUploads !== 1 ? 's' : '' }}</p>
                     </div>
                 </div>
-                <div class="flex-shrink-0 ml-3 flex items-center space-x-2">
-                    <svg class="w-4 h-4 text-gray-800 group-hover:text-indigo-600 dark:group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                </div>
-            </a>
-            @empty
-            <div class="text-center py-8">
-                <p class="text-gray-800 dark:text-gray-400">No files uploaded yet</p>
             </div>
-            @endforelse
-        </div>
-    </div>
-    @endif
 
-    <!-- Statistics Graph Cards - Grid Layout -->
-    <div class="flex flex-wrap justify-center gap-6 mb-8">
+            <!-- File Uploads List -->
+            <div class="space-y-2">
+                @forelse($recentFileUploads as $upload)
+                <a href="{{ route('admin.files.download', ['id' => $upload['id'], 'type' => $upload['type'] === 'student' ? 'students' : 'staff']) }}" 
+                   class="flex items-center justify-between p-2 bg-gradient-to-r from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 rounded-lg hover:from-indigo-100 hover:to-indigo-200 dark:hover:from-indigo-900/30 dark:hover:to-indigo-800/30 transition-all duration-200 group text-sm">
+                    <div class="flex items-center flex-1 min-w-0">
+                        <div class="flex-shrink-0">
+                            @if($upload['type'] === 'student')
+                            <div class="flex items-center justify-center h-8 w-8 rounded-full bg-blue-600 dark:bg-blue-500">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            @else
+                            <div class="flex items-center justify-center h-8 w-8 rounded-full bg-green-600 dark:bg-green-500">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                </svg>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="ml-2 flex-1 min-w-0">
+                            <p class="text-xs font-medium text-gray-900 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                                {{ $upload['name'] }}
+                            </p>
+                            <p class="text-xs text-gray-800 dark:text-gray-400">
+                                {{ $upload['date']->diffForHumans() }}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                @empty
+                <div class="text-center py-8">
+                    <p class="text-gray-800 dark:text-gray-400 text-sm">No files uploaded yet</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+        @endif
+
         <!-- Student Gender Statistics Graph Card -->
-        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1" style="width: 480px; height: 320px;">
+        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 400px; height: 320px;">
             <div class="graph-card-header">
                 <div class="flex items-center">
                     <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-2 rounded-lg mr-3">
@@ -575,16 +509,16 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white graph-card-title">Student Gender Distribution</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white graph-card-title">Student Gender</h3>
                 </div>
                 <div class="graph-card-legend">
                     <div class="legend-item">
                         <span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span>
-                        <span class="text-gray-800 dark:text-gray-300">Male: <strong>{{ $maleStudents }}</strong></span>
+                        <span class="text-gray-800 dark:text-gray-300">M: <strong>{{ $maleStudents }}</strong></span>
                     </div>
                     <div class="legend-item">
                         <span class="w-3 h-3 rounded-full bg-pink-500 mr-1"></span>
-                        <span class="text-gray-800 dark:text-gray-300">Female: <strong>{{ $femaleStudents }}</strong></span>
+                        <span class="text-gray-800 dark:text-gray-300">F: <strong>{{ $femaleStudents }}</strong></span>
                     </div>
                 </div>
             </div>
@@ -595,7 +529,7 @@
         </div>
         
         <!-- Staff Gender Statistics Graph Card -->
-        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1" style="width: 480px; height: 320px;">
+        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 400px; height: 320px;">
             <div class="graph-card-header">
                 <div class="flex items-center">
                     <div class="bg-gradient-to-r from-green-500 to-green-600 p-2 rounded-lg mr-3">
@@ -603,16 +537,16 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white graph-card-title">Staff Gender Distribution</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white graph-card-title">Staff Gender</h3>
                 </div>
                 <div class="graph-card-legend">
                     <div class="legend-item">
                         <span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span>
-                        <span class="text-gray-800 dark:text-gray-300">Male: <strong>{{ $maleStaff }}</strong></span>
+                        <span class="text-gray-800 dark:text-gray-300">M: <strong>{{ $maleStaff }}</strong></span>
                     </div>
                     <div class="legend-item">
                         <span class="w-3 h-3 rounded-full bg-pink-500 mr-1"></span>
-                        <span class="text-gray-800 dark:text-gray-300">Female: <strong>{{ $femaleStaff }}</strong></span>
+                        <span class="text-gray-800 dark:text-gray-300">F: <strong>{{ $femaleStaff }}</strong></span>
                     </div>
                 </div>
             </div>
@@ -621,9 +555,44 @@
                 <canvas id="staffGenderChart"></canvas>
             </div>
         </div>
-        
+    </div>
+
+    <!-- Quick Actions, Growth Chart, School Population Distribution, Recent Activity - Horizontal Line -->
+    <div class="flex flex-nowrap gap-6 mb-8 overflow-x-auto">
+        <!-- Quick Actions Section -->
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex-shrink-0" style="width: 380px; height: 320px; overflow-y: auto;">
+            <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-3">Quick Actions</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <a href="{{ route('admin.students.olevel.create') }}" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-3 rounded-lg text-center transition-colors duration-300 flex items-center justify-center text-sm">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
+                    Add Student
+                </a>
+                <a href="{{ route('admin.staff.index') }}" class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-3 rounded-lg text-center transition-colors duration-300 flex items-center justify-center text-sm">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    Staff
+                </a>
+                <a href="{{ route('admin.reports.index') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-3 rounded-lg text-center transition-colors duration-300 flex items-center justify-center text-sm">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Report
+                </a>
+                <a href="{{ route('admin.settings.index') }}" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-3 rounded-lg text-center transition-colors duration-300 flex items-center justify-center text-sm">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Settings
+                </a>
+            </div>
+        </div>
+
         <!-- Growth Chart Card -->
-        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1" style="width: 480px; height: 320px;">
+        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 380px; height: 320px;">
             <div class="graph-card-header">
                 <div class="flex items-center">
                     <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-2 rounded-lg mr-3">
@@ -648,11 +617,64 @@
             <div class="relative" style="height: 200px;">
                 <canvas id="growthChart"></canvas>
             </div>
+        </div>
 
+        <!-- Recent Activity Section -->
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex-shrink-0" style="width: 380px; height: 320px; overflow-y: auto;">
+            <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-3">Recent Activity</h3>
+            <div class="space-y-3">
+                <div class="flex items-start">
+                    <div class="bg-indigo-100 dark:bg-indigo-900/30 p-1 rounded-full mr-2 flex-shrink-0">
+                        <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-gray-700 dark:text-gray-300 font-medium text-sm">New student application</p>
+                        <p class="text-gray-800 dark:text-gray-400 text-xs truncate">{{ now()->subHours(2)->format('M d, H:i') }}</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-teal-100 dark:bg-teal-900/30 p-1 rounded-full mr-2 flex-shrink-0">
+                        <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-gray-700 dark:text-gray-300 font-medium text-sm">Staff member updated</p>
+                        <p class="text-gray-800 dark:text-gray-400 text-xs truncate">{{ now()->subHours(5)->format('M d, H:i') }}</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-orange-100 dark:bg-orange-900/30 p-1 rounded-full mr-2 flex-shrink-0">
+                        <svg class="w-4 h-4 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-gray-700 dark:text-gray-300 font-medium text-sm">Attendance report</p>
+                        <p class="text-gray-800 dark:text-gray-400 text-xs truncate">{{ now()->subDay()->format('M d, H:i') }}</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-blue-100 dark:bg-blue-900/30 p-1 rounded-full mr-2 flex-shrink-0">
+                        <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-gray-700 dark:text-gray-300 font-medium text-sm">System notification</p>
+                        <p class="text-gray-800 dark:text-gray-400 text-xs truncate">{{ now()->subDays(2)->format('M d, H:i') }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- School Population Distribution Pie Chart -->
-        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1" style="width: 480px; height: 320px;">
+        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 380px; height: 320px;">
             <div class="graph-card-header">
                 <div class="flex items-center">
                     <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-2 rounded-lg mr-3">
@@ -660,102 +682,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18a6 6 0 100-12 6 6 0 000 12zM12 6v6m3-3H9"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white graph-card-title">School Population Distribution</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white graph-card-title">School Pop.</h3>
                 </div>
             </div>
             
             <div class="relative" style="height: 230px;">
                 <canvas id="schoolPopulationChart"></canvas>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Quick Actions and Recent Activity Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <!-- Quick Actions Section -->
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 h-full">
-            <h3 class="text-xl font-semibold text-gray-700 dark:text-white mb-4">Quick Actions</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a href="{{ route('admin.students.olevel.create') }}" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-5 rounded-lg text-center transition-colors duration-300 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                    </svg>
-                    Add New Student
-                </a>
-                <a href="{{ route('admin.staff.index') }}" class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 px-5 rounded-lg text-center transition-colors duration-300 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                    Manage Staff
-                </a>
-                <a href="{{ route('admin.reports.index') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-5 rounded-lg text-center transition-colors duration-300 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    Generate Report
-                </a>
-                <a href="{{ route('admin.settings.index') }}" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-5 rounded-lg text-center transition-colors duration-300 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    Settings
-                </a>
-            </div>
-        </div>
-
-        <!-- Recent Activity Section -->
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 h-full">
-            <h3 class="text-xl font-semibold text-gray-700 dark:text-white mb-4">Recent Activity</h3>
-            <div class="space-y-4">
-                <div class="flex items-start">
-                    <div class="bg-indigo-100 dark:bg-indigo-900/30 p-2 rounded-full mr-3">
-                        <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-700 dark:text-gray-300 font-medium">New student application received</p>
-                        <p class="text-gray-800 dark:text-gray-400 text-sm">John Doe - {{ now()->subHours(2)->format('M d, H:i') }}</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start">
-                    <div class="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-full mr-3">
-                        <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-700 dark:text-gray-300 font-medium">Staff member updated</p>
-                        <p class="text-gray-800 dark:text-gray-400 text-sm">Jane Smith - {{ now()->subHours(5)->format('M d, H:i') }}</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start">
-                    <div class="bg-orange-100 dark:bg-orange-900/30 p-2 rounded-full mr-3">
-                        <svg class="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-700 dark:text-gray-300 font-medium">Monthly attendance report generated</p>
-                        <p class="text-gray-800 dark:text-gray-400 text-sm">{{ now()->subDay()->format('M d, H:i') }}</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start">
-                    <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mr-3">
-                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-700 dark:text-gray-300 font-medium">System notification sent</p>
-                        <p class="text-gray-800 dark:text-gray-400 text-sm">{{ now()->subDays(2)->format('M d, H:i') }}</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

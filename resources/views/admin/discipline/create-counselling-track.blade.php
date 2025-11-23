@@ -11,7 +11,7 @@
                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                     <i class="fas fa-heart text-blue-600 dark:text-blue-400"></i>
                 </div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Create Counselling Record</h1>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-black">Create Counselling Record</h1>
             </div>
             <p class="text-gray-800 dark:text-gray-400 ml-11">Record a new counselling session for a student</p>
         </div>
@@ -33,7 +33,7 @@
                                 class="w-full px-4 py-3 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 rounded-lg text-gray-900 dark:text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-400">
                                 <option value="">Select a student...</option>
                                 @foreach($students as $student)
-                                    <option value="{{ $student->id }}" {{ old('student_id') == $student->id ? 'selected' : '' }}>
+                                    <option value="{{ $student->admission_number }}" {{ old('student_id') == $student->admission_number ? 'selected' : '' }}>
                                         {{ $student->student_name }} ({{ $student->level ?? 'N/A' }} - {{ $student->class ?? 'N/A' }})
                                     </option>
                                 @endforeach
@@ -144,7 +144,7 @@
                         <i class="fas fa-times mr-2"></i>Cancel
                     </a>
                     <button type="submit" 
-                        class="inline-flex items-center px-8 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        class="inline-flex items-center px-8 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-black font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <i class="fas fa-save mr-2"></i>Create Counselling Record
                     </button>
                 </div>

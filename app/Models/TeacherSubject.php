@@ -19,10 +19,12 @@ class TeacherSubject extends Model
         'level', // 'olevel' or 'alevel'
         'specialty', // 'arts' or 'science' (for A'Level)
         'classes', // JSON array of classes they teach
+        'streams', // JSON array of streams they teach (arts, science)
     ];
 
     protected $casts = [
         'classes' => 'array',
+        'streams' => 'array',
     ];
 
     public function staff()

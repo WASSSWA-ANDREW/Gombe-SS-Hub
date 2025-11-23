@@ -77,7 +77,11 @@ class PromoteStudents extends Command
      */
     private function promoteStudents(string $fromClass, string $toClass): void
     {
-        $count = Student::where('class', $fromClass)->update(['class' => $toClass]);
+        $count = Student::where('class', $fromClass)->update([
+            'class' => $toClass,
+            'promoted_at' => now(),
+            'promotion_count' => DB::raw('promotion_count + 1')
+        ]);
         $this->info("Promoted {$count} students from {$fromClass} to {$toClass}");
     }
 

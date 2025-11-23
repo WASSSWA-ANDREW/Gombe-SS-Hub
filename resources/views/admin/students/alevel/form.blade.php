@@ -70,19 +70,18 @@
                         <label for="stream" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Stream:</label>
                         <select name="stream" id="stream" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base py-3 px-4 bg-white text-gray-900">
                             <option value="">Select Stream</option>
-                            <option value="A" {{ old('stream', $student->stream ?? '') == 'A' ? 'selected' : '' }}>A</option>
-                            <option value="B" {{ old('stream', $student->stream ?? '') == 'B' ? 'selected' : '' }}>B</option>
-                            <option value="C" {{ old('stream', $student->stream ?? '') == 'C' ? 'selected' : '' }}>C</option>
-                            <option value="D" {{ old('stream', $student->stream ?? '') == 'D' ? 'selected' : '' }}>D</option>
-                            <option value="E" {{ old('stream', $student->stream ?? '') == 'E' ? 'selected' : '' }}>E</option>
-                            <option value="G" {{ old('stream', $student->stream ?? '') == 'G' ? 'selected' : '' }}>G</option>
-                            <option value="H" {{ old('stream', $student->stream ?? '') == 'H' ? 'selected' : '' }}>H</option>
-                            <option value="T" {{ old('stream', $student->stream ?? '') == 'T' ? 'selected' : '' }}>T</option>
+                            <option value="ARTS A" {{ old('stream', $student->stream ?? '') == 'ARTS A' ? 'selected' : '' }}>ARTS A</option>
+                            <option value="ARTS B" {{ old('stream', $student->stream ?? '') == 'ARTS B' ? 'selected' : '' }}>ARTS B</option>
+                            <option value="SCI A" {{ old('stream', $student->stream ?? '') == 'SCI A' ? 'selected' : '' }}>SCI A</option>
+                            <option value="SCI B" {{ old('stream', $student->stream ?? '') == 'SCI B' ? 'selected' : '' }}>SCI B</option>
+                            <option value="SCI C1" {{ old('stream', $student->stream ?? '') == 'SCI C1' ? 'selected' : '' }}>SCI C1</option>
+                            <option value="SCI C2" {{ old('stream', $student->stream ?? '') == 'SCI C2' ? 'selected' : '' }}>SCI C2</option>
+                            <option value="SCI D" {{ old('stream', $student->stream ?? '') == 'SCI D' ? 'selected' : '' }}>SCI D</option>
                         </select>
                     </div>
                     <div>
-                        <label for="admission_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Admission Number:</label>
-                        <input type="text" name="admission_number" id="admission_number" value="{{ old('admission_number', $student->admission_number ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base py-3 px-4 bg-white text-gray-900">
+                        <label for="admission_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Admission Number: <span class="text-red-500">*</span></label>
+                        <input type="text" name="admission_number" id="admission_number" required value="{{ old('admission_number', $student->admission_number ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base py-3 px-4 bg-white text-gray-900">
                     </div>
                     <div>
                         <label for="learners_lin" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Learner's LIN:</label>

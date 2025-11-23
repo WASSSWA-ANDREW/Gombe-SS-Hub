@@ -479,6 +479,11 @@
                                 <i class="fas fa-chalkboard-teacher mr-2"></i><span class="sidebar-text">Teacher Assignments</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.academics.student-performance') }}" class="sidebar-link text-sm py-1 {{ request()->routeIs('admin.academics.student-performance') ? 'active bg-gray-700' : '' }}" title="Student Performance">
+                                <i class="fas fa-chart-area mr-2"></i><span class="sidebar-text">Student Performance</span>
+                            </a>
+                        </li>
                     </ul>
                 </details>
 

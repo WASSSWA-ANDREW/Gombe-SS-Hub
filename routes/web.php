@@ -1,33 +1,32 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\AcademicsController;
 // Import all controllers
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\AlumniController;
+use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\DisciplineController;
+use App\Http\Controllers\Admin\FileUploadController;
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ExportController;
+use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Api\ApiController;
-use App\Http\Controllers\MapController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\StudentController;
-use App\Http\Controllers\Admin\AlumniController;
-use App\Http\Controllers\Admin\DisciplineController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookmarkController;
-use App\Http\Controllers\ThemeController;
-use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\EmergencyContactController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LegalController;
-use App\Http\Controllers\Admin\FileUploadController;
-use App\Http\Controllers\Admin\BackupController;
-use App\Http\Controllers\Admin\AcademicsController;
+use App\Http\Controllers\MapController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeacherAuthController;
+use App\Http\Controllers\ThemeController;
+use Illuminate\Support\Facades\Route;
 
 // Landing page
 Route::get('/', function () {
@@ -158,6 +157,12 @@ Route::prefix('admin/students')->name('admin.students.')->group(function () {
     Route::get('/alevel/import', [StudentController::class, 'importAlevelForm'])->name('alevel.import');
     Route::post('/alevel/import', [StudentController::class, 'importAlevel'])->name('alevel.import.store');
     Route::get('/alevel/search', [StudentController::class, 'searchAlevel'])->name('alevel.search');
+
+    // Student Promotion Routes
+    Route::prefix('promotion')->name('promotion.')->group(function () {
+        Route::get('/', [StudentController::class, 'promotionForm'])->name('form');
+        Route::post('/', [StudentController::class, 'promoteStudents'])->name('store');
+    });
 });
 
 // Alumni Management Routes
@@ -171,6 +176,8 @@ Route::prefix('admin/alumni')->name('admin.alumni.')->group(function () {
     Route::get('/{alumnus}', [AlumniController::class, 'show'])->name('show');
     Route::get('/export/excel', [AlumniController::class, 'exportExcel'])->name('export.excel');
     Route::get('/export/pdf', [AlumniController::class, 'exportPdf'])->name('export.pdf');
+    Route::post('/export/selected', [AlumniController::class, 'exportSelected'])->name('export.selected');
+    Route::post('/delete-selected', [AlumniController::class, 'deleteSelected'])->name('delete.selected');
     Route::get('/stats', [AlumniController::class, 'getStats'])->name('stats');
     Route::get('/search', [AlumniController::class, 'search'])->name('search');
 });
@@ -178,26 +185,26 @@ Route::prefix('admin/alumni')->name('admin.alumni.')->group(function () {
 // Discipline Records Routes
 Route::prefix('admin/discipline')->name('admin.discipline.')->group(function () {
     Route::get('/', [DisciplineController::class, 'index'])->name('index');
-    
+
     // Records routes (for layout navigation)
     Route::prefix('records')->name('records.')->group(function () {
         Route::get('/', [DisciplineController::class, 'disciplineTracks'])->name('index');
         Route::get('/create', [DisciplineController::class, 'createDisciplineTrack'])->name('create');
         Route::post('/', [DisciplineController::class, 'storeDisciplineTrack'])->name('store');
     });
-    
+
     // Tracks routes
     Route::prefix('tracks')->name('tracks.')->group(function () {
         Route::get('/', [DisciplineController::class, 'disciplineTracks'])->name('index');
         Route::get('/create', [DisciplineController::class, 'createDisciplineTrack'])->name('create');
         Route::post('/', [DisciplineController::class, 'storeDisciplineTrack'])->name('store');
     });
-    
+
     // Legacy routes (kept for backward compatibility)
     Route::get('/discipline-tracks', [DisciplineController::class, 'disciplineTracks'])->name('discipline-tracks');
     Route::get('/create-discipline-track', [DisciplineController::class, 'createDisciplineTrack'])->name('create-discipline-track');
     Route::post('/store-discipline-track', [DisciplineController::class, 'storeDisciplineTrack'])->name('store-discipline-track');
-    
+
     Route::get('/student/{studentId}/records', [DisciplineController::class, 'studentRecords'])->name('student-records');
 });
 
@@ -208,7 +215,7 @@ Route::prefix('admin/counselling')->name('admin.counselling.')->group(function (
         Route::get('/create', [DisciplineController::class, 'createCounsellingTrack'])->name('create');
         Route::post('/', [DisciplineController::class, 'storeCounsellingTrack'])->name('store');
     });
-    
+
     // Legacy routes (kept for backward compatibility)
     Route::get('/counselling-tracks', [DisciplineController::class, 'counsellingTracks'])->name('counselling-tracks');
     Route::get('/create-counselling-track', [DisciplineController::class, 'createCounsellingTrack'])->name('create-counselling-track');
@@ -217,24 +224,24 @@ Route::prefix('admin/counselling')->name('admin.counselling.')->group(function (
 
 // Protected Admin Routes (require authentication)
 Route::middleware(['auth'])->group(function () {
-    
+
     // Dashboard Routes
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/dashboard/stats', [DashboardController::class, 'getStats'])->name('admin.dashboard.stats');
     Route::get('/admin/dashboard/charts', [DashboardController::class, 'getChartsData'])->name('admin.dashboard.charts');
     Route::get('/admin/dashboard/recent-activities', [DashboardController::class, 'getRecentActivities'])->name('admin.dashboard.activities');
-    
+
     // File Upload Routes
     Route::prefix('admin/files')->name('admin.files.')->group(function () {
         Route::get('/', [FileUploadController::class, 'index'])->name('index');
         Route::get('/download/{id}/{type}', [FileUploadController::class, 'download'])->name('download');
         Route::delete('/delete/{id}/{type}', [FileUploadController::class, 'delete'])->name('delete');
     });
-    
+
     // Academics Management Routes
     Route::prefix('admin/academics')->name('admin.academics.')->group(function () {
         Route::get('/dashboard', [AcademicsController::class, 'dashboard'])->name('dashboard');
-        
+
         Route::prefix('olevel')->name('olevel.')->group(function () {
             Route::get('/subjects', [AcademicsController::class, 'olevelSubjects'])->name('subjects');
             Route::post('/subjects/general', [AcademicsController::class, 'storeOlevelGeneralSubject'])->name('subjects.general.store');
@@ -246,7 +253,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/marks', [AcademicsController::class, 'olevelMarks'])->name('marks');
             Route::get('/performance', [AcademicsController::class, 'olevelPerformance'])->name('performance');
         });
-        
+
         Route::prefix('alevel')->name('alevel.')->group(function () {
             Route::get('/subjects', [AcademicsController::class, 'alevelSubjects'])->name('subjects');
             Route::post('/subjects/arts', [AcademicsController::class, 'storeAlevelArtsSubject'])->name('subjects.arts.store');
@@ -261,14 +268,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/marks', [AcademicsController::class, 'alevelMarks'])->name('marks');
             Route::get('/performance', [AcademicsController::class, 'alevelPerformance'])->name('performance');
         });
-        
+
+        Route::get('/student-performance', [AcademicsController::class, 'studentPerformance'])->name('student-performance');
+        Route::get('/student-performance/{studentId}/data', [AcademicsController::class, 'getStudentPerformanceData'])->name('student-performance.data');
+
         Route::get('/teachers', [AcademicsController::class, 'teacherAssignments'])->name('teachers');
         Route::post('/teachers/assign', [AcademicsController::class, 'assignTeacherSubjects'])->name('teachers.assign');
         Route::get('/teachers/{id}/edit', [AcademicsController::class, 'editTeacherSubject'])->name('teachers.edit');
         Route::put('/teachers/{id}', [AcademicsController::class, 'updateTeacherSubject'])->name('teachers.update');
         Route::delete('/teachers/{id}', [AcademicsController::class, 'destroyTeacherSubject'])->name('teachers.destroy');
     });
-    
+
     // Search Routes
     Route::get('/search', [SearchController::class, 'index'])->name('search');
     Route::post('/search', [SearchController::class, 'search'])->name('search.submit');
@@ -277,7 +287,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/search/history/{id}', [SearchController::class, 'deleteSearchHistory'])->name('search.history.delete');
     Route::delete('/search/history', [SearchController::class, 'clearSearchHistory'])->name('search.history.clear');
     Route::get('/search/advanced', [SearchController::class, 'advancedSearch'])->name('search.advanced');
-    
+
     // Reports Routes
     Route::prefix('admin/reports')->name('admin.reports.')->group(function () {
         // Legacy Reports Controller (if needed)
@@ -291,7 +301,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/legacy/custom', [ReportsController::class, 'customReport'])->name('legacy.custom');
         Route::post('/legacy/generate', [ReportsController::class, 'generateReport'])->name('legacy.generate');
         Route::get('/legacy/export/{type}', [ReportsController::class, 'exportReport'])->name('legacy.export');
-        
+
         // New Reports Controller
         Route::get('/', [ReportController::class, 'index'])->name('index');
         Route::get('/student-distribution', [ReportController::class, 'studentDistribution'])->name('student-distribution');
@@ -303,7 +313,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
         Route::post('/export-excel', [ReportController::class, 'exportExcel'])->name('export-excel');
     });
-    
+
     // User Management Routes (Admin only)
     Route::prefix('admin/users')->name('admin.users.')->middleware(['role:admin'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
@@ -317,7 +327,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('toggle.status');
         Route::put('/{user}/reset-password', [UserController::class, 'resetPassword'])->name('reset.password');
     });
-    
+
     // Notification Routes
     Route::prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', [NotificationController::class, 'index'])->name('index');
@@ -333,7 +343,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/preferences', [NotificationController::class, 'preferences'])->name('preferences');
         Route::put('/preferences', [NotificationController::class, 'updatePreferences'])->name('preferences.update');
     });
-    
+
     // Export Routes
     Route::prefix('export')->name('export.')->group(function () {
         Route::post('/excel', [ExportController::class, 'exportExcel'])->name('excel');
@@ -346,7 +356,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/templates', [ExportController::class, 'getTemplates'])->name('templates');
         Route::post('/bulk', [ExportController::class, 'bulkExport'])->name('bulk');
     });
-    
+
     // Settings Routes (Admin only)
     Route::prefix('admin/settings')->name('admin.settings.')->middleware(['role:admin'])->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('index');
@@ -385,9 +395,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/nearby', [MapController::class, 'getNearbyLocations'])->name('nearby');
         Route::get('/config', [MapController::class, 'getMapConfig'])->name('config');
     });
-    
+
     // Chatbot and FAQ Routes removed
-    
+
     // Bookmark Routes
     Route::prefix('bookmarks')->name('bookmarks.')->group(function () {
         Route::get('/', [BookmarkController::class, 'index'])->name('index');
@@ -402,7 +412,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/export', [BookmarkController::class, 'export'])->name('export');
         Route::post('/import', [BookmarkController::class, 'import'])->name('import');
     });
-    
+
     // Theme Routes
     Route::prefix('theme')->name('theme.')->group(function () {
         Route::get('/current', [ThemeController::class, 'getCurrentTheme'])->name('current');
@@ -417,7 +427,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/export', [ThemeController::class, 'exportSettings'])->name('export');
         Route::post('/import', [ThemeController::class, 'importSettings'])->name('import');
     });
-    
+
     // Language Routes
     Route::prefix('language')->name('language.')->group(function () {
         Route::get('/available', [LanguageController::class, 'getAvailableLanguages'])->name('available');
@@ -428,7 +438,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/translation/update', [LanguageController::class, 'updateTranslation'])->name('translation.update');
         Route::get('/missing/{language}', [LanguageController::class, 'getMissingTranslations'])->name('missing');
     });
-    
+
     // Emergency Contact Routes
     Route::prefix('emergency')->name('emergency.')->group(function () {
         Route::get('/contacts', [EmergencyContactController::class, 'getContacts'])->name('contacts');
@@ -441,7 +451,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/test', [EmergencyContactController::class, 'testSystem'])->name('test');
         Route::get('/widget', [EmergencyContactController::class, 'getWidgetData'])->name('widget');
     });
-    
+
     // Feedback Routes
     Route::prefix('feedback')->name('feedback.')->group(function () {
         Route::get('/', [FeedbackController::class, 'index'])->name('index');
@@ -454,7 +464,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/export', [FeedbackController::class, 'exportFeedback'])->name('export');
         Route::get('/templates', [FeedbackController::class, 'getTemplates'])->name('templates');
     });
-    
+
     // Support Routes removed
 });
 
@@ -463,7 +473,7 @@ Route::prefix('api/v1')->name('api.')->group(function () {
     // Public API routes
     Route::post('/login', [ApiController::class, 'login'])->name('login');
     Route::get('/app-info', [ApiController::class, 'getAppInfo'])->name('app.info');
-    
+
     // Protected API routes
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/logout', [ApiController::class, 'logout'])->name('logout');

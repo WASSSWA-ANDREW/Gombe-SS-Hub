@@ -96,10 +96,10 @@
                                         {{ $student->mobile_number ?? $student->email ?? 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('admin.students.' . $student->level . '.edit', $student->id) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
+                                        <a href="{{ route('admin.students.' . $student->level . '.edit', $student->admission_number) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-                                        <a href="{{ route('admin.students.' . $student->level . '.show', $student->id) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300">
+                                        <a href="{{ route('admin.students.' . $student->level . '.show', $student->admission_number) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300">
                                             <i class="fas fa-eye"></i> View
                                         </a>
                                     </td>

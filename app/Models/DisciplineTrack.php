@@ -18,11 +18,14 @@ class DisciplineTrack extends Model
         'case_status',
         'date_of_incident',
         'description',
-        'recorded_by'
+        'recorded_by',
+        'attachments',
+        'statement_type'
     ];
 
     protected $casts = [
         'date_of_incident' => 'date',
+        'attachments' => 'array',
     ];
 
     /**
@@ -30,7 +33,7 @@ class DisciplineTrack extends Model
      */
     public function student(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_id', 'id');
     }
 
     /**

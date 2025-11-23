@@ -22,6 +22,21 @@
                 </div>
             </div>
 
+            <div id="selection-actions" class="mb-4 hidden">
+                <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg flex items-center justify-between">
+                    <div>
+                        <span id="selected-count" class="font-semibold text-gray-700 dark:text-white">0</span> 
+                        <span class="text-gray-800 dark:text-gray-300">alumni selected</span>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="select-all-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Select All</button>
+                        <button id="deselect-all-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">Deselect All</button>
+                        <button id="export-selected-btn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">Export Selected</button>
+                        <button id="delete-selected-btn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Delete Selected</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="mb-4">
                 <div class="relative group">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-all duration-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
@@ -58,6 +73,9 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
+                                <th scope="col" class="px-3 py-3 text-center text-xs font-medium text-gray-800 dark:text-gray-300 uppercase tracking-wider">
+                                    <input type="checkbox" id="select-all-checkbox" class="form-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700">
+                                </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 dark:text-gray-300 uppercase tracking-wider">
                                     Name
                                 </th>
@@ -80,7 +98,10 @@
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                             @foreach ($alumni as $alumnus)
-                                <tr>
+                                <tr class="alumni-row hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
+                                    <td class="px-3 py-4 whitespace-nowrap text-center">
+                                        <input type="checkbox" name="selected_alumni[]" value="{{ $alumnus->id }}" class="alumni-checkbox form-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700">
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
                                         {{ $alumnus->student_name ?? 'N/A' }}
                                     </td>
@@ -91,7 +112,9 @@
                                         {{ $alumnus->learners_lin ?? 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-300">
-                                        {{ $alumnus->graduation_class ?? 'N/A' }}
+                                        <span class="px-2 py-1 rounded text-sm font-semibold {{ $alumnus->graduation_class === 'S4' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' }}">
+                                            {{ $alumnus->graduation_class ?? 'N/A' }}
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-300">
                                         {{ $alumnus->graduation_year ?? 'N/A' }}
@@ -126,17 +149,153 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Search functionality
-        const searchInput = document.getElementById('alumniSearchInput');
+        const selectAllCheckbox = document.getElementById('select-all-checkbox');
+        const alumniCheckboxes = document.querySelectorAll('.alumni-checkbox');
+        const selectionActions = document.getElementById('selection-actions');
+        const selectedCountElement = document.getElementById('selected-count');
+        const selectAllBtn = document.getElementById('select-all-btn');
+        const deselectAllBtn = document.getElementById('deselect-all-btn');
+        const exportSelectedBtn = document.getElementById('export-selected-btn');
+        const deleteSelectedBtn = document.getElementById('delete-selected-btn');
 
-        // Auto-submit search on enter
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                this.closest('form').submit();
+        function updateSelectionStatus() {
+            const checkedBoxes = document.querySelectorAll('.alumni-checkbox:checked');
+            const count = checkedBoxes.length;
+            
+            selectedCountElement.textContent = count;
+            
+            if (count > 0) {
+                selectionActions.classList.remove('hidden');
+            } else {
+                selectionActions.classList.add('hidden');
             }
+            
+            if (count === alumniCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else if (count === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+        
+        alumniCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectionStatus);
+            
+            const row = checkbox.closest('tr');
+            row.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
+                    return;
+                }
+                
+                checkbox.checked = !checkbox.checked;
+                updateSelectionStatus();
+            });
         });
+        
+        selectAllCheckbox.addEventListener('change', function() {
+            const isChecked = this.checked;
+            
+            document.querySelectorAll('tbody tr.alumni-row:not([style*="display: none"]) .alumni-checkbox').forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateSelectionStatus();
+        });
+        
+        selectAllBtn.addEventListener('click', function() {
+            document.querySelectorAll('tbody tr.alumni-row:not([style*="display: none"]) .alumni-checkbox').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            updateSelectionStatus();
+        });
+        
+        deselectAllBtn.addEventListener('click', function() {
+            document.querySelectorAll('.alumni-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateSelectionStatus();
+        });
+        
+        exportSelectedBtn.addEventListener('click', function() {
+            const selectedIds = Array.from(document.querySelectorAll('.alumni-checkbox:checked')).map(checkbox => checkbox.value);
+            
+            if (selectedIds.length === 0) {
+                alert('Please select at least one alumni to export.');
+                return;
+            }
+            
+            const format = confirm('Click OK to export as Excel, or Cancel to export as PDF');
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("admin.alumni.export.selected") }}';
+            form.style.display = 'none';
+            
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+            
+            const formatInput = document.createElement('input');
+            formatInput.type = 'hidden';
+            formatInput.name = 'format';
+            formatInput.value = format ? 'excel' : 'pdf';
+            form.appendChild(formatInput);
+            
+            selectedIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'selected_ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
+            
+            document.body.appendChild(form);
+            form.submit();
+        });
+        
+        deleteSelectedBtn.addEventListener('click', function() {
+            const selectedIds = Array.from(document.querySelectorAll('.alumni-checkbox:checked')).map(checkbox => checkbox.value);
+            
+            if (selectedIds.length === 0) {
+                alert('Please select at least one alumni to delete.');
+                return;
+            }
+            
+            if (!confirm(`Are you sure you want to delete ${selectedIds.length} selected alumni record(s)? This action cannot be undone.`)) {
+                return;
+            }
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("admin.alumni.delete.selected") }}';
+            form.style.display = 'none';
+            
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+            
+            selectedIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'selected_ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
+            
+            document.body.appendChild(form);
+            form.submit();
+        });
+        
+        updateSelectionStatus();
     });
 </script>
 @endpush
+
 @endsection

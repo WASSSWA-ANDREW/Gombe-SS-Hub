@@ -20,7 +20,7 @@
 
         <!-- Form Card -->
         <div class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700">
-            <form action="{{ route('admin.discipline.store-discipline-track') }}" method="POST" class="divide-y divide-gray-200 dark:divide-gray-700">
+            <form action="{{ route('admin.discipline.store-discipline-track') }}" method="POST" enctype="multipart/form-data" class="divide-y divide-gray-200 dark:divide-gray-700">
                 @csrf
                 
                 <!-- Form Content -->
@@ -35,7 +35,7 @@
                                 class="w-full px-4 py-3 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 rounded-xl text-gray-900 dark:text-gray-900 focus:border-red-500 focus:ring-2 focus:ring-red-200 dark:focus:ring-red-200 transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-400 appearance-none cursor-pointer">
                                 <option value="">Select a student...</option>
                                 @foreach($students as $student)
-                                    <option value="{{ $student->id }}" {{ old('student_id') == $student->id ? 'selected' : '' }}>
+                                    <option value="{{ $student->admission_number }}" {{ old('student_id') == $student->admission_number ? 'selected' : '' }}>
                                         {{ $student->student_name }} ({{ $student->level ?? 'N/A' }} - {{ $student->class ?? 'N/A' }})
                                     </option>
                                 @endforeach
@@ -130,6 +130,56 @@
                                 <p class="mt-2 flex items-center text-sm text-red-600 dark:text-red-400"><i class="fas fa-circle-exclamation mr-1"></i>{{ $message }}</p>
                             @enderror
                         </div>
+
+                        <!-- File Uploads Section -->
+                        <div class="md:col-span-2 group">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-6">
+                                <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">
+                                    <i class="fas fa-file-upload text-blue-500 mr-2"></i>Upload Supporting Documents
+                                </h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <!-- Written Statement -->
+                                    <div>
+                                        <label for="statement_written" class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            <i class="fas fa-file-lines text-blue-500 mr-1"></i>Written Statement
+                                        </label>
+                                        <input type="file" name="statement_written" id="statement_written" accept=".pdf,.doc,.docx,.txt"
+                                            class="w-full px-3 py-2 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 rounded-lg text-gray-900 dark:text-gray-900 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 transition-all duration-200">
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">PDF, DOC, DOCX, TXT</p>
+                                        @error('statement_written')
+                                            <p class="mt-1 text-xs text-red-600 dark:text-red-400"><i class="fas fa-circle-exclamation mr-0.5"></i>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Caution -->
+                                    <div>
+                                        <label for="caution_document" class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            <i class="fas fa-warning text-yellow-500 mr-1"></i>Caution Document
+                                        </label>
+                                        <input type="file" name="caution_document" id="caution_document" accept=".pdf,.doc,.docx,.txt"
+                                            class="w-full px-3 py-2 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 rounded-lg text-gray-900 dark:text-gray-900 text-sm focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 dark:focus:ring-yellow-200 transition-all duration-200">
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">PDF, DOC, DOCX, TXT</p>
+                                        @error('caution_document')
+                                            <p class="mt-1 text-xs text-red-600 dark:text-red-400"><i class="fas fa-circle-exclamation mr-0.5"></i>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Counselling Agreement -->
+                                    <div>
+                                        <label for="counselling_agreement" class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            <i class="fas fa-handshake text-green-500 mr-1"></i>Counselling Agreement
+                                        </label>
+                                        <input type="file" name="counselling_agreement" id="counselling_agreement" accept=".pdf,.doc,.docx,.txt"
+                                            class="w-full px-3 py-2 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 rounded-lg text-gray-900 dark:text-gray-900 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-200 dark:focus:ring-green-200 transition-all duration-200">
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">PDF, DOC, DOCX, TXT</p>
+                                        @error('counselling_agreement')
+                                            <p class="mt-1 text-xs text-red-600 dark:text-red-400"><i class="fas fa-circle-exclamation mr-0.5"></i>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -140,7 +190,7 @@
                         <i class="fas fa-xmark mr-2"></i>Cancel
                     </a>
                     <button type="submit" 
-                        class="inline-flex items-center px-8 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-lg hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
+                        class="inline-flex items-center px-8 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-navy-600 font-semibold rounded-lg hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
                         <i class="fas fa-plus mr-2"></i>Create Record
                     </button>
                 </div>
