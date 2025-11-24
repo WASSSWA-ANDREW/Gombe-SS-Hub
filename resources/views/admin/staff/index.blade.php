@@ -6,16 +6,16 @@
 @section('content')
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">Staff Directory</h2>
+        <h2 class="text-2xl font-semibold text-gray-700 dark:text-white"><i class="fas fa-users-cog mr-2"></i>Staff Directory</h2>
         <div>
             <a href="{{ route('admin.staff.export.excel') }}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm mr-2">
-                Export to Excel
+                <i class="fas fa-file-excel mr-2"></i>Export to Excel
             </a>
             <a href="{{ route('admin.staff.export.pdf') }}" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm mr-2">
-                Export to PDF
+                <i class="fas fa-file-pdf mr-2"></i>Export to PDF
             </a>
             <a href="{{ route('admin.staff.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md shadow-sm">
-                Add New Staff
+                <i class="fas fa-user-plus mr-2"></i>Add New Staff
             </a>
         </div>
     </div>
@@ -27,10 +27,10 @@
                 <span class="text-gray-800 dark:text-gray-300">staff members selected</span>
             </div>
             <div class="flex space-x-2">
-                <button id="select-all-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Select All</button>
-                <button id="deselect-all-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">Deselect All</button>
-                <button id="export-selected-btn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">Export Selected</button>
-                <button id="delete-selected-btn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Delete Selected</button>
+                <button id="select-all-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-check-square mr-1"></i>Select All</button>
+                <button id="deselect-all-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-times-circle mr-1"></i>Deselect All</button>
+                <button id="export-selected-btn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-download mr-1"></i>Export Selected</button>
+                <button id="delete-selected-btn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-trash mr-1"></i>Delete Selected</button>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                     value="{{ $query ?? '' }}"
                     autocomplete="off">
                 <button type="submit" class="ml-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                    Search
+                    <i class="fas fa-search mr-2"></i>Search
                 </button>
             </form>
         </div>
@@ -105,13 +105,13 @@
                             {{ $staff->created_at->format('d M, Y') }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="{{ route('admin.staff.show', $staff) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-3">View</a>
-                            <a href="{{ route('admin.staff.edit', $staff) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-3">Edit</a>
-                            <a href="{{ route('admin.staff.export.form_pdf', $staff) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 mr-3">Export Form PDF</a>
+                            <a href="{{ route('admin.staff.show', $staff) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-3" title="View staff details"><i class="fas fa-eye mr-1"></i>View</a>
+                            <a href="{{ route('admin.staff.edit', $staff) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-3" title="Edit staff information"><i class="fas fa-edit mr-1"></i>Edit</a>
+                            <a href="{{ route('admin.staff.export.form_pdf', $staff) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 mr-3" title="Export form as PDF"><i class="fas fa-file-pdf mr-1"></i>Export</a>
                             <form action="{{ route('admin.staff.destroy', $staff) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this staff member?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200">Delete</button>
+                                <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200" title="Delete staff record"><i class="fas fa-trash mr-1"></i>Delete</button>
                             </form>
                         </td>
                     </tr>

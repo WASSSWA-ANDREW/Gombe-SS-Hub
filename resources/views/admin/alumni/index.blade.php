@@ -8,16 +8,16 @@
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <div class="px-6 py-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">Alumni List</h2>
+                <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200"><i class="fas fa-graduation-cap mr-2"></i>Alumni List</h2>
                 <div class="flex space-x-2">
                     <a href="{{ route('admin.alumni.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                        <i class="fas fa-plus mr-2"></i>Add Alumni
+                        <i class="fas fa-user-plus mr-2"></i>Add Alumni
                     </a>
                     <a href="{{ route('admin.alumni.export.excel') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                        Export to Excel
+                        <i class="fas fa-file-excel mr-2"></i>Export to Excel
                     </a>
                     <a href="{{ route('admin.alumni.export.pdf') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                        Export to PDF
+                        <i class="fas fa-file-pdf mr-2"></i>Export to PDF
                     </a>
                 </div>
             </div>
@@ -29,10 +29,10 @@
                         <span class="text-gray-800 dark:text-gray-300">alumni selected</span>
                     </div>
                     <div class="flex space-x-2">
-                        <button id="select-all-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Select All</button>
-                        <button id="deselect-all-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">Deselect All</button>
-                        <button id="export-selected-btn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">Export Selected</button>
-                        <button id="delete-selected-btn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Delete Selected</button>
+                        <button id="select-all-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-check-square mr-1"></i>Select All</button>
+                        <button id="deselect-all-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-times-circle mr-1"></i>Deselect All</button>
+                        <button id="export-selected-btn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-download mr-1"></i>Export Selected</button>
+                        <button id="delete-selected-btn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-trash mr-1"></i>Delete Selected</button>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                             value="{{ $query ?? '' }}"
                             autocomplete="off">
                         <button type="submit" class="ml-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                            Search
+                            <i class="fas fa-search mr-2"></i>Search
                         </button>
                     </form>
                 </div>
@@ -120,12 +120,12 @@
                                         {{ $alumnus->graduation_year ?? 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('admin.alumni.show', $alumnus->id) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-2">View</a>
-                                        <a href="{{ route('admin.alumni.edit', $alumnus->id) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 mr-2">Edit</a>
+                                        <a href="{{ route('admin.alumni.show', $alumnus->id) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-2" title="View alumni details"><i class="fas fa-eye mr-1"></i>View</a>
+                                        <a href="{{ route('admin.alumni.edit', $alumnus->id) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 mr-2" title="Edit alumni information"><i class="fas fa-edit mr-1"></i>Edit</a>
                                         <form method="POST" action="{{ route('admin.alumni.destroy', $alumnus->id) }}" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this alumni record?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200">Delete</button>
+                                            <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200" title="Delete alumni record"><i class="fas fa-trash mr-1"></i>Delete</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -8,16 +8,16 @@
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <div class="px-6 py-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">A'Level Student List</h2>
+                <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200"><i class="fas fa-book mr-2"></i>A'Level Student List</h2>
                 <div class="flex space-x-2">
                     <a href="{{ route('admin.students.alevel.export.excel') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                        Export to Excel
+                        <i class="fas fa-file-excel mr-2"></i>Export to Excel
                     </a>
                     <a href="{{ route('admin.students.alevel.export.pdf') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                        Export to PDF
+                        <i class="fas fa-file-pdf mr-2"></i>Export to PDF
                     </a>
                     <a href="{{ route('admin.students.alevel.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                        Add New A'Level Student
+                        <i class="fas fa-user-plus mr-2"></i>Add New A'Level Student
                     </a>
                 </div>
             </div>
@@ -29,9 +29,9 @@
                         <span class="text-gray-800 dark:text-gray-300">students selected</span>
                     </div>
                     <div class="flex space-x-2">
-                        <button id="select-all-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Select All</button>
-                        <button id="deselect-all-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">Deselect All</button>
-                        <button id="export-selected-btn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">Export Selected</button>
+                        <button id="select-all-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-check-square mr-1"></i>Select All</button>
+                        <button id="deselect-all-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-times-circle mr-1"></i>Deselect All</button>
+                        <button id="export-selected-btn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-download mr-1"></i>Export Selected</button>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                             value="{{ $query ?? '' }}"
                             autocomplete="off">
                         <button type="submit" class="ml-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
-                            Search
+                            <i class="fas fa-search mr-2"></i>Search
                         </button>
                     </form>
                 </div>
@@ -119,12 +119,12 @@
                                         {{ $student->previous_school ?? 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('admin.students.alevel.show', $student->id) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-3">View</a>
-                                        <a href="{{ route('admin.students.alevel.edit', $student->id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-3">Edit</a>
+                                        <a href="{{ route('admin.students.alevel.show', $student->id) }}" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-200 mr-3" title="View student details"><i class="fas fa-eye mr-1"></i>View</a>
+                                        <a href="{{ route('admin.students.alevel.edit', $student->id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-3" title="Edit student information"><i class="fas fa-edit mr-1"></i>Edit</a>
                                         <form action="{{ route('admin.students.alevel.destroy', $student->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this student?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200">Delete</button>
+                                            <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200" title="Delete student record"><i class="fas fa-trash mr-1"></i>Delete</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -5,16 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#3B82F6">
+    <!-- PWA Meta Tags - Universal Support -->
     <meta name="description" content="School Management System for data collection and management of students and teachers">
+    <meta name="keywords" content="school management, education, students, staff, data collection">
+    
+    <!-- Theme Colors (Light and Dark) -->
+    <meta name="theme-color" content="#3B82F6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1E293B" media="(prefers-color-scheme: dark)">
+    
+    <!-- Standard PWA Capability Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Apple iOS Configuration -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Gombe Hub">
+    <meta name="apple-itunes-app" content="app-id=placeholder">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Android Chrome Configuration -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Gombe SS Hub Pro">
+    
+    <!-- Microsoft Windows Configuration -->
+    <meta name="msapplication-TileColor" content="#3B82F6">
+    <meta name="msapplication-TileImage" content="{{ asset('img/pwa/icon-144x144.png') }}">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-window" content="width=1024;height=768">
+    
+    <!-- Icons for All Devices -->
     <link rel="icon" type="image/png" href="{{ asset('img/pwa/icon-192x192.png') }}" sizes="192x192">
-    <link rel="apple-touch-icon" href="{{ asset('img/pwa/icon-192x192.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/pwa/icon-512x512.png') }}" sizes="512x512">
+    <link rel="shortcut icon" href="{{ asset('img/pwa/icon-192x192.png') }}" type="image/png">
+    
+    <!-- Apple Touch Icons for iOS Home Screen -->
+    <link rel="apple-touch-icon" href="{{ asset('img/pwa/icon-192x192.png') }}" sizes="192x192">
+    <link rel="apple-touch-icon" href="{{ asset('img/pwa/icon-152x152.png') }}" sizes="152x152">
+    <link rel="apple-touch-icon" href="{{ asset('img/pwa/icon-144x144.png') }}" sizes="144x144">
+    <link rel="apple-touch-icon" href="{{ asset('img/pwa/icon-128x128.png') }}" sizes="128x128">
+    
+    <!-- Web App Manifest -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
+    
+    <!-- Startup Image for iOS -->
+    <link rel="apple-touch-startup-image" href="{{ asset('img/pwa/icon-192x192.png') }}">
+    
+    <!-- Preconnect to External Resources -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <title>@yield('title', 'Admin Dashboard') | Gombe SS Hub</title>
 
@@ -88,6 +127,140 @@
         
         * {
             font-family: var(--font-family);
+        }
+        
+        /* PWA Install Button Styles */
+        #install-app-btn-sidebar {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        #install-app-btn-sidebar:hover:not(:disabled) {
+            background-color: #4a5568;
+            color: #ffffff;
+            transform: translateX(2px);
+        }
+        
+        #install-app-btn-sidebar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        #install-app-btn-sidebar.loading {
+            animation: pulse-button 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-button {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        /* Installation Feedback Styles */
+        .pwa-install-feedback,
+        .pwa-error-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .pwa-install-feedback,
+            .pwa-error-message {
+                top: auto;
+                bottom: 20px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+        
+        /* PWA Compatibility Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+        
+        /* iOS Safe Area Support */
+        body {
+            padding-top: max(0px, env(safe-area-inset-top));
+            padding-left: max(0px, env(safe-area-inset-left));
+            padding-right: max(0px, env(safe-area-inset-right));
+            padding-bottom: max(0px, env(safe-area-inset-bottom));
+        }
+        
+        /* High DPI Optimization */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            body {
+                font-smoothing: antialiased;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+        
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Dark Mode Optimization */
+        @media (prefers-color-scheme: dark) {
+            html {
+                color-scheme: dark;
+            }
+        }
+        
+        /* Touch Device Optimization */
+        @media (hover: none) and (pointer: coarse) {
+            button, a, input[type="button"], input[type="submit"] {
+                min-height: 44px;
+                min-width: 44px;
+            }
         }
         .sidebar-link {
             display: flex;
@@ -567,6 +740,11 @@
                 </a>
                 @endif
                 
+                <button id="install-app-btn-sidebar" class="sidebar-link hidden w-full text-left" onclick="event.preventDefault(); if(window.pwaInstaller) window.pwaInstaller.triggerInstall();" title="Install App" style="background: none; border: none; padding: 0.75rem 1rem;">
+                    <i class="fas fa-download mr-3 w-5 h-5"></i>
+                    <span class="sidebar-text">Install App</span>
+                </button>
+                
                 <a href="#" class="sidebar-link mt-auto" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
                     <i class="fas fa-sign-out-alt mr-3 w-5 h-5"></i>
                     <span class="sidebar-text">Logout</span>
@@ -634,8 +812,14 @@
                         </div>
                     </div>
                     
-                    <div class="flex items-center">
-                        <span class="text-gray-800 dark:text-gray-300 mr-4 admin-header-welcome">Welcome, Admin!</span> {{-- Replace with Auth::user()->name if auth is set up --}}
+                    <div class="flex items-center gap-4">
+                        <span class="text-gray-800 mr-4 admin-header-welcome">Welcome, Admin!</span>
+                        
+                        <button id="install-app-btn" class="hidden px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2 transition" title="Install app on device">
+                            <i class="fas fa-download"></i>
+                            <span>Install App</span>
+                        </button>
+                        
                         <div id="theme-selector" class="flex items-center space-x-2">
                             <span class="text-sm theme-selector-heading">Theme:</span>
                             <label class="flex items-center space-x-1 cursor-pointer">
@@ -1022,7 +1206,8 @@
     <!-- Page-specific scripts -->
     @stack('scripts')
     
-    <!-- PWA Installer -->
+    <!-- PWA Installer & Compatibility -->
+    <script src="{{ asset('js/pwa-compatibility.js') }}"></script>
     <script src="{{ asset('js/pwa-installer.js') }}"></script>
     
     <!-- PWA Service Worker Registration -->
@@ -1050,23 +1235,23 @@
             });
             
             // Listen for install prompt
-            let deferredPrompt;
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
-                deferredPrompt = e;
                 
-                // Show install button (you can customize this)
-                const installButton = document.getElementById('install-app-btn');
-                if (installButton) {
-                    installButton.style.display = 'block';
-                    installButton.addEventListener('click', async () => {
-                        if (deferredPrompt) {
-                            deferredPrompt.prompt();
-                            const { outcome } = await deferredPrompt.userChoice;
-                            console.log(`User response to the install prompt: ${outcome}`);
-                            deferredPrompt = null;
-                        }
-                    });
+                if (window.pwaInstaller) {
+                    window.pwaInstaller.deferredPrompt = e;
+                    
+                    // Show install button in navbar if exists
+                    const installButton = document.getElementById('install-app-btn');
+                    if (installButton) {
+                        installButton.style.display = 'block';
+                    }
+                    
+                    // Show install button in sidebar if exists
+                    const sidebarInstallButton = document.getElementById('install-app-btn-sidebar');
+                    if (sidebarInstallButton) {
+                        sidebarInstallButton.classList.remove('hidden');
+                    }
                 }
             });
             

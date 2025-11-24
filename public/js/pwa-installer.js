@@ -18,6 +18,7 @@ class PWAInstaller {
             this.isInstalled = true;
             console.log('PWA is installed and running in standalone mode');
             document.body.classList.add('pwa-installed');
+            this.hideSidebarInstallButton();
         }
     }
 
@@ -33,12 +34,20 @@ class PWAInstaller {
             this.isInstalled = true;
             document.body.classList.add('pwa-installed');
             this.deferredPrompt = null;
+            this.hideSidebarInstallButton();
             this.showNotification('App Installed', 'Gombe Hub has been installed on your device!');
         });
     }
 
     showInstallPrompt() {
         const installButton = this.createInstallButton();
+        const sidebarButton = document.getElementById('install-app-btn-sidebar');
+        
+        // Show sidebar button if available
+        if (sidebarButton) {
+            sidebarButton.classList.remove('hidden');
+        }
+        
         const promptContainer = document.createElement('div');
         promptContainer.id = 'pwa-install-prompt';
         promptContainer.className = 'pwa-install-prompt';
@@ -97,10 +106,31 @@ class PWAInstaller {
 
     async triggerInstall() {
         if (this.deferredPrompt) {
-            this.deferredPrompt.prompt();
-            const { outcome } = await this.deferredPrompt.userChoice;
-            console.log(`User response to install prompt: ${outcome}`);
-            this.deferredPrompt = null;
+            this.setButtonLoading(true);
+            
+            try {
+                this.deferredPrompt.prompt();
+                const { outcome } = await this.deferredPrompt.userChoice;
+                
+                console.log(`User response to install prompt: ${outcome}`);
+                
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                    this.showInstallationFeedback();
+                } else {
+                    console.log('User dismissed the install prompt');
+                    this.setButtonLoading(false);
+                }
+                
+                this.deferredPrompt = null;
+            } catch (error) {
+                console.error('Error during installation:', error);
+                this.setButtonLoading(false);
+                this.showErrorMessage('Installation failed. Please try again.');
+            }
+        } else {
+            console.log('Deferred prompt not available');
+            this.showErrorMessage('Installation not available on this device.');
         }
     }
 
@@ -152,6 +182,114 @@ class PWAInstaller {
         const expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 1);
         localStorage.setItem('pwa-prompt-hidden', expiryDate.getTime());
+    }
+
+    hideSidebarInstallButton() {
+        const sidebarButton = document.getElementById('install-app-btn-sidebar');
+        if (sidebarButton) {
+            sidebarButton.classList.add('hidden');
+        }
+    }
+
+    setButtonLoading(isLoading) {
+        const sidebarButton = document.getElementById('install-app-btn-sidebar');
+        const navbarButton = document.getElementById('install-app-btn');
+        const buttons = [sidebarButton, navbarButton].filter(Boolean);
+        
+        buttons.forEach(button => {
+            if (isLoading) {
+                button.disabled = true;
+                button.classList.add('loading');
+                button.style.opacity = '0.7';
+                button.style.pointerEvents = 'none';
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-spinner fa-spin';
+                }
+                const text = button.querySelector('span');
+                if (text) {
+                    text.textContent = 'Installing...';
+                }
+            } else {
+                button.disabled = false;
+                button.classList.remove('loading');
+                button.style.opacity = '1';
+                button.style.pointerEvents = 'auto';
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-download';
+                }
+                const text = button.querySelector('span');
+                if (text) {
+                    text.textContent = 'Install App';
+                }
+            }
+        });
+    }
+
+    showInstallationFeedback() {
+        const notification = document.createElement('div');
+        notification.className = 'pwa-install-feedback';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: slideDown 0.3s ease-out;
+            max-width: 90vw;
+        `;
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #10b981; color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); flex-wrap: wrap;">
+                <i class="fas fa-check-circle" style="font-size: 1.25rem; flex-shrink: 0;"></i>
+                <span style="flex: 1; min-width: 200px;">Installation in progress... The app will appear on your home screen.</span>
+            </div>
+        `;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.3s ease-out';
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 4000);
+    }
+
+    showErrorMessage(message) {
+        const notification = document.createElement('div');
+        notification.className = 'pwa-error-message';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: slideDown 0.3s ease-out;
+            max-width: 90vw;
+        `;
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #ef4444; color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); flex-wrap: wrap;">
+                <i class="fas fa-exclamation-circle" style="font-size: 1.25rem; flex-shrink: 0;"></i>
+                <span style="flex: 1; min-width: 200px;">${message}</span>
+                <button onclick="this.parentElement.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: white; cursor: pointer; font-size: 1.5rem; padding: 0; flex-shrink: 0;">×</button>
+            </div>
+        `;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s ease-out';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        }, 5000);
     }
 
     shouldShowPrompt() {

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gombe Hub - PWA Status & Diagnostics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .feature {
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+            background: #f9fafb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .feature.supported {
+            border-left-color: #10b981;
+            background: #ecfdf5;
+        }
+        
+        .feature.unsupported {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        .feature.partial {
+            border-left-color: #f59e0b;
+            background: #fefce8;
+        }
+        
+        .feature-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .feature-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .feature.supported .feature-status {
+            background: #10b981;
+            color: white;
+        }
+        
+        .feature.unsupported .feature-status {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .feature.partial .feature-status {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+        
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .support-level {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .support-level.excellent {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .support-level.good {
+            background: #dbeafe;
+            color: #0c4a6e;
+        }
+        
+        .support-level.moderate {
+            background: #fed7aa;
+            color: #92400e;
+        }
+        
+        .support-level.limited {
+            background: #fecaca;
+            color: #7f1d1d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Gombe Hub PWA Diagnostics</h1>
+            <p>Check your device's compatibility with Progressive Web App features</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>📊 Overall Status</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="supportPercentage">0%</div>
+                        <div class="stat-label">Support Level</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="supportedCount">0</div>
+                        <div class="stat-label">Features Supported</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="unsupportedCount">0</div>
+                        <div class="stat-label">Features Unsupported</div>
+                    </div>
+                </div>
+                <div id="supportLevelBadge" class="support-level">Loading...</div>
+            </div>
+            
+            <div class="section">
+                <h2>✨ Core PWA Features</h2>
+                <div class="feature-grid" id="coreFeaturesGrid"></div>
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> Service Workers are required for full PWA functionality including offline support and background sync.
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>📱 Device Information</h2>
+                <div class="feature-grid" id="deviceInfoGrid"></div>
+            </div>
+            
+            <div class="section">
+                <h2>🔧 Advanced Features</h2>
+                <div class="feature-grid" id="advancedFeaturesGrid"></div>
+            </div>
+            
+            <div class="section">
+                <h2>⚙️ Actions</h2>
+                <div class="actions">
+                    <button class="btn-primary" onclick="installApp()">Install App</button>
+                    <button class="btn-primary" onclick="registerServiceWorker()">Register Service Worker</button>
+                    <button class="btn-danger" onclick="clearCache()">Clear Cache</button>
+                </div>
+                <div class="info-box" id="actionStatus" style="margin-top: 15px; display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/pwa-compatibility.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            displayDiagnostics();
+        });
+
+        function displayDiagnostics() {
+            if (!window.pwaCompatibility) {
+                console.error('PWA Compatibility script not loaded');
+                return;
+            }
+
+            const capabilities = window.pwaCompatibility.getCapabilities();
+            const supportLevel = window.pwaCompatibility.getSupportLevel();
+            const supported = Object.values(capabilities).filter(Boolean).length;
+            const total = Object.keys(capabilities).length;
+            const percentage = Math.round((supported / total) * 100);
+
+            document.getElementById('supportPercentage').textContent = percentage + '%';
+            document.getElementById('supportedCount').textContent = supported;
+            document.getElementById('unsupportedCount').textContent = total - supported;
+
+            const badge = document.getElementById('supportLevelBadge');
+            badge.textContent = supportLevel.toUpperCase();
+            badge.className = `support-level ${supportLevel}`;
+
+            displayCoreFeatures(capabilities);
+            displayDeviceInfo(capabilities);
+            displayAdvancedFeatures(capabilities);
+        }
+
+        function displayCoreFeatures(capabilities) {
+            const coreFeatures = ['serviceWorker', 'webManifest', 'notifications', 'offline', 'localStorage'];
+            const html = coreFeatures.map(feature => createFeatureElement(feature, capabilities[feature])).join('');
+            document.getElementById('coreFeaturesGrid').innerHTML = html;
+        }
+
+        function displayDeviceInfo(capabilities) {
+            const deviceInfo = ['iosSupport', 'androidSupport', 'desktopSupport', 'touchSupport', 'darkMode', 'highDPI'];
+            const html = deviceInfo.map(feature => createFeatureElement(feature, capabilities[feature])).join('');
+            document.getElementById('deviceInfoGrid').innerHTML = html;
+        }
+
+        function displayAdvancedFeatures(capabilities) {
+            const advancedFeatures = ['vibration', 'geolocation', 'backgroundSync', 'webShare', 'clipboard', 'indexedDB', 'cameraAccess', 'microphone'];
+            const html = advancedFeatures.map(feature => createFeatureElement(feature, capabilities[feature])).join('');
+            document.getElementById('advancedFeaturesGrid').innerHTML = html;
+        }
+
+        function createFeatureElement(name, supported) {
+            const status = supported ? 'SUPPORTED' : 'UNSUPPORTED';
+            const className = supported ? 'supported' : 'unsupported';
+            const displayName = name.replace(/([A-Z])/g, ' $1').trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            
+            return `
+                <div class="feature ${className}">
+                    <span class="feature-name">${displayName}</span>
+                    <span class="feature-status">${status}</span>
+                </div>
+            `;
+        }
+
+        function installApp() {
+            if (window.pwaInstaller && window.pwaInstaller.triggerInstall) {
+                window.pwaInstaller.triggerInstall();
+                showActionStatus('Installation prompt shown (if available on this device)', 'success');
+            } else {
+                showActionStatus('PWA installer not available', 'error');
+            }
+        }
+
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/js/service-worker.js')
+                    .then(reg => showActionStatus('Service Worker registered successfully!', 'success'))
+                    .catch(err => showActionStatus('Service Worker registration failed: ' + err.message, 'error'));
+            } else {
+                showActionStatus('Service Workers not supported on this device', 'error');
+            }
+        }
+
+        function clearCache() {
+            if (confirm('Are you sure you want to clear all cached data?')) {
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
+                    caches.keys().then(names => Promise.all(names.map(name => caches.delete(name))))
+                        .then(() => showActionStatus('Cache cleared successfully!', 'success'))
+                        .catch(err => showActionStatus('Cache clear failed: ' + err.message, 'error'));
+                } else {
+                    showActionStatus('Service Worker not available', 'error');
+                }
+            }
+        }
+
+        function showActionStatus(message, type) {
+            const status = document.getElementById('actionStatus');
+            status.textContent = message;
+            status.style.display = 'block';
+            status.style.borderLeftColor = type === 'success' ? '#10b981' : '#ef4444';
+            status.style.background = type === 'success' ? '#ecfdf5' : '#fef2f2';
+            status.style.color = type === 'success' ? '#065f46' : '#7f1d1d';
+        }
+    </script>
+</body>
+</html>

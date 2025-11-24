@@ -214,6 +214,10 @@
         color: rgba(255, 255, 255, 0.8) !important;
     }
 
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div .opacity-100 {
+        color: rgba(255, 255, 255, 1) !important;
+    }
+
     .flex.flex-wrap.justify-center.gap-6.mb-8 > div,
     .flex.flex-wrap.justify-center.gap-6.mb-8 > div * {
         color: white !important;
@@ -224,6 +228,22 @@
     }
 
     .flex.flex-wrap.justify-center.gap-6.mb-8 > div span {
+        color: white !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div .text-4xl {
+        color: white !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div .text-sm {
+        color: white !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div .text-xs {
+        color: white !important;
+    }
+
+    .flex.flex-wrap.justify-center.gap-6.mb-8 > div .inline-block {
         color: white !important;
     }
 </style>

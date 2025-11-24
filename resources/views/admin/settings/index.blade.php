@@ -6,10 +6,10 @@
 <div class="container-fluid px-4 py-6">
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
             <i class="fas fa-cog mr-2"></i>System Settings
         </h1>
-        <p class="text-gray-800 dark:text-gray-400">Manage system configuration, user accounts, and appearance settings</p>
+        <p class="text-gray-800">Manage system configuration, user accounts, and appearance settings</p>
     </div>
 
     @if(session('success'))
@@ -25,11 +25,11 @@
     @endif
 
     <!-- Settings Tabs -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+    <div class="bg-white rounded-lg shadow-lg">
         <!-- Tab Navigation -->
-        <div class="border-b border-gray-200 dark:border-gray-700">
+        <div class="border-b border-gray-200">
             <nav class="flex -mb-px overflow-x-auto" aria-label="Tabs">
-                <button onclick="showTab('user-management')" class="tab-button active whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm" data-tab="user-management">
+                <button onclick="showTab('user-management')" class="tab-button active whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm text-gray-900" data-tab="user-management">
                     <i class="fas fa-users mr-2"></i>User Management
                 </button>
                 <button onclick="showTab('appearance')" class="tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm" data-tab="appearance">
@@ -41,6 +41,9 @@
                 <button onclick="showTab('security')" class="tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm" data-tab="security">
                     <i class="fas fa-shield-alt mr-2"></i>Security
                 </button>
+                <button onclick="showTab('pwa')" class="tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm" data-tab="pwa">
+                    <i class="fas fa-mobile-alt mr-2"></i>PWA Settings
+                </button>
             </nav>
         </div>
 
@@ -48,8 +51,8 @@
         <div class="p-6">
             <!-- User Management Tab -->
             <div id="user-management-tab" class="tab-content">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">User Management</h2>
-                <p class="text-gray-800 dark:text-gray-400 mb-6">Create, edit, and manage user accounts and permissions</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">User Management</h2>
+                <p class="text-gray-800 mb-6">Create, edit, and manage user accounts and permissions</p>
 
                 <!-- Quick Actions -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -67,11 +70,11 @@
                 <!-- User Management Features -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Account Creation -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <i class="fas fa-user-plus text-indigo-600 mr-2"></i>Account Creation
                         </h3>
-                        <ul class="space-y-2 text-gray-800 dark:text-gray-300">
+                        <ul class="space-y-2 text-gray-800">
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Create user accounts</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Set initial passwords</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Assign user roles</li>
@@ -80,11 +83,11 @@
                     </div>
 
                     <!-- User Roles & Permissions -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <i class="fas fa-user-shield text-blue-600 mr-2"></i>Roles & Permissions
                         </h3>
-                        <ul class="space-y-2 text-gray-800 dark:text-gray-300">
+                        <ul class="space-y-2 text-gray-800">
                             <li><i class="fas fa-crown text-yellow-500 mr-2"></i><strong>Super Admin:</strong> Full system access</li>
                             <li><i class="fas fa-user-tie text-purple-500 mr-2"></i><strong>Admin:</strong> Manage users & data</li>
                             <li><i class="fas fa-user text-gray-800 mr-2"></i><strong>User:</strong> View & basic operations</li>
@@ -92,11 +95,11 @@
                     </div>
 
                     <!-- Profile Management -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <i class="fas fa-id-card text-green-600 mr-2"></i>Profile Management
                         </h3>
-                        <ul class="space-y-2 text-gray-800 dark:text-gray-300">
+                        <ul class="space-y-2 text-gray-800">
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Edit user information</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Upload profile pictures</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Update contact details</li>
@@ -105,11 +108,11 @@
                     </div>
 
                     <!-- Password Management -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <i class="fas fa-key text-red-600 mr-2"></i>Password Management
                         </h3>
-                        <ul class="space-y-2 text-gray-800 dark:text-gray-300">
+                        <ul class="space-y-2 text-gray-800">
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Reset user passwords</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Force password changes</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Set password policies</li>
@@ -118,11 +121,11 @@
                     </div>
 
                     <!-- File Management -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <i class="fas fa-file-upload text-orange-600 mr-2"></i>File Management
                         </h3>
-                        <ul class="space-y-2 text-gray-800 dark:text-gray-300">
+                        <ul class="space-y-2 text-gray-800">
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Upload system files</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Manage user documents</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Profile picture uploads</li>
@@ -131,11 +134,11 @@
                     </div>
 
                     <!-- User Activity -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <i class="fas fa-chart-line text-teal-600 mr-2"></i>User Activity
                         </h3>
-                        <ul class="space-y-2 text-gray-800 dark:text-gray-300">
+                        <ul class="space-y-2 text-gray-800">
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Track user logins</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Monitor user actions</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>View activity logs</li>
@@ -147,28 +150,28 @@
 
             <!-- Appearance Tab -->
             <div id="appearance-tab" class="tab-content hidden">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Appearance Settings</h2>
-                <p class="text-gray-800 dark:text-gray-400 mb-6">Customize the look and feel of the application</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Appearance Settings</h2>
+                <p class="text-gray-800 mb-6">Customize the look and feel of the application</p>
 
                 <form id="appearance-form" class="space-y-6">
                     @csrf
                     
                     <!-- Font Family -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
                             <i class="fas fa-font mr-2"></i>Font Family
                         </label>
-                        <select name="font_family" id="font_family" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white" onchange="previewFont(this.value)">
+                        <select name="font_family" id="font_family" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white text-gray-900" onchange="previewFont(this.value)">
                             <option value="Ubuntu" selected>Ubuntu (Default)</option>
                             <option value="Calibri">Calibri</option>
                             <option value="Brush Script MT">Brush Script MT</option>
                             <option value="Times New Roman">Times New Roman</option>
                         </select>
-                        <p class="mt-2 text-sm text-gray-800 dark:text-gray-400">Select the default font for the entire application</p>
+                        <p class="mt-2 text-sm text-gray-800">Select the default font for the entire application</p>
                         
                         <!-- Font Preview -->
-                        <div class="mt-4 p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg">
-                            <p class="text-sm text-gray-800 dark:text-gray-400 mb-2">Preview:</p>
+                        <div class="mt-4 p-4 bg-gray-50 border border-gray-300 rounded-lg">
+                            <p class="text-sm text-gray-800 mb-2">Preview:</p>
                             <p id="font-preview" style="font-family: Ubuntu; font-size: 18px;">
                                 The quick brown fox jumps over the lazy dog. 0123456789
                             </p>
@@ -176,19 +179,19 @@
                     </div>
 
                     <!-- Theme Selection -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
                             <i class="fas fa-palette mr-2"></i>Color Theme
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <label class="flex items-center p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-green-500 transition">
+                            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-green-500 transition">
                                 <input type="radio" name="theme" value="green" class="mr-3" checked>
                                 <div>
                                     <i class="fas fa-leaf text-green-600 mr-2"></i>
                                     <span class="font-medium">Green Theme</span>
                                 </div>
                             </label>
-                            <label class="flex items-center p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-amber-500 transition">
+                            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-amber-500 transition">
                                 <input type="radio" name="theme" value="cream" class="mr-3">
                                 <div>
                                     <i class="fas fa-sun text-amber-600 mr-2"></i>
@@ -199,20 +202,20 @@
                     </div>
 
                     <!-- Font Size -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
                             <i class="fas fa-text-height mr-2"></i>Font Size
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <label class="flex items-center p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-indigo-500 transition">
+                            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 transition">
                                 <input type="radio" name="font_size" value="small" class="mr-3">
                                 <span class="font-medium text-sm">Small</span>
                             </label>
-                            <label class="flex items-center p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-indigo-500 transition">
+                            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 transition">
                                 <input type="radio" name="font_size" value="medium" class="mr-3" checked>
                                 <span class="font-medium">Medium</span>
                             </label>
-                            <label class="flex items-center p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-indigo-500 transition">
+                            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 transition">
                                 <input type="radio" name="font_size" value="large" class="mr-3">
                                 <span class="font-medium text-lg">Large</span>
                             </label>
@@ -233,31 +236,31 @@
 
             <!-- General Tab -->
             <div id="general-tab" class="tab-content hidden">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">General Settings</h2>
-                <p class="text-gray-800 dark:text-gray-400 mb-6">Configure general application settings</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">General Settings</h2>
+                <p class="text-gray-800 mb-6">Configure general application settings</p>
 
                 <form id="general-form" class="space-y-6">
                     @csrf
                     
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
                             Application Name
                         </label>
-                        <input type="text" name="app_name" value="Gombe SS Hub" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white">
+                        <input type="text" name="app_name" value="Gombe SS Hub" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white text-gray-900">
                     </div>
 
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
                             Contact Email
                         </label>
-                        <input type="email" name="contact_email" value="admin@gombess.edu" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white">
+                        <input type="email" name="contact_email" value="admin@gombess.edu" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white text-gray-900">
                     </div>
 
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
                             Contact Phone
                         </label>
-                        <input type="text" name="contact_phone" value="0779201801" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white">
+                        <input type="text" name="contact_phone" value="0779201801" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white text-gray-900">
                     </div>
 
                     <div class="flex justify-end">
@@ -270,28 +273,28 @@
 
             <!-- Security Tab -->
             <div id="security-tab" class="tab-content hidden">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Security Settings</h2>
-                <p class="text-gray-800 dark:text-gray-400 mb-6">Configure security and authentication settings</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Security Settings</h2>
+                <p class="text-gray-800 mb-6">Configure security and authentication settings</p>
 
                 <form id="security-form" class="space-y-6">
                     @csrf
                     
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
                             Session Timeout (minutes)
                         </label>
-                        <input type="number" name="session_timeout" value="120" min="5" max="1440" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white">
+                        <input type="number" name="session_timeout" value="120" min="5" max="1440" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white text-gray-900">
                     </div>
 
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
                             Minimum Password Length
                         </label>
-                        <input type="number" name="password_min_length" value="8" min="6" max="50" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white">
+                        <input type="number" name="password_min_length" value="8" min="6" max="50" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white text-gray-900">
                     </div>
 
-                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
                             Password Requirements
                         </label>
                         <div class="space-y-2">
@@ -320,6 +323,115 @@
                         </button>
                     </div>
                 </form>
+            </div>
+
+            <!-- PWA Settings Tab -->
+            <div id="pwa-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Progressive Web App (PWA) Settings</h2>
+                <p class="text-gray-800 mb-6">Configure Progressive Web App settings to enable offline access and app installation</p>
+
+                <div class="space-y-6">
+                    <!-- PWA Status -->
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fas fa-info-circle text-blue-600 mr-2"></i>PWA Status
+                        </h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-800">
+                                <strong>Status:</strong> 
+                                <span id="pwa-status" class="inline-block ml-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                    <i class="fas fa-check-circle mr-1"></i>Active & Ready
+                                </span>
+                            </p>
+                            <p class="text-gray-800 mt-3">
+                                <strong>Service Worker:</strong> 
+                                <span id="sw-status" class="inline-block ml-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                    <i class="fas fa-cog mr-1"></i>Registered
+                                </span>
+                            </p>
+                            <p class="text-gray-800 mt-3">
+                                <strong>Installation:</strong> 
+                                <span id="pwa-install-status" class="inline-block ml-2 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+                                    <i class="fas fa-mobile-alt mr-1"></i>Ready to Install
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- PWA Features -->
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-star text-purple-600 mr-2"></i>Enabled Features
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-start p-3 bg-green-50 rounded-lg border border-green-200">
+                                <i class="fas fa-check-circle text-green-600 mr-3 mt-1"></i>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Offline Access</p>
+                                    <p class="text-sm text-gray-600">Access app content offline</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-3 bg-green-50 rounded-lg border border-green-200">
+                                <i class="fas fa-check-circle text-green-600 mr-3 mt-1"></i>
+                                <div>
+                                    <p class="font-semibold text-gray-900">App Caching</p>
+                                    <p class="text-sm text-gray-600">Static assets cached locally</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-3 bg-green-50 rounded-lg border border-green-200">
+                                <i class="fas fa-check-circle text-green-600 mr-3 mt-1"></i>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Installable</p>
+                                    <p class="text-sm text-gray-600">Install as native app</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-3 bg-green-50 rounded-lg border border-green-200">
+                                <i class="fas fa-check-circle text-green-600 mr-3 mt-1"></i>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Background Sync</p>
+                                    <p class="text-sm text-gray-600">Auto sync data when online</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PWA Installation -->
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-download text-indigo-600 mr-2"></i>Installation Options
+                        </h3>
+                        <div class="space-y-3">
+                            <p class="text-gray-800">Install the Gombe Hub PWA on your device for quick access and offline capabilities.</p>
+                            <div class="flex flex-wrap gap-3">
+                                <button onclick="installPWA()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center gap-2">
+                                    <i class="fas fa-download"></i>
+                                    Install App Now
+                                </button>
+                                <button onclick="viewPWAGuide()" class="px-6 py-2 border border-indigo-600 text-indigo-600 hover:bg-indigo-50 rounded-lg transition flex items-center gap-2">
+                                    <i class="fas fa-question-circle"></i>
+                                    Installation Guide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cache Management -->
+                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-database text-orange-600 mr-2"></i>Cache Management
+                        </h3>
+                        <div class="space-y-3">
+                            <p class="text-gray-800">Manage PWA cache to free up storage space or refresh content.</p>
+                            <div id="cache-size" class="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                <p class="text-sm text-gray-600">Cache size: <span id="cache-size-value" class="font-semibold">Calculating...</span></p>
+                            </div>
+                            <button onclick="clearPWACache()" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition flex items-center gap-2">
+                                <i class="fas fa-trash"></i>
+                                Clear Cache
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -426,6 +538,131 @@ function showBulkActions() {
     alert('Bulk actions feature - Navigate to User Management page for bulk operations');
     window.location.href = '{{ route("admin.users.index") }}';
 }
+
+// PWA Functions
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const installBtn = document.getElementById('install-app-btn');
+    if (installBtn) {
+        installBtn.classList.remove('hidden');
+    }
+});
+
+function installPWA() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                alert('App installed successfully!');
+                updatePWAStatus();
+            }
+            deferredPrompt = null;
+        });
+    } else {
+        alert('App is already installed or installation is not available on your device.');
+    }
+}
+
+function viewPWAGuide() {
+    alert('PWA Installation Guide:\n\n' +
+        '1. Chrome/Edge: Look for "Install" button in the address bar\n' +
+        '2. Firefox: Right-click and select "Install app"\n' +
+        '3. Safari: Use Share menu → "Add to Home Screen"\n' +
+        '4. Mobile: Look for app installation prompt at the top of screen\n\n' +
+        'After installation, you can access the app from your home screen or app drawer!');
+}
+
+async function clearPWACache() {
+    if (!('caches' in window)) {
+        alert('Cache API is not supported in your browser.');
+        return;
+    }
+    
+    if (confirm('Are you sure you want to clear the app cache? This will remove all offline content.')) {
+        try {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+            alert('Cache cleared successfully! The app will re-download content on next visit.');
+            updateCacheSize();
+        } catch (err) {
+            console.error('Error clearing cache:', err);
+            alert('Failed to clear cache. Please try again.');
+        }
+    }
+}
+
+async function updateCacheSize() {
+    if (!('caches' in window)) return;
+    
+    try {
+        const cacheNames = await caches.keys();
+        let totalSize = 0;
+        
+        for (const cacheName of cacheNames) {
+            const cache = await caches.open(cacheName);
+            const keys = await cache.keys();
+            
+            for (const request of keys) {
+                const response = await cache.match(request);
+                if (response) {
+                    const blob = await response.blob();
+                    totalSize += blob.size;
+                }
+            }
+        }
+        
+        const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
+        const sizeDisplay = document.getElementById('cache-size-value');
+        if (sizeDisplay) {
+            sizeDisplay.textContent = sizeInMB + ' MB';
+        }
+    } catch (err) {
+        console.error('Error calculating cache size:', err);
+    }
+}
+
+function updatePWAStatus() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            const statusElement = document.getElementById('pwa-status');
+            if (statusElement && registrations.length > 0) {
+                statusElement.innerHTML = '<i class="fas fa-check-circle mr-1"></i>Active & Installed';
+                statusElement.className = 'inline-block ml-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium';
+            }
+        });
+    }
+}
+
+// Initialize on page load
+window.addEventListener('load', () => {
+    updateCacheSize();
+    updatePWAStatus();
+    
+    // Check if app is installed
+    if (window.navigator.standalone === true || document.referrer.includes('android-app://')) {
+        const statusElement = document.getElementById('pwa-install-status');
+        if (statusElement) {
+            statusElement.innerHTML = '<i class="fas fa-check-circle mr-1"></i>Installed';
+            statusElement.className = 'inline-block ml-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium';
+        }
+    }
+});
+
+// Check for app installation
+window.addEventListener('appinstalled', () => {
+    console.log('App was installed successfully');
+    updatePWAStatus();
+    const statusElement = document.getElementById('pwa-install-status');
+    if (statusElement) {
+        statusElement.innerHTML = '<i class="fas fa-check-circle mr-1"></i>Installed';
+        statusElement.className = 'inline-block ml-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium';
+    }
+});
 </script>
 
 <style>

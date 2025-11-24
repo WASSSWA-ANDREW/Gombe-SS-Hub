@@ -14,6 +14,7 @@ use App\Models\Alumni;
 use App\Exports\OlevelStudentsExport;
 use App\Exports\AlevelStudentsExport;
 use App\Imports\StudentsImport;
+use App\Services\NotificationService;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
@@ -135,7 +136,8 @@ class StudentController extends Controller
             $data['photo_path'] = $request->file('photo_path')->store('students/olevel/photos', 'public');
         }
 
-        Student::create($data);
+        $student = Student::create($data);
+        NotificationService::notifyStudentDataEntered($student, 'created');
 
         return redirect()->route('admin.students.olevel.index')->with('success', 'O\'Level student created successfully');
     }
@@ -242,7 +244,8 @@ class StudentController extends Controller
             $data['photo_path'] = $request->file('photo_path')->store('students/alevel/photos', 'public');
         }
 
-        Student::create($data);
+        $student = Student::create($data);
+        NotificationService::notifyStudentDataEntered($student, 'created');
 
         return redirect()->route('admin.students.alevel.index')->with('success', 'A\'Level student created successfully');
     }

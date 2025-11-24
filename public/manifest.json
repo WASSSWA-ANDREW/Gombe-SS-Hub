@@ -9,16 +9,27 @@
   "background_color": "#ffffff",
   "theme_color": "#3B82F6",
   "categories": ["education", "productivity"],
+  "prefer_related_applications": false,
+  "lang": "en-US",
+  "dir": "ltr",
   "screenshots": [
     {
       "src": "/img/pwa/screenshot-1.png",
       "sizes": "540x720",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "narrow"
     },
     {
       "src": "/img/pwa/screenshot-2.png",
       "sizes": "540x720",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/img/pwa/screenshot-wide-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ],
   "icons": [
@@ -135,6 +146,44 @@
           "type": "image/png"
         }
       ]
+    }
+  ],
+  "share_target": {
+    "action": "/admin/dashboard",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "documents",
+          "accept": [
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "image/*"
+          ]
+        }
+      ]
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "/admin/dashboard",
+      "accept": {
+        "application/pdf": [".pdf"],
+        "application/msword": [".doc"],
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+        "text/csv": [".csv"],
+        "application/vnd.ms-excel": [".xls"],
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"]
+      },
+      "launch_type": "single-client"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+gombeapp",
+      "url": "/admin/dashboard?protocol=%s"
     }
   ]
 }

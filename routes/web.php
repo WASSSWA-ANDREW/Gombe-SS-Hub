@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DisciplineController;
 use App\Http\Controllers\Admin\FileUploadController;
+use App\Http\Controllers\Admin\IntelligenceController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -230,6 +231,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard/stats', [DashboardController::class, 'getStats'])->name('admin.dashboard.stats');
     Route::get('/admin/dashboard/charts', [DashboardController::class, 'getChartsData'])->name('admin.dashboard.charts');
     Route::get('/admin/dashboard/recent-activities', [DashboardController::class, 'getRecentActivities'])->name('admin.dashboard.activities');
+
+    // Intelligence and Analytics Routes
+    Route::prefix('admin/intelligence')->name('admin.intelligence.')->group(function () {
+        Route::get('/dashboard', [IntelligenceController::class, 'dashboard'])->name('dashboard');
+        Route::get('/predictions', [IntelligenceController::class, 'studentPredictions'])->name('predictions');
+        Route::get('/performance', [IntelligenceController::class, 'performanceAnalytics'])->name('performance');
+        Route::get('/attendance', [IntelligenceController::class, 'attendanceAnalysis'])->name('attendance');
+        Route::get('/anomalies', [IntelligenceController::class, 'anomalyReport'])->name('anomalies');
+        Route::get('/recommendations', [IntelligenceController::class, 'recommendations'])->name('recommendations');
+        Route::get('/notifications', [IntelligenceController::class, 'notifications'])->name('notifications');
+        Route::post('/generate-notifications', [IntelligenceController::class, 'generateNotifications'])->name('generate.notifications');
+        Route::get('/system-health', [IntelligenceController::class, 'systemHealth'])->name('system.health');
+    });
 
     // File Upload Routes
     Route::prefix('admin/files')->name('admin.files.')->group(function () {
