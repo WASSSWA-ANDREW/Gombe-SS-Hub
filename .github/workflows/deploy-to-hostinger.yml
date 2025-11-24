@@ -28,6 +28,29 @@ jobs:
             npm run production || npm run prod || true
           fi
 
+      - name: Transfer files via SSH (tar pipe)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          script_stop: true
+          script: |
+            mkdir -p ${{ secrets.HOSTINGER_TARGET }}
+            cd ${{ secrets.HOSTINGER_TARGET }}
+            echo "Target directory ready: $(pwd)"
+      
+      - name: Upload files via SSH
+        run: |
+          tar --exclude='.git' --exclude='node_modules' --exclude='.github' -czf - . | \
+          ssh -i ${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }} \
+              -o StrictHostKeyChecking=no \
+              -o UserKnownHostsFile=/dev/null \
+              -p ${{ secrets.HOSTINGER_PORT }} \
+              ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} \
+              "cd ${{ secrets.HOSTINGER_TARGET }} && tar -xzf -"
+
       - name: Deploy via SSH (copy files)
         uses: appleboy/ssh-action@master
         with:
