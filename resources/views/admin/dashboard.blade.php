@@ -478,6 +478,16 @@
                         <p class="text-sm text-gray-800 dark:text-gray-300">{{ $totalFileUploads }} document{{ $totalFileUploads !== 1 ? 's' : '' }}</p>
                     </div>
                 </div>
+                <div class="flex items-center space-x-2">
+                    <a href="{{ route('admin.files.index', ['type' => 'students']) }}" class="inline-flex items-center px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm" title="View student files">
+                        <i class="fas fa-user-graduate mr-2"></i>
+                        View Student Files
+                    </a>
+                    <a href="{{ route('admin.files.index', ['type' => 'staff']) }}" class="inline-flex items-center px-3 py-1 rounded-md bg-green-600 hover:bg-green-700 text-white text-xs font-semibold shadow-sm" title="View staff files">
+                        <i class="fas fa-chalkboard-teacher mr-2"></i>
+                        View Staff Files
+                    </a>
+                </div>
             </div>
 
             <!-- File Uploads List -->

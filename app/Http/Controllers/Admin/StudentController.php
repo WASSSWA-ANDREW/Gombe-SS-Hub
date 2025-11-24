@@ -115,25 +115,58 @@ class StudentController extends Controller
         $data = $validator->validated();
         $data['level'] = 'olevel';
 
-        // Handle file uploads
+        // Helper to sanitize names for filenames/directories
+        $sanitize = function ($name) {
+            $name = trim($name);
+            $name = str_replace(' ', '_', $name);
+            $name = preg_replace('/[^A-Za-z0-9_\-]/', '', $name);
+            return $name;
+        };
+
+        // Handle file uploads - rename files using owner names
         if ($request->hasFile('pass_slip')) {
-            $data['pass_slip_path'] = $request->file('pass_slip')->store('students/olevel/pass_slips', 'public');
+            $studentName = isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time();
+            $file = $request->file('pass_slip');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $studentName . '_pass_slip_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/pass_slips';
+            $data['pass_slip_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         if ($request->hasFile('father_passport_photo')) {
-            $data['father_passport_photo_path'] = $request->file('father_passport_photo')->store('students/olevel/parents', 'public');
+            $fatherName = isset($data['father_full_name']) && $data['father_full_name'] ? $sanitize($data['father_full_name']) : (isset($data['student_name']) ? $sanitize($data['student_name']) . '_father' : 'father_' . time());
+            $file = $request->file('father_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $fatherName . '_father_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . (isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time()) . '/parents';
+            $data['father_passport_photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         if ($request->hasFile('mother_passport_photo')) {
-            $data['mother_passport_photo_path'] = $request->file('mother_passport_photo')->store('students/olevel/parents', 'public');
+            $motherName = isset($data['mother_full_name']) && $data['mother_full_name'] ? $sanitize($data['mother_full_name']) : (isset($data['student_name']) ? $sanitize($data['student_name']) . '_mother' : 'mother_' . time());
+            $file = $request->file('mother_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $motherName . '_mother_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . (isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time()) . '/parents';
+            $data['mother_passport_photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         if ($request->hasFile('guardian_passport_photo')) {
-            $data['guardian_passport_photo_path'] = $request->file('guardian_passport_photo')->store('students/olevel/guardians', 'public');
+            $guardianName = isset($data['guardian_full_name']) && $data['guardian_full_name'] ? $sanitize($data['guardian_full_name']) : (isset($data['student_name']) ? $sanitize($data['student_name']) . '_guardian' : 'guardian_' . time());
+            $file = $request->file('guardian_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $guardianName . '_guardian_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . (isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time()) . '/guardians';
+            $data['guardian_passport_photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         if ($request->hasFile('photo_path')) {
-            $data['photo_path'] = $request->file('photo_path')->store('students/olevel/photos', 'public');
+            $studentName = isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time();
+            $file = $request->file('photo_path');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $studentName . '_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/photos';
+            $data['photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         $student = Student::create($data);
@@ -227,21 +260,49 @@ class StudentController extends Controller
         $data = $validator->validated();
         $data['level'] = 'alevel';
 
-        // Handle file uploads
+        // Helper to sanitize names for filenames/directories
+        $sanitize = function ($name) {
+            $name = trim($name);
+            $name = str_replace(' ', '_', $name);
+            $name = preg_replace('/[^A-Za-z0-9_\-]/', '', $name);
+            return $name;
+        };
+
+        // Handle file uploads - rename files using owner names
         if ($request->hasFile('father_passport_photo')) {
-            $data['father_passport_photo_path'] = $request->file('father_passport_photo')->store('students/alevel/parents', 'public');
+            $fatherName = isset($data['father_full_name']) && $data['father_full_name'] ? $sanitize($data['father_full_name']) : (isset($data['student_name']) ? $sanitize($data['student_name']) . '_father' : 'father_' . time());
+            $file = $request->file('father_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $fatherName . '_father_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . (isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time()) . '/parents';
+            $data['father_passport_photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         if ($request->hasFile('mother_passport_photo')) {
-            $data['mother_passport_photo_path'] = $request->file('mother_passport_photo')->store('students/alevel/parents', 'public');
+            $motherName = isset($data['mother_full_name']) && $data['mother_full_name'] ? $sanitize($data['mother_full_name']) : (isset($data['student_name']) ? $sanitize($data['student_name']) . '_mother' : 'mother_' . time());
+            $file = $request->file('mother_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $motherName . '_mother_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . (isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time()) . '/parents';
+            $data['mother_passport_photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         if ($request->hasFile('guardian_passport_photo')) {
-            $data['guardian_passport_photo_path'] = $request->file('guardian_passport_photo')->store('students/alevel/guardians', 'public');
+            $guardianName = isset($data['guardian_full_name']) && $data['guardian_full_name'] ? $sanitize($data['guardian_full_name']) : (isset($data['student_name']) ? $sanitize($data['student_name']) . '_guardian' : 'guardian_' . time());
+            $file = $request->file('guardian_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $guardianName . '_guardian_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . (isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time()) . '/guardians';
+            $data['guardian_passport_photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         if ($request->hasFile('photo_path')) {
-            $data['photo_path'] = $request->file('photo_path')->store('students/alevel/photos', 'public');
+            $studentName = isset($data['student_name']) ? $sanitize($data['student_name']) : 'student_' . time();
+            $file = $request->file('photo_path');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $studentName . '_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/photos';
+            $data['photo_path'] = $file->storeAs($directory, $filename, 'public');
         }
 
         $student = Student::create($data);
@@ -274,6 +335,43 @@ class StudentController extends Controller
         }
 
         $student->update($validator->validated());
+
+        // Allow updating uploaded files on edit; rename using student name
+        $sanitize = function ($name) {
+            $name = trim($name);
+            $name = str_replace(' ', '_', $name);
+            $name = preg_replace('/[^A-Za-z0-9_\\-]/', '', $name);
+            return $name;
+        };
+
+        $studentName = $sanitize($request->input('student_name', $student->student_name ?? 'student_' . time()));
+
+        if ($request->hasFile('pass_slip')) {
+            // delete old
+            if ($student->pass_slip_path) {
+                Storage::disk('public')->delete($student->pass_slip_path);
+            }
+            $file = $request->file('pass_slip');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $studentName . '_pass_slip_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/pass_slips';
+            $path = $file->storeAs($directory, $filename, 'public');
+            $student->pass_slip_path = $path;
+            $student->save();
+        }
+
+        if ($request->hasFile('photo_path')) {
+            if ($student->photo_path) {
+                Storage::disk('public')->delete($student->photo_path);
+            }
+            $file = $request->file('photo_path');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $studentName . '_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/photos';
+            $path = $file->storeAs($directory, $filename, 'public');
+            $student->photo_path = $path;
+            $student->save();
+        }
 
         return redirect()->route('admin.students.olevel.index')->with('success', 'Student updated successfully');
     }
@@ -394,6 +492,71 @@ class StudentController extends Controller
         }
 
         $student->update($validator->validated());
+
+        // Allow updating uploaded files on edit; rename using student name
+        $sanitize = function ($name) {
+            $name = trim($name);
+            $name = str_replace(' ', '_', $name);
+            $name = preg_replace('/[^A-Za-z0-9_\\-]/', '', $name);
+            return $name;
+        };
+
+        $studentName = $sanitize($request->input('student_name', $student->student_name ?? 'student_' . time()));
+
+        if ($request->hasFile('father_passport_photo')) {
+            if ($student->father_passport_photo_path) {
+                Storage::disk('public')->delete($student->father_passport_photo_path);
+            }
+            $fatherName = $sanitize($request->input('father_full_name', $student->father_full_name ?? ($studentName . '_father')));
+            $file = $request->file('father_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $fatherName . '_father_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/parents';
+            $path = $file->storeAs($directory, $filename, 'public');
+            $student->father_passport_photo_path = $path;
+            $student->save();
+        }
+
+        if ($request->hasFile('mother_passport_photo')) {
+            if ($student->mother_passport_photo_path) {
+                Storage::disk('public')->delete($student->mother_passport_photo_path);
+            }
+            $motherName = $sanitize($request->input('mother_full_name', $student->mother_full_name ?? ($studentName . '_mother')));
+            $file = $request->file('mother_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $motherName . '_mother_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/parents';
+            $path = $file->storeAs($directory, $filename, 'public');
+            $student->mother_passport_photo_path = $path;
+            $student->save();
+        }
+
+        if ($request->hasFile('guardian_passport_photo')) {
+            if ($student->guardian_passport_photo_path) {
+                Storage::disk('public')->delete($student->guardian_passport_photo_path);
+            }
+            $guardianName = $sanitize($request->input('guardian_full_name', $student->guardian_full_name ?? ($studentName . '_guardian')));
+            $file = $request->file('guardian_passport_photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $guardianName . '_guardian_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/guardians';
+            $path = $file->storeAs($directory, $filename, 'public');
+            $student->guardian_passport_photo_path = $path;
+            $student->save();
+        }
+
+        if ($request->hasFile('photo_path')) {
+            if ($student->photo_path) {
+                Storage::disk('public')->delete($student->photo_path);
+            }
+            $file = $request->file('photo_path');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $studentName . '_photo_' . time() . '.' . $extension;
+            $directory = 'students/' . $studentName . '/photos';
+            $path = $file->storeAs($directory, $filename, 'public');
+            $student->photo_path = $path;
+            $student->save();
+        }
 
         return redirect()->route('admin.students.alevel.index')->with('success', 'Student updated successfully');
     }
