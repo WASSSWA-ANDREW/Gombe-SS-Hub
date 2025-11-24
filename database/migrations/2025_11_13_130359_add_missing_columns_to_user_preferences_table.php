@@ -12,9 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('user_preferences', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('key');
-            $table->text('value')->nullable();
+
+            if (!Schema::hasColumn('user_preferences', 'user_id')) {
+                $table->unsignedBigInteger('user_id')->after('id');
+            }
+
+            if (!Schema::hasColumn('user_preferences', 'theme')) {
+                $table->string('theme')->nullable()->after('user_id');
+            }
+
+            if (!Schema::hasColumn('user_preferences', 'notifications_enabled')) {
+                $table->boolean('notifications_enabled')->default(true)->after('theme');
+            }
+
+            if (!Schema::hasColumn('user_preferences', 'language')) {
+                $table->string('language')->default('en')->after('notifications_enabled');
+            }
         });
     }
 
@@ -24,10 +37,22 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('user_preferences', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
-            $table->dropColumn('key');
-            $table->dropColumn('value');
+
+            if (Schema::hasColumn('user_preferences', 'user_id')) {
+                $table->dropColumn('user_id');
+            }
+
+            if (Schema::hasColumn('user_preferences', 'theme')) {
+                $table->dropColumn('theme');
+            }
+
+            if (Schema::hasColumn('user_preferences', 'notifications_enabled')) {
+                $table->dropColumn('notifications_enabled');
+            }
+
+            if (Schema::hasColumn('user_preferences', 'language')) {
+                $table->dropColumn('language');
+            }
         });
     }
 };
