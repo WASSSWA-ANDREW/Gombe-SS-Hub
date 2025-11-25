@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('olevel_subject_id')->references('id')->on('olevel_subjects')->onDelete('cascade');
             $table->foreign('alevel_subject_id')->references('id')->on('alevel_subjects')->onDelete('cascade');
 
-            $table->unique(['student_id', 'olevel_subject_id', 'alevel_subject_id']);
+            $table->unique(['student_id', 'olevel_subject_id', 'alevel_subject_id'], 'sos_student_subjects_unique');
         });
     }
 
@@ -35,7 +35,7 @@ return new class extends Migration
             $table->dropForeign(['student_id']);
             $table->dropForeign(['olevel_subject_id']);
             $table->dropForeign(['alevel_subject_id']);
-            $table->dropUnique(['student_id', 'olevel_subject_id', 'alevel_subject_id']);
+            $table->dropUnique('sos_student_subjects_unique');
             $table->dropColumn(['student_id', 'olevel_subject_id', 'alevel_subject_id', 'level', 'stream']);
         });
     }

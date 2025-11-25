@@ -28,6 +28,13 @@ return new class extends Migration
             $this->dropForeignKeyIfExists('marks_entries', 'marks_entries_student_id_foreign');
             $this->dropForeignKeyIfExists('discipline_tracks', 'discipline_tracks_student_id_foreign');
             $this->dropForeignKeyIfExists('counselling_tracks', 'counselling_tracks_student_id_foreign');
+            $this->dropForeignKeyIfExists('alumnis', 'alumnis_student_id_foreign');
+
+            DB::statement('ALTER TABLE student_optional_subjects MODIFY student_id VARCHAR(255) NULL');
+            DB::statement('ALTER TABLE marks_entries MODIFY student_id VARCHAR(255) NULL');
+            DB::statement('ALTER TABLE discipline_tracks MODIFY student_id VARCHAR(255) NULL');
+            DB::statement('ALTER TABLE counselling_tracks MODIFY student_id VARCHAR(255) NULL');
+            DB::statement('ALTER TABLE alumnis MODIFY student_id VARCHAR(255) NULL');
 
             DB::statement('ALTER TABLE students MODIFY admission_number VARCHAR(255) NOT NULL');
             DB::statement('ALTER TABLE students DROP PRIMARY KEY');
@@ -42,6 +49,7 @@ return new class extends Migration
             DB::statement('ALTER TABLE marks_entries ADD CONSTRAINT marks_entries_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
             DB::statement('ALTER TABLE discipline_tracks ADD CONSTRAINT discipline_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
             DB::statement('ALTER TABLE counselling_tracks ADD CONSTRAINT counselling_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE alumnis ADD CONSTRAINT alumnis_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
 
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
         }
@@ -56,6 +64,7 @@ return new class extends Migration
             $this->dropForeignKeyIfExists('marks_entries', 'marks_entries_student_id_foreign');
             $this->dropForeignKeyIfExists('discipline_tracks', 'discipline_tracks_student_id_foreign');
             $this->dropForeignKeyIfExists('counselling_tracks', 'counselling_tracks_student_id_foreign');
+            $this->dropForeignKeyIfExists('alumnis', 'alumnis_student_id_foreign');
 
             DB::statement('ALTER TABLE students DROP PRIMARY KEY');
             DB::statement('ALTER TABLE students ADD COLUMN id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE FIRST');
@@ -66,6 +75,7 @@ return new class extends Migration
             DB::statement('ALTER TABLE marks_entries ADD CONSTRAINT marks_entries_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
             DB::statement('ALTER TABLE discipline_tracks ADD CONSTRAINT discipline_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
             DB::statement('ALTER TABLE counselling_tracks ADD CONSTRAINT counselling_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE alumnis ADD CONSTRAINT alumnis_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
 
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
         }
