@@ -43,10 +43,13 @@ return new class extends Migration
             });
 
             Schema::table('students', function (Blueprint $table) {
-                $table->dropPrimary(['id']);
-                $table->string('admission_number')->nullable(false)->change();
-                $table->primary('admission_number');
+                DB::statement('ALTER TABLE students DROP PRIMARY KEY, DROP INDEX id');
+            });
+
+            Schema::table('students', function (Blueprint $table) {
+                $table->string('admission_number')->nullable(false)->unique()->change();
                 $table->dropColumn('id');
+                $table->primary('admission_number');
             });
 
             Schema::table('student_optional_subjects', function (Blueprint $table) {
@@ -103,7 +106,10 @@ return new class extends Migration
             });
 
             Schema::table('students', function (Blueprint $table) {
-                $table->dropPrimary(['admission_number']);
+                DB::statement('ALTER TABLE students DROP PRIMARY KEY');
+            });
+
+            Schema::table('students', function (Blueprint $table) {
                 $table->bigIncrements('id')->first();
                 $table->primary('id');
                 $table->string('admission_number')->nullable()->change();
