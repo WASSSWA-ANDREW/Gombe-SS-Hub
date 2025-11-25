@@ -37,8 +37,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('user_preferences', function (Blueprint $table) {
-
             if (Schema::hasColumn('user_preferences', 'user_id')) {
+                try {
+                    $table->dropForeign(['user_id']);
+                } catch (\Exception $e) {
+                    //
+                }
                 $table->dropColumn('user_id');
             }
 
