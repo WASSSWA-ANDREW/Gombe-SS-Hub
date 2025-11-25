@@ -1,85 +1,47 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function dropForeignKeyIfExists($table, $constraint)
+    {
+        $database = DB::getDatabaseName();
+        $exists = DB::selectOne(
+            "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE 
+            WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND CONSTRAINT_NAME = ?",
+            [$database, $table, $constraint]
+        );
+        
+        if ($exists) {
+            DB::statement("ALTER TABLE $table DROP FOREIGN KEY $constraint");
+        }
+    }
+
     public function up(): void
     {
-        if (DB::getDriverName() !== 'sqlite') {
+        if (DB::getDriverName() === 'mysql') {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-            DB::table('student_optional_subjects')
-                ->whereNotNull('student_id')
-                ->update(['student_id' => null]);
-
-            DB::table('marks_entries')
-                ->whereNotNull('student_id')
-                ->update(['student_id' => null]);
-
-            DB::table('discipline_tracks')
-                ->whereNotNull('student_id')
-                ->update(['student_id' => null]);
-
-            DB::table('counselling_tracks')
-                ->whereNotNull('student_id')
-                ->update(['student_id' => null]);
-
-            Schema::table('student_optional_subjects', function (Blueprint $table) {
-                try {
-                    $table->dropForeign(['student_id']);
-                } catch (\Exception $e) {
-                    DB::statement('ALTER TABLE student_optional_subjects DROP FOREIGN KEY student_optional_subjects_student_id_foreign');
-                }
-            });
-
-            Schema::table('marks_entries', function (Blueprint $table) {
-                try {
-                    $table->dropForeign(['student_id']);
-                } catch (\Exception $e) {
-                    DB::statement('ALTER TABLE marks_entries DROP FOREIGN KEY marks_entries_student_id_foreign');
-                }
-            });
-
-            Schema::table('discipline_tracks', function (Blueprint $table) {
-                try {
-                    $table->dropForeign(['student_id']);
-                } catch (\Exception $e) {
-                    DB::statement('ALTER TABLE discipline_tracks DROP FOREIGN KEY discipline_tracks_student_id_foreign');
-                }
-            });
-
-            Schema::table('counselling_tracks', function (Blueprint $table) {
-                try {
-                    $table->dropForeign(['student_id']);
-                } catch (\Exception $e) {
-                    DB::statement('ALTER TABLE counselling_tracks DROP FOREIGN KEY counselling_tracks_student_id_foreign');
-                }
-            });
+            $this->dropForeignKeyIfExists('student_optional_subjects', 'student_optional_subjects_student_id_foreign');
+            $this->dropForeignKeyIfExists('marks_entries', 'marks_entries_student_id_foreign');
+            $this->dropForeignKeyIfExists('discipline_tracks', 'discipline_tracks_student_id_foreign');
+            $this->dropForeignKeyIfExists('counselling_tracks', 'counselling_tracks_student_id_foreign');
 
             DB::statement('ALTER TABLE students MODIFY admission_number VARCHAR(255) NOT NULL');
             DB::statement('ALTER TABLE students DROP PRIMARY KEY');
+            
+            if (DB::getSchemaBuilder()->hasColumn('students', 'id')) {
+                DB::statement('ALTER TABLE students DROP COLUMN id');
+            }
+            
             DB::statement('ALTER TABLE students ADD PRIMARY KEY (admission_number)');
-            DB::statement('ALTER TABLE students DROP COLUMN id');
 
-            Schema::table('student_optional_subjects', function (Blueprint $table) {
-                $table->foreign('student_id')->references('admission_number')->on('students')->onDelete('cascade');
-            });
-
-            Schema::table('marks_entries', function (Blueprint $table) {
-                $table->foreign('student_id')->references('admission_number')->on('students')->onDelete('cascade');
-            });
-
-            Schema::table('discipline_tracks', function (Blueprint $table) {
-                $table->foreign('student_id')->references('admission_number')->on('students')->onDelete('cascade');
-            });
-
-            Schema::table('counselling_tracks', function (Blueprint $table) {
-                $table->foreign('student_id')->references('admission_number')->on('students')->onDelete('cascade');
-            });
+            DB::statement('ALTER TABLE student_optional_subjects ADD CONSTRAINT student_optional_subjects_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE marks_entries ADD CONSTRAINT marks_entries_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE discipline_tracks ADD CONSTRAINT discipline_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE counselling_tracks ADD CONSTRAINT counselling_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(admission_number) ON DELETE CASCADE');
 
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
         }
@@ -87,34 +49,23 @@ return new class extends Migration
 
     public function down(): void
     {
-        if (DB::getDriverName() !== 'sqlite') {
+        if (DB::getDriverName() === 'mysql') {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-            DB::statement('ALTER TABLE student_optional_subjects DROP FOREIGN KEY student_optional_subjects_student_id_foreign');
-            DB::statement('ALTER TABLE marks_entries DROP FOREIGN KEY marks_entries_student_id_foreign');
-            DB::statement('ALTER TABLE discipline_tracks DROP FOREIGN KEY discipline_tracks_student_id_foreign');
-            DB::statement('ALTER TABLE counselling_tracks DROP FOREIGN KEY counselling_tracks_student_id_foreign');
+            $this->dropForeignKeyIfExists('student_optional_subjects', 'student_optional_subjects_student_id_foreign');
+            $this->dropForeignKeyIfExists('marks_entries', 'marks_entries_student_id_foreign');
+            $this->dropForeignKeyIfExists('discipline_tracks', 'discipline_tracks_student_id_foreign');
+            $this->dropForeignKeyIfExists('counselling_tracks', 'counselling_tracks_student_id_foreign');
 
             DB::statement('ALTER TABLE students DROP PRIMARY KEY');
             DB::statement('ALTER TABLE students ADD COLUMN id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE FIRST');
             DB::statement('ALTER TABLE students ADD PRIMARY KEY (id)');
             DB::statement('ALTER TABLE students MODIFY admission_number VARCHAR(255) NULL');
 
-            Schema::table('student_optional_subjects', function (Blueprint $table) {
-                $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            });
-
-            Schema::table('marks_entries', function (Blueprint $table) {
-                $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            });
-
-            Schema::table('discipline_tracks', function (Blueprint $table) {
-                $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            });
-
-            Schema::table('counselling_tracks', function (Blueprint $table) {
-                $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            });
+            DB::statement('ALTER TABLE student_optional_subjects ADD CONSTRAINT student_optional_subjects_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE marks_entries ADD CONSTRAINT marks_entries_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE discipline_tracks ADD CONSTRAINT discipline_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
+            DB::statement('ALTER TABLE counselling_tracks ADD CONSTRAINT counselling_tracks_student_id_foreign FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE');
 
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
         }
