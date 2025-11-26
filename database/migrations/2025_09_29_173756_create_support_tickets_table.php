@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('support_tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('ticket_number')->unique();
+            $table->string('ticket_number', 191)->unique();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name');
             $table->string('email');

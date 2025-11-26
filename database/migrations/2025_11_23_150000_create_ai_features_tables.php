@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('notification_type');
+            $table->string('notification_type', 191);
             $table->text('message');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->json('data')->nullable();
-            $table->string('recipient_role')->default('all');
+            $table->string('recipient_role', 191)->default('all');
             $table->boolean('read')->default(false);
             $table->timestamps();
             
@@ -28,9 +28,9 @@ return new class extends Migration
         Schema::create('ai_predictions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id')->nullable();
-            $table->string('prediction_type');
-            $table->string('level')->nullable();
-            $table->string('class')->nullable();
+            $table->string('prediction_type', 191);
+            $table->string('level', 191)->nullable();
+            $table->string('class', 191)->nullable();
             $table->float('confidence_score')->default(0);
             $table->json('prediction_data');
             $table->enum('risk_level', ['low', 'medium', 'high'])->nullable();
@@ -48,7 +48,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id')->nullable();
             $table->unsignedBigInteger('staff_id')->nullable();
-            $table->string('anomaly_type');
+            $table->string('anomaly_type', 191);
             $table->text('description');
             $table->enum('severity', ['low', 'medium', 'high'])->default('medium');
             $table->json('anomaly_data');
@@ -70,9 +70,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id')->nullable();
             $table->unsignedBigInteger('staff_id')->nullable();
-            $table->string('class')->nullable();
-            $table->string('level')->nullable();
-            $table->string('recommendation_type');
+            $table->string('class', 191)->nullable();
+            $table->string('level', 191)->nullable();
+            $table->string('recommendation_type', 191);
             $table->text('description');
             $table->text('recommended_action');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
@@ -92,9 +92,9 @@ return new class extends Migration
 
         Schema::create('intelligence_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('service_name');
-            $table->string('action');
-            $table->string('entity_type')->nullable();
+            $table->string('service_name', 191);
+            $table->string('action', 191);
+            $table->string('entity_type', 191)->nullable();
             $table->unsignedBigInteger('entity_id')->nullable();
             $table->json('metadata')->nullable();
             $table->text('result')->nullable();
@@ -109,9 +109,9 @@ return new class extends Migration
         Schema::create('performance_analytics', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->string('level');
-            $table->string('class');
-            $table->string('stream')->nullable();
+            $table->string('level', 191);
+            $table->string('class', 191);
+            $table->string('stream', 191)->nullable();
             $table->float('average_performance')->default(0);
             $table->float('trend_percentage')->default(0);
             $table->integer('subjects_passed')->default(0);

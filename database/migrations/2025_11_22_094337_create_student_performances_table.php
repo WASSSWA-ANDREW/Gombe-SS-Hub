@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('student_performances', function (Blueprint $table) {
             $table->id();
-            $table->string('student_id');
+            $table->string('student_id', 191);
             $table->unsignedBigInteger('olevel_subject_id')->nullable();
             $table->unsignedBigInteger('alevel_subject_id')->nullable();
             $table->enum('level', ['olevel', 'alevel']);

@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('student_name');
             $table->string('gender'); // Consider enum or specific values if applicable
-            $table->string('learners_lin')->nullable()->unique();
-            $table->string('learners_nin')->nullable()->unique();
+            $table->string('learners_lin', 191)->nullable()->unique();
+            $table->string('learners_nin', 191)->nullable()->unique();
             $table->date('date_of_birth');
             $table->string('religion')->nullable();
             $table->string('mobile_number')->nullable();
-            $table->string('email')->nullable()->unique();
+            $table->string('email', 191)->nullable()->unique();
             $table->string('district_of_birth')->nullable();
             $table->string('previous_school')->nullable();
-            $table->string('ple_index_number')->nullable()->unique();
+            $table->string('ple_index_number', 191)->nullable()->unique();
             $table->text('special_issue')->nullable();
             $table->string('ple_english')->nullable();
             $table->string('ple_mathematics')->nullable();

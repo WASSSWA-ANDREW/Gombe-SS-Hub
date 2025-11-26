@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('uts_file_no')->nullable();
             $table->string('district_file_no')->nullable();
             $table->string('computer_no')->nullable();
-            $table->string('national_id_no')->nullable()->unique();
+            $table->string('national_id_no', 191)->nullable()->unique();
             $table->string('registration_no')->nullable();
             $table->string('salary_scale')->nullable();
             $table->decimal('gross_salary', 15, 2)->nullable();
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('marital_status')->nullable();
             $table->string('next_of_kin')->nullable();
             $table->string('next_of_kin_telephone')->nullable();
-            $table->string('email')->nullable()->unique();
+            $table->string('email', 191)->nullable()->unique();
             $table->text('other_academic_qualifications')->nullable();
             $table->string('highest_level_of_education')->nullable();
             // 'date_of_issue' for the form itself, can be tracked by created_at

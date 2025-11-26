@@ -8941,7 +8941,7 @@ CREATE TABLE `support_tickets` (`id` INT AUTO_INCREMENT PRIMARY KEY, `ticket_num
 
 -- Table: teacher_subjects
 DROP TABLE IF EXISTS `teacher_subjects`;
-CREATE TABLE `teacher_subjects` (`id` INT AUTO_INCREMENT PRIMARY KEY, `staff_id` INT NOT NULL, `academics_id` INT, `olevel_subject_id` INT, `alevel_subject_id` INT, `level` varchar(255) NOT NULL default 'olevel', `specialty` varchar(255) ), `classes` text, `created_at` datetime, `updated_at` datetime, `streams` text, foreign key(`staff_id`) references `staff`(`id`) on delete cascade, foreign key(`academics_id`) references `academics`(`id`) on delete set null, foreign key(`olevel_subject_id`) references `olevel_subjects`(`id`) on delete set null, foreign key(`alevel_subject_id`) references `alevel_subjects`(`id`) on delete set null);
+CREATE TABLE `teacher_subjects` (`id` INT AUTO_INCREMENT PRIMARY KEY, `staff_id` INT NOT NULL, `academics_id` INT, `olevel_subject_id` INT, `alevel_subject_id` INT, `level` varchar(255) NOT NULL default 'olevel', `specialty` varchar(255), `classes` text, `created_at` datetime, `updated_at` datetime, `streams` text, foreign key(`staff_id`) references `staff`(`id`) on delete cascade, foreign key(`academics_id`) references `academics`(`id`) on delete set null, foreign key(`olevel_subject_id`) references `olevel_subjects`(`id`) on delete set null, foreign key(`alevel_subject_id`) references `alevel_subjects`(`id`) on delete set null);
 
 -- Table: user_preferences
 DROP TABLE IF EXISTS `user_preferences`;

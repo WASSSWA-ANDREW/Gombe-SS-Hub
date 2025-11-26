@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('students', function (Blueprint $table) {
-            $table->string('admission_number', 191)->nullable()->unique()->after('learners_nin');
+        Schema::table('staff', function (Blueprint $table) {
+            $table->string('pass_slip_path')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('students', function (Blueprint $table) {
-            $table->dropColumn('admission_number');
+        Schema::table('staff', function (Blueprint $table) {
+            $table->dropColumn('pass_slip_path');
         });
     }
 };
