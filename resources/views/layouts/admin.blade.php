@@ -801,7 +801,7 @@
                                     dark:bg-gray-700 dark:border-gray-600 dark:text-white
                                     dark:hover:border-indigo-500 dark:hover:shadow-indigo-700/30
                                     bg-white dark:bg-gray-700"
-                                    placeholder="Search students, staff, users..."
+                                    placeholder="       Search students, staff, users..."
                                     value="{{ old('query', request('query')) }}"
                                     autocomplete="off">
                                 <button type="submit" class="ml-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
