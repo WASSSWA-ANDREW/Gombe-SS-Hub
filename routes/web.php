@@ -345,6 +345,7 @@ Route::middleware(['auth'])->group(function () {
     // Notification Routes
     Route::prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::get('/recent', [NotificationController::class, 'getRecent'])->name('getRecent');
         Route::get('/create', [NotificationController::class, 'create'])->name('create');
         Route::post('/', [NotificationController::class, 'store'])->name('store');
         Route::get('/{notification}', [NotificationController::class, 'show'])->name('show');
