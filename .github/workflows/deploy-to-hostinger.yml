@@ -37,6 +37,13 @@ jobs:
 
       - name: Deploy files via rsync
         run: |
+          echo "=== Deployment Configuration ==="
+          echo "Host: ${{ secrets.HOSTINGER_HOST }}"
+          echo "User: ${{ secrets.HOSTINGER_USER }}"
+          echo "Target: ${{ secrets.HOSTINGER_TARGET }}"
+          echo "Port: ${{ secrets.HOSTINGER_PORT }}"
+          echo ""
+
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o ConnectTimeout=30 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
             --exclude='.git' \
@@ -50,11 +57,25 @@ jobs:
       - name: Run remote artisan commands
         run: |
           ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o ConnectTimeout=30 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'ENDSSH'
+
+          echo "=== Current Working Directory ==="
+          pwd
+          echo ""
+          echo "=== Files in deployment target ==="
+          ls -la ${{ secrets.HOSTINGER_TARGET }}
+          echo ""
+
           cd ${{ secrets.HOSTINGER_TARGET }}
-          
+
+          # Verify we're in the correct location
+          echo "=== Verifying Deployment Location ==="
+          echo "Current directory: $(pwd)"
+          echo "Expected: /home/u933773389/domains/gombesshub.com/public_html/"
+          echo ""
+
           # Set proper permissions
           chmod -R 755 storage bootstrap/cache public
-          
+
           # Run artisan commands
           echo "=== Running Artisan Commands ==="
           php artisan migrate --force 2>&1 || echo "⚠ Migration had issues"
@@ -65,7 +86,7 @@ jobs:
           php artisan view:clear 2>&1
           php artisan view:cache 2>&1 || echo "⚠ View cache failed"
           php artisan storage:link 2>&1 || echo "⚠ Storage link exists"
-          
+
           # Verify deployment
           echo ""
           echo "=== Deployment Verification ==="
