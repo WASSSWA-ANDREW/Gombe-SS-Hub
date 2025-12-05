@@ -1,65 +1,72 @@
 name: Build & Deploy to Hostinger (SSH)
 
 on:
-    push:
-        branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Set up PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: "8.2"
-                  extensions: mbstring, bcmath, openssl, pdo_mysql, xml, zip
-                  ini-values: post_max_size=256M, upload_max_filesize=256M
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, bcmath, openssl, pdo_mysql, xml, zip
+          ini-values: post_max_size=256M, upload_max_filesize=256M
 
-            - name: Install Composer dependencies
-              run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+      - name: Install Composer dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-            - name: Build frontend assets (if present)
-              run: |
-                  if [ -f package.json ]; then
-                    npm ci
-                    npm run production || npm run prod || true
-                  fi
+      - name: Build frontend assets (if present)
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+            npm run production || npm run prod || true
+          fi
 
-            - name: Setup SSH key file
-              run: |
-                  mkdir -p /tmp/.ssh
-                  echo "${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}" > /tmp/.ssh/hostinger_key
-                  chmod 600 /tmp/.ssh/hostinger_key
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}" > ~/.ssh/hostinger_key
+          chmod 600 ~/.ssh/hostinger_key
+          ssh-keyscan -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_HOST }} >> ~/.ssh/known_hosts
 
-            - name: Deploy files via SCP
-              uses: appleboy/scp-action@master
-              with:
-                  host: ${{ secrets.HOSTINGER_HOST }}
-                  username: ${{ secrets.HOSTINGER_USER }}
-                  key_path: /tmp/.ssh/hostinger_key
-                  port: ${{ secrets.HOSTINGER_PORT }}
-                  source: "."
-                  target: ${{ secrets.HOSTINGER_TARGET }}
-                  rm: false
+      - name: Deploy files via rsync
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o StrictHostKeyChecking=no" \
+            --exclude='.git' \
+            --exclude='.env' \
+            --exclude='node_modules' \
+            --exclude='storage/logs/*.log' \
+            ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
 
-            - name: Run remote artisan commands
-              uses: appleboy/ssh-action@master
-              with:
-                  host: ${{ secrets.HOSTINGER_HOST }}
-                  username: ${{ secrets.HOSTINGER_USER }}
-                  key: ${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}
-                  port: ${{ secrets.HOSTINGER_PORT }}
-                  script: |
-                      cd ${{ secrets.HOSTINGER_TARGET }}
-                      php artisan migrate --force || true
-                      php artisan config:cache || true
-                      php artisan route:cache || true
-                      php artisan view:cache || true
-                      php artisan storage:link || true
-                      # Verify .htaccess exists
-                      ls -la public/.htaccess
-                      # Check .env APP_URL
-                      grep "APP_URL" .env
+      - name: Run remote artisan commands
+        run: |
+          ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'ENDSSH'
+          cd ${{ secrets.HOSTINGER_TARGET }}
+          
+          # Set proper permissions
+          chmod -R 755 storage bootstrap/cache
+          
+          # Run artisan commands
+          php artisan migrate --force 2>&1 || echo "Migration failed"
+          php artisan config:cache 2>&1 || echo "Config cache failed"
+          php artisan route:cache 2>&1 || echo "Route cache failed"
+          php artisan view:cache 2>&1 || echo "View cache failed"
+          php artisan storage:link 2>&1 || echo "Storage link exists"
+          
+          # Verify deployment
+          echo "=== .htaccess in public folder ==="
+          ls -la public/.htaccess
+          
+          echo "=== Current APP_URL ==="
+          grep "APP_URL" .env
+          
+          echo "=== Laravel Version ==="
+          php artisan --version
+          ENDSSH
