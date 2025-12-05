@@ -44,14 +44,30 @@ jobs:
 
       - name: Deploy via SCP
         run: |
-          # Remove .env, node_modules, and git files before transfer
-          rm -rf .git .gitignore node_modules storage/logs/* bootstrap/cache/*
+          # Create temporary directory for archive
+          mkdir -p /tmp/deploy_archive
           
-          # Create tar archive
-          tar -czf deploy.tar.gz --exclude='.env' --exclude='storage/logs' --exclude='bootstrap/cache' .
+          # Copy files to temp directory (excluding unwanted files)
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.gitignore' \
+            --exclude='.env' \
+            --exclude='node_modules' \
+            --exclude='storage/logs' \
+            --exclude='bootstrap/cache' \
+            --exclude='deploy.tar.gz' \
+            ./ /tmp/deploy_archive/
+          
+          # Create tar archive from the temp directory
+          cd /tmp/deploy_archive
+          tar -czf deploy.tar.gz .
           
           # Copy to server
           scp -P ${{ secrets.HOSTINGER_PORT }} deploy.tar.gz ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
+          
+          # Cleanup
+          cd /
+          rm -rf /tmp/deploy_archive
           
           echo "✓ Archive uploaded successfully"
 
