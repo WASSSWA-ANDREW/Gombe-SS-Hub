@@ -1,0 +1,38 @@
+name: Cleanup - Delete All Files on Hostinger
+
+on:
+    workflow_dispatch:
+
+jobs:
+    cleanup:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup SSH
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}" > ~/.ssh/hostinger_key
+                  chmod 600 ~/.ssh/hostinger_key
+                  ssh-keyscan -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+            - name: Delete all files
+              run: |
+                  ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o ConnectTimeout=30 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'ENDSSH'
+
+                  echo "=== CLEANUP: Deleting all files in ${{ secrets.HOSTINGER_TARGET }} ==="
+
+                  # Backup .env file first
+                  if [ -f "${{ secrets.HOSTINGER_TARGET }}/.env" ]; then
+                    cp "${{ secrets.HOSTINGER_TARGET }}/.env" "${{ secrets.HOSTINGER_TARGET }}/.env.backup"
+                    echo "✓ .env backed up to .env.backup"
+                  fi
+
+                  # Delete everything except .env
+                  cd ${{ secrets.HOSTINGER_TARGET }}
+                  find . -maxdepth 1 -not -name '.env' -not -name '.env.backup' -not -name '.' -delete
+
+                  echo "✓ Cleanup complete!"
+                  echo ""
+                  echo "=== Remaining files ==="
+                  ls -la ${{ secrets.HOSTINGER_TARGET }}
+
+                  ENDSSH
