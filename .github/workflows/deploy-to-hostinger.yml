@@ -1,0 +1,53 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, bcmath, openssl, pdo_mysql, xml, zip
+
+      - name: Install Dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      - name: Build Assets
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+            npm run production || npm run prod || true
+          fi
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}" > ~/.ssh/hostinger_key
+          chmod 600 ~/.ssh/hostinger_key
+          ssh-keyscan -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Files
+        run: |
+          rsync -avz --delete -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }}" \
+            --exclude='.git' --exclude='.env' --exclude='node_modules' --exclude='storage/logs' \
+            ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
+
+      - name: Run Migrations & Cache
+        run: |
+          ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'EOF'
+          cd ${{ secrets.HOSTINGER_TARGET }}
+          php artisan migrate --force 2>&1 || true
+          php artisan config:cache 2>&1 || true
+          php artisan route:cache 2>&1 || true
+          php artisan view:cache 2>&1 || true
+          php artisan storage:link 2>&1 || true
+          echo "=== Checking Laravel Logs ==="
+          tail -20 storage/logs/laravel.log || echo "No logs found"
+          EOF
