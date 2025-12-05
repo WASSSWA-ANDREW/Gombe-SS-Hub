@@ -279,7 +279,7 @@
                     
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="admin@smart-keyholder.click" required>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="admin@example.com" required>
                     </div>
                     
                     <div class="form-group">
