@@ -33,40 +33,50 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}" > ~/.ssh/hostinger_key
           chmod 600 ~/.ssh/hostinger_key
-          ssh-keyscan -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
       - name: Deploy files via rsync
         run: |
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o StrictHostKeyChecking=no" \
+            -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o ConnectTimeout=30 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
             --exclude='.git' \
+            --exclude='.gitignore' \
             --exclude='.env' \
             --exclude='node_modules' \
-            --exclude='storage/logs/*.log' \
+            --exclude='storage/logs' \
+            --exclude='bootstrap/cache' \
             ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
 
       - name: Run remote artisan commands
         run: |
-          ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'ENDSSH'
+          ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o ConnectTimeout=30 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'ENDSSH'
           cd ${{ secrets.HOSTINGER_TARGET }}
           
           # Set proper permissions
-          chmod -R 755 storage bootstrap/cache
+          chmod -R 755 storage bootstrap/cache public
           
           # Run artisan commands
-          php artisan migrate --force 2>&1 || echo "Migration failed"
-          php artisan config:cache 2>&1 || echo "Config cache failed"
-          php artisan route:cache 2>&1 || echo "Route cache failed"
-          php artisan view:cache 2>&1 || echo "View cache failed"
-          php artisan storage:link 2>&1 || echo "Storage link exists"
+          echo "=== Running Artisan Commands ==="
+          php artisan migrate --force 2>&1 || echo "⚠ Migration had issues"
+          php artisan config:clear 2>&1
+          php artisan config:cache 2>&1 || echo "⚠ Config cache failed"
+          php artisan route:clear 2>&1
+          php artisan route:cache 2>&1 || echo "⚠ Route cache failed"
+          php artisan view:clear 2>&1
+          php artisan view:cache 2>&1 || echo "⚠ View cache failed"
+          php artisan storage:link 2>&1 || echo "⚠ Storage link exists"
           
           # Verify deployment
-          echo "=== .htaccess in public folder ==="
+          echo ""
+          echo "=== Deployment Verification ==="
+          echo "✓ .htaccess in public folder:"
           ls -la public/.htaccess
-          
-          echo "=== Current APP_URL ==="
+          echo ""
+          echo "✓ APP_URL value:"
           grep "APP_URL" .env
-          
-          echo "=== Laravel Version ==="
+          echo ""
+          echo "✓ Laravel Version:"
           php artisan --version
+          echo ""
+          echo "✓ Deployment Complete!"
           ENDSSH
