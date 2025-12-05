@@ -1,36 +1,36 @@
 name: Emergency Fix - Update .env Only
 
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  fix-env:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Update .env on Hostinger
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}
-          port: ${{ secrets.HOSTINGER_PORT }}
-          script: |
-            cd ${{ secrets.HOSTINGER_TARGET }}
-            # Backup current .env
-            cp .env .env.backup.$(date +%s)
-            
-            # Update APP_URL (remove /public/)
-            sed -i 's|APP_URL=.*|APP_URL=https://gombesshub.com|' .env
-            
-            # Ensure APP_ENV is production
-            sed -i 's|APP_ENV=.*|APP_ENV=production|' .env
-            
-            # Clear and rebuild caches
-            php artisan config:clear
-            php artisan config:cache
-            php artisan route:clear
-            php artisan route:cache
-            
-            echo "✅ .env updated successfully!"
-            echo "APP_URL: $(grep 'APP_URL=' .env)"
-            echo "APP_ENV: $(grep 'APP_ENV=' .env)"
+    fix-env:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Update .env on Hostinger
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOSTINGER_HOST }}
+                  username: ${{ secrets.HOSTINGER_USER }}
+                  key: ${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}
+                  port: ${{ secrets.HOSTINGER_PORT }}
+                  script: |
+                      cd ${{ secrets.HOSTINGER_TARGET }}
+                      # Backup current .env
+                      cp .env .env.backup.$(date +%s)
+
+                      # Update APP_URL (remove /public/)
+                      sed -i 's|APP_URL=.*|APP_URL=https://gombesshub.com|' .env
+
+                      # Ensure APP_ENV is production
+                      sed -i 's|APP_ENV=.*|APP_ENV=production|' .env
+
+                      # Clear and rebuild caches
+                      php artisan config:clear
+                      php artisan config:cache
+                      php artisan route:clear
+                      php artisan route:cache
+
+                      echo "✅ .env updated successfully!"
+                      echo "APP_URL: $(grep 'APP_URL=' .env)"
+                      echo "APP_ENV: $(grep 'APP_ENV=' .env)"
