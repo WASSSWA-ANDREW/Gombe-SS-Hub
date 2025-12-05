@@ -2,7 +2,7 @@ name: Deploy to Hostinger
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
           extensions: mbstring, bcmath, openssl, pdo_mysql, xml, zip
 
       - name: Install Dependencies
@@ -33,21 +33,49 @@ jobs:
           chmod 600 ~/.ssh/hostinger_key
           ssh-keyscan -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy Files
+      - name: Deploy Laravel Core Files
         run: |
+          # Deploy everything EXCEPT public folder to laravel_core
           rsync -avz --delete -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }}" \
             --exclude='.git' --exclude='.env' --exclude='node_modules' --exclude='storage/logs' \
-            ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
+            --exclude='public/' \
+            ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:/home/${{ secrets.HOSTINGER_USER }}/domains/gombesshub.com/laravel_core/
+
+      - name: Deploy Public Files to Document Root
+        run: |
+          # Deploy ONLY public folder contents to public_html
+          rsync -avz --delete -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }}" \
+            ./public/ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
+
+      - name: Update index.php to point to laravel_core
+        run: |
+          ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'EOF'
+          cd ${{ secrets.HOSTINGER_TARGET }}
+
+          # Backup original index.php
+          cp index.php index.php.backup
+
+          # Update paths in index.php to point to laravel_core
+          sed -i "s|__DIR__.'/../vendor/autoload.php'|'/home/${{ secrets.HOSTINGER_USER }}/domains/gombesshub.com/laravel_core/vendor/autoload.php'|g" index.php
+          sed -i "s|__DIR__.'/../bootstrap/app.php'|'/home/${{ secrets.HOSTINGER_USER }}/domains/gombesshub.com/laravel_core/bootstrap/app.php'|g" index.php
+
+          echo "=== Updated index.php ==="
+          cat index.php
+          EOF
 
       - name: Run Migrations & Cache
         run: |
           ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'EOF'
-          cd ${{ secrets.HOSTINGER_TARGET }}
+          cd /home/${{ secrets.HOSTINGER_USER }}/domains/gombesshub.com/laravel_core
           php artisan migrate --force 2>&1 || true
           php artisan config:cache 2>&1 || true
           php artisan route:cache 2>&1 || true
           php artisan view:cache 2>&1 || true
-          php artisan storage:link 2>&1 || true
+
+          # Create symlink from public_html/storage to laravel_core/storage/app/public
+          rm -rf ${{ secrets.HOSTINGER_TARGET }}/storage
+          ln -sf /home/${{ secrets.HOSTINGER_USER }}/domains/gombesshub.com/laravel_core/storage/app/public ${{ secrets.HOSTINGER_TARGET }}/storage
+
           echo "=== Checking Laravel Logs ==="
           tail -20 storage/logs/laravel.log || echo "No logs found"
           EOF
