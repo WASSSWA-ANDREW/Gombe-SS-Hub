@@ -16,7 +16,6 @@ jobs:
         with:
           php-version: "8.2"
           extensions: mbstring, bcmath, openssl, pdo_mysql, xml, zip
-          ini-values: post_max_size=256M, upload_max_filesize=256M
 
       - name: Install Composer dependencies
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
@@ -28,76 +27,79 @@ jobs:
             npm run production || npm run prod || true
           fi
 
-      - name: Setup SSH
+      - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}" > ~/.ssh/hostinger_key
-          chmod 600 ~/.ssh/hostinger_key
-          ssh-keyscan -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+          echo "${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat >> ~/.ssh/config << EOF
+          Host hostinger
+            HostName ${{ secrets.HOSTINGER_HOST }}
+            User ${{ secrets.HOSTINGER_USER }}
+            Port ${{ secrets.HOSTINGER_PORT }}
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
 
-      - name: Deploy files via rsync
+      - name: Deploy via SCP
         run: |
-          echo "=== Deployment Configuration ==="
-          echo "Host: ${{ secrets.HOSTINGER_HOST }}"
-          echo "User: ${{ secrets.HOSTINGER_USER }}"
-          echo "Target: ${{ secrets.HOSTINGER_TARGET }}"
-          echo "Port: ${{ secrets.HOSTINGER_PORT }}"
-          echo ""
+          # Remove .env, node_modules, and git files before transfer
+          rm -rf .git .gitignore node_modules storage/logs/* bootstrap/cache/*
+          
+          # Create tar archive
+          tar -czf deploy.tar.gz --exclude='.env' --exclude='storage/logs' --exclude='bootstrap/cache' .
+          
+          # Copy to server
+          scp -P ${{ secrets.HOSTINGER_PORT }} deploy.tar.gz ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
+          
+          echo "✓ Archive uploaded successfully"
 
-          rsync -avz --delete \
-            -e "ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o ConnectTimeout=30 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
-            --exclude='.git' \
-            --exclude='.gitignore' \
-            --exclude='.env' \
-            --exclude='node_modules' \
-            --exclude='storage/logs' \
-            --exclude='bootstrap/cache' \
-            ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET }}/
-
-      - name: Run remote artisan commands
+      - name: Extract and run commands
         run: |
-          ssh -i ~/.ssh/hostinger_key -p ${{ secrets.HOSTINGER_PORT }} -o ConnectTimeout=30 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'ENDSSH'
-
-          echo "=== Current Working Directory ==="
-          pwd
-          echo ""
-          echo "=== Files in deployment target ==="
-          ls -la ${{ secrets.HOSTINGER_TARGET }}
-          echo ""
-
+          ssh -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'ENDSSH'
+          
           cd ${{ secrets.HOSTINGER_TARGET }}
-
-          # Verify we're in the correct location
-          echo "=== Verifying Deployment Location ==="
+          
+          echo "=== Deployment Status ==="
           echo "Current directory: $(pwd)"
           echo "Expected: /home/u933773389/domains/gombesshub.com/public_html/"
           echo ""
-
-          # Set proper permissions
-          chmod -R 755 storage bootstrap/cache public
-
-          # Run artisan commands
-          echo "=== Running Artisan Commands ==="
-          php artisan migrate --force 2>&1 || echo "⚠ Migration had issues"
-          php artisan config:clear 2>&1
-          php artisan config:cache 2>&1 || echo "⚠ Config cache failed"
-          php artisan route:clear 2>&1
-          php artisan route:cache 2>&1 || echo "⚠ Route cache failed"
-          php artisan view:clear 2>&1
-          php artisan view:cache 2>&1 || echo "⚠ View cache failed"
-          php artisan storage:link 2>&1 || echo "⚠ Storage link exists"
-
-          # Verify deployment
+          
+          # Backup current files
+          if [ -d "app" ]; then
+            tar -czf backup_$(date +%s).tar.gz app config routes database --ignore-failed-read 2>/dev/null || true
+            echo "✓ Backup created"
+          fi
+          
+          # Extract uploaded archive
+          tar -xzf deploy.tar.gz
+          rm deploy.tar.gz
+          
+          echo "✓ Files extracted"
           echo ""
-          echo "=== Deployment Verification ==="
-          echo "✓ .htaccess in public folder:"
+          
+          # Set permissions
+          chmod -R 755 storage bootstrap/cache public
+          
+          echo "=== Running Artisan Commands ==="
+          php artisan migrate --force 2>&1 || echo "⚠ Migration skipped"
+          php artisan config:clear && php artisan config:cache
+          php artisan route:clear && php artisan route:cache
+          php artisan view:clear && php artisan view:cache
+          
+          echo ""
+          echo "=== Verification ==="
+          echo "✓ .htaccess exists:"
           ls -la public/.htaccess
           echo ""
-          echo "✓ APP_URL value:"
-          grep "APP_URL" .env
+          echo "✓ APP_URL:"
+          grep APP_URL .env
           echo ""
-          echo "✓ Laravel Version:"
+          echo "✓ Laravel ready:"
           php artisan --version
+          
+          ENDSSH
           echo ""
           echo "✓ Deployment Complete!"
           ENDSSH
