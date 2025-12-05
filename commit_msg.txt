@@ -1,0 +1,6 @@
+Fix PWA installation issues and School Population dashboard  
+  
+- Updated manifest.json icons from PNG to SVG  
+- Created offline.html for Service Worker fallback  
+- Created browserconfig.xml for Windows PWA  
+- Fixed School Population chart data  
