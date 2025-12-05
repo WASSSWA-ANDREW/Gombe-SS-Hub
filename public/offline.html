@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline - Gombe SS Hub Pro</title>
+    <meta name="theme-color" content="#3B82F6">
+    <title>Offline - Gombe SS Hub</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +13,7 @@
         }
         
         body {
-            font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
@@ -23,144 +24,125 @@
         
         .offline-container {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 40px;
             max-width: 500px;
             text-align: center;
-            animation: slideUp 0.5s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .offline-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: #f3f4f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
         }
         
         h1 {
             color: #1f2937;
             font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         
-        p {
+        .offline-message {
             color: #6b7280;
             font-size: 16px;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
         
-        .status-message {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 30px;
-            color: #92400e;
-            text-align: left;
-        }
-        
-        .feature-list {
-            text-align: left;
-            margin-bottom: 30px;
+        .offline-tips {
             background: #f9fafb;
-            padding: 20px;
-            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin-bottom: 32px;
+            text-align: left;
+            border-radius: 4px;
         }
         
-        .feature-list h3 {
-            color: #374151;
+        .offline-tips h3 {
+            color: #1f2937;
             font-size: 14px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
         
-        .feature-item {
+        .offline-tips ul {
+            list-style: none;
             color: #6b7280;
             font-size: 14px;
-            padding: 8px 0;
-            display: flex;
-            align-items: center;
         }
         
-        .feature-item::before {
-            content: "✓";
-            color: #10b981;
+        .offline-tips li {
+            margin-bottom: 6px;
+        }
+        
+        .offline-tips li:before {
+            content: "• ";
+            color: #3b82f6;
             font-weight: bold;
-            margin-right: 10px;
-            font-size: 18px;
+            margin-right: 8px;
         }
         
-        .action-buttons {
+        .offline-actions {
             display: flex;
-            gap: 10px;
-            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
         
         button {
-            padding: 12px 24px;
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #3b82f6;
             color: white;
-            flex: 1;
         }
         
         .btn-primary:hover {
+            background: #2563eb;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
         
         .btn-secondary {
             background: #e5e7eb;
-            color: #374151;
-            flex: 1;
+            color: #1f2937;
         }
         
         .btn-secondary:hover {
             background: #d1d5db;
         }
         
-        .wifi-status {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 12px;
+            background: #fef3c7;
+            border-radius: 8px;
+            color: #92400e;
+            font-size: 14px;
         }
         
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #f59e0b;
             border-radius: 50%;
-            background: #ef4444;
-            margin-right: 8px;
             animation: pulse 2s infinite;
         }
         
@@ -173,55 +155,97 @@
             }
         }
         
-        .status-text {
-            color: #6b7280;
-            font-size: 14px;
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            }
+            
+            .offline-container {
+                background: #1f2937;
+                color: #f3f4f6;
+            }
+            
+            h1 {
+                color: #f3f4f6;
+            }
+            
+            .offline-message {
+                color: #d1d5db;
+            }
+            
+            .offline-tips {
+                background: #111827;
+                border-left-color: #60a5fa;
+            }
+            
+            .offline-tips h3 {
+                color: #f3f4f6;
+            }
+            
+            .offline-tips ul {
+                color: #d1d5db;
+            }
+            
+            .btn-secondary {
+                background: #374151;
+                color: #f3f4f6;
+            }
+            
+            .btn-secondary:hover {
+                background: #4b5563;
+            }
+            
+            .status-indicator {
+                background: #78350f;
+                color: #fbbf24;
+            }
         }
     </style>
 </head>
 <body>
     <div class="offline-container">
         <div class="offline-icon">📡</div>
-        
         <h1>You're Offline</h1>
-        <p>It looks like you've lost your internet connection. Don't worry, your app is ready to work offline!</p>
+        <p class="offline-message">
+            It looks like you've lost your internet connection. Don't worry, you can still view some pages that have been cached.
+        </p>
         
-        <div class="status-message">
-            <strong>Connection Status:</strong> No internet connection detected
+        <div class="offline-tips">
+            <h3>What you can do:</h3>
+            <ul>
+                <li>Check your internet connection</li>
+                <li>Try reloading the page</li>
+                <li>Visit a cached page if available</li>
+                <li>Go back to the home screen</li>
+            </ul>
         </div>
         
-        <div class="feature-list">
-            <h3>Available Offline Features</h3>
-            <div class="feature-item">View cached pages and data</div>
-            <div class="feature-item">Access previously loaded content</div>
-            <div class="feature-item">Automatic sync when online</div>
-            <div class="feature-item">Full app functionality on reconnect</div>
+        <div class="offline-actions">
+            <button class="btn-primary" onclick="location.reload()">Reload Page</button>
+            <button class="btn-secondary" onclick="window.history.back()">Go Back</button>
         </div>
         
-        <div class="action-buttons">
-            <button class="btn-secondary" onclick="history.back()">Go Back</button>
-            <button class="btn-primary" onclick="location.reload()">Retry Connection</button>
-        </div>
-        
-        <div class="wifi-status">
-            <span class="status-indicator"></span>
-            <span class="status-text">Waiting for connection...</span>
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span>Waiting for connection...</span>
         </div>
     </div>
     
     <script>
-        // Monitor connection status
+        // Monitor connectivity
         window.addEventListener('online', () => {
-            document.querySelector('.status-indicator').style.background = '#10b981';
-            document.querySelector('.status-text').textContent = 'Connection restored!';
-            setTimeout(() => {
-                location.reload();
-            }, 1500);
+            console.log('Back online!');
+            location.reload();
         });
         
-        window.addEventListener('offline', () => {
-            document.querySelector('.status-indicator').style.background = '#ef4444';
-            document.querySelector('.status-text').textContent = 'No internet connection';
+        // Update status when coming back online
+        document.addEventListener('DOMContentLoaded', () => {
+            if (navigator.onLine) {
+                console.log('Already online, redirecting...');
+                setTimeout(() => {
+                    window.location.href = '/admin/dashboard';
+                }, 1000);
+            }
         });
     </script>
 </body>

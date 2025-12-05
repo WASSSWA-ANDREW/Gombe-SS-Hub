@@ -120,6 +120,7 @@ class PWAInstaller {
                 } else {
                     console.log('User dismissed the install prompt');
                     this.setButtonLoading(false);
+                    this.hideSidebarInstallButton();
                 }
                 
                 this.deferredPrompt = null;
@@ -129,8 +130,14 @@ class PWAInstaller {
                 this.showErrorMessage('Installation failed. Please try again.');
             }
         } else {
-            console.log('Deferred prompt not available');
-            this.showErrorMessage('Installation not available on this device.');
+            console.log('Deferred prompt not available - Install prompt may not have fired yet');
+            console.log('This could be due to:', {
+                'serviceWorkerReady': 'serviceWorker' in navigator,
+                'manifestExists': !!document.querySelector('link[rel="manifest"]'),
+                'isStandalone': window.navigator.standalone === true,
+                'isInAndroidApp': document.referrer.includes('android-app://')
+            });
+            this.showErrorMessage('Installation is not available at this moment. Please try again later or check the browser console for details.');
         }
     }
 
@@ -173,7 +180,9 @@ class PWAInstaller {
             new Notification(title, {
                 body: message,
                 icon: '/img/pwa/icon-192x192.svg',
-                badge: '/img/pwa/icon-96x96.svg'
+                badge: '/img/pwa/icon-96x96.svg',
+                tag: 'gombe-notification',
+                requireInteraction: false
             });
         }
     }

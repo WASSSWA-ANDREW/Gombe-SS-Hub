@@ -88,7 +88,7 @@ class DisciplineController extends Controller
             });
         }
 
-        $disciplineTracks = $query->paginate(15);
+        $disciplineTracks = $query->get();
 
         return view('admin.discipline.discipline-tracks', compact('disciplineTracks'));
     }
@@ -118,7 +118,7 @@ class DisciplineController extends Controller
             });
         }
 
-        $counsellingTracks = $query->paginate(15);
+        $counsellingTracks = $query->get();
 
         return view('admin.discipline.counselling-tracks', compact('counsellingTracks'));
     }
@@ -129,7 +129,7 @@ class DisciplineController extends Controller
     public function createDisciplineTrack()
     {
         $students = Student::orderBy('student_name')->get();
-        $staff = Staff::orderBy('staff_name')->get();
+        $staff = Staff::orderBy('first_name')->get();
 
         return view('admin.discipline.create-discipline-track', compact('students', 'staff'));
     }
@@ -206,7 +206,7 @@ class DisciplineController extends Controller
     public function createCounsellingTrack()
     {
         $students = Student::orderBy('student_name')->get();
-        $staff = Staff::orderBy('staff_name')->get();
+        $staff = Staff::orderBy('first_name')->get();
 
         return view('admin.discipline.create-counselling-track', compact('students', 'staff'));
     }

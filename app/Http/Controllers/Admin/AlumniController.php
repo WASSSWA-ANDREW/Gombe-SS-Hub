@@ -17,7 +17,7 @@ class AlumniController extends Controller
     {
         $alumni = Alumni::orderBy('graduation_year', 'desc')
                        ->orderBy('graduation_class')
-                       ->paginate(10);
+                       ->get();
 
         return view('admin.alumni.index', compact('alumni'));
     }
@@ -78,7 +78,7 @@ class AlumniController extends Controller
                        ->orWhere('learners_lin', 'like', "%{$query}%")
                        ->orWhere('learners_nin', 'like', "%{$query}%")
                        ->orWhere('graduation_class', 'like', "%{$query}%")
-                       ->paginate(10);
+                       ->get();
 
         return view('admin.alumni.index', compact('alumni', 'query'));
     }

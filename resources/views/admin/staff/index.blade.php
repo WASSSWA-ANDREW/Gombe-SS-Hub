@@ -125,9 +125,6 @@
             </tbody>
         </table>
     </div>
-    <div class="mt-4">
-        {{-- $staffMembers->links() --}} {{-- Add pagination if many staff members --}}
-    </div>
 </div>
 
 @push('scripts')

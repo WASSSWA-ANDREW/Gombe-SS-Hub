@@ -149,9 +149,9 @@
                                     <td class="px-6 py-4">
                                         <div class="text-sm text-gray-700 dark:text-gray-300">
                                             @if($record->notes)
-                                                <div class="flex items-start space-x-2 max-w-xs">
+                                                <div class="flex items-start space-x-2">
                                                     <i class="fas fa-comment-dots text-blue-500 mt-0.5"></i>
-                                                    <span>{{ Str::limit($record->notes, 40) }}</span>
+                                                    <span>{{ $record->notes }}</span>
                                                 </div>
                                             @else
                                                 <span class="inline-flex items-center text-gray-800 dark:text-gray-500">
@@ -169,11 +169,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Pagination -->
-                <div class="mt-6 flex justify-center">
-                    {{ $counsellingTracks->appends(request()->query())->links() }}
                 </div>
             @else
                 <div class="text-center py-20">

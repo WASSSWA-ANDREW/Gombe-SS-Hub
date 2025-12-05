@@ -1209,6 +1209,7 @@
     <!-- PWA Installer & Compatibility -->
     <script src="{{ asset('js/pwa-compatibility.js') }}"></script>
     <script src="{{ asset('js/pwa-installer.js') }}"></script>
+    <script src="{{ asset('js/pwa-debug.js') }}"></script>
     
     <!-- PWA Service Worker Registration -->
     <script>

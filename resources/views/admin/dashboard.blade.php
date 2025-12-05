@@ -284,6 +284,20 @@
             </div>
         </div>
 
+        <!-- Card 2b: Administrators (School Leadership) -->
+        <div class="bg-indigo-600 dark:bg-indigo-800 text-white shadow-lg rounded-lg p-6 hover:bg-indigo-700 dark:hover:bg-indigo-900 transition-all duration-300 flex flex-col justify-between" style="height: 160px; width: 280px;">
+            <div class="flex justify-between items-start">
+                <div class="bg-indigo-500/30 p-3 rounded-full">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <span class="bg-indigo-500/30 text-xs font-semibold px-2.5 py-1 rounded" style="color: white; font-family: Ubuntu;">ADMIN</span>
+            </div>
+            <div class="mt-4">
+                <p class="text-4xl font-bold">{{ $totalAdministrators }}</p>
+                <p class="text-sm opacity-80 mt-1">School Administrators</p>
+            </div>
+        </div>
+
         <!-- Card 3: Total Users -->
         <div class="bg-yellow-500 dark:bg-yellow-600 text-white shadow-lg rounded-lg p-6 hover:bg-yellow-600 dark:hover:bg-yellow-700 transition-all duration-300 flex flex-col justify-between" style="height: 160px; width: 280px;">
             <div class="flex justify-between items-start">
@@ -464,8 +478,7 @@
     <!-- Horizontal Line: Recent File Uploads, Student Gender Distribution, Staff Gender Distribution -->
     <div class="flex flex-nowrap gap-6 mb-8 overflow-x-auto">
         <!-- File Uploads Summary Card -->
-        @if($recentFileUploads->count() > 0)
-        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 400px; height: 320px; overflow-y: auto;">
+        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 400px;">
             <div class="flex justify-between items-center mb-4">
                 <div class="flex items-center">
                     <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-3 rounded-lg mr-3">
@@ -528,7 +541,6 @@
                 @endforelse
             </div>
         </div>
-        @endif
 
         <!-- Student Gender Statistics Graph Card -->
         <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex-shrink-0" style="width: 400px; height: 320px;">
@@ -590,7 +602,7 @@
     <!-- Quick Actions, Growth Chart, School Population Distribution, Recent Activity - Horizontal Line -->
     <div class="flex flex-nowrap gap-6 mb-8 overflow-x-auto">
         <!-- Quick Actions Section -->
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex-shrink-0" style="width: 380px; height: 320px; overflow-y: auto;">
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex-shrink-0" style="width: 380px;">
             <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-3">Quick Actions</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <a href="{{ route('admin.students.olevel.create') }}" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-3 rounded-lg text-center transition-colors duration-300 flex items-center justify-center text-sm">
@@ -644,13 +656,13 @@
                 </div>
             </div>
             
-            <div class="relative" style="height: 200px;">
+            <div class="relative">
                 <canvas id="growthChart"></canvas>
             </div>
         </div>
 
         <!-- Recent Activity Section -->
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex-shrink-0" style="width: 380px; height: 320px; overflow-y: auto;">
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex-shrink-0" style="width: 380px;">
             <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-3">Recent Activity</h3>
             <div class="space-y-3">
                 <div class="flex items-start">
@@ -1081,9 +1093,9 @@
             let teachingStaffCount = parseInt('{{ $teachingStaff }}') || 0;
             let nonTeachingStaffCount = parseInt('{{ $nonTeachingStaff }}') || 0;
             let supportStaffCount = parseInt('{{ $supportStaff }}') || 0;
-            let alumniCount = parseInt('{{ $totalAlumni }}') || 0;
+            let administratorCount = parseInt('{{ $totalAdministrators }}') || 0;
             
-            let total = olevelStudents + alevelStudents + teachingStaffCount + nonTeachingStaffCount + supportStaffCount + alumniCount;
+            let total = olevelStudents + alevelStudents + teachingStaffCount + nonTeachingStaffCount + supportStaffCount + administratorCount;
             
             if (total === 0 || isNaN(total)) {
                 olevelStudents = 150;
@@ -1091,11 +1103,11 @@
                 teachingStaffCount = 35;
                 nonTeachingStaffCount = 18;
                 supportStaffCount = 12;
-                alumniCount = 50;
-                total = olevelStudents + alevelStudents + teachingStaffCount + nonTeachingStaffCount + supportStaffCount + alumniCount;
+                administratorCount = 15;
+                total = olevelStudents + alevelStudents + teachingStaffCount + nonTeachingStaffCount + supportStaffCount + administratorCount;
             }
             
-            console.log('Chart data loaded:', { olevelStudents, alevelStudents, teachingStaffCount, nonTeachingStaffCount, supportStaffCount, alumniCount, total });
+            console.log('Chart data loaded:', { olevelStudents, alevelStudents, teachingStaffCount, nonTeachingStaffCount, supportStaffCount, administratorCount, total });
             
             // Destroy existing chart if it exists
             if (window.schoolPopulationChart) {
@@ -1105,16 +1117,16 @@
             window.schoolPopulationChart = new Chart(populationChartCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['O\'Level Students', 'A\'Level Students', 'Teaching Staff', 'Non-Teaching Staff', 'Support Staff', 'Alumni'],
+                    labels: ['O\'Level Students', 'A\'Level Students', 'Teaching Staff', 'Non-Teaching Staff', 'Support Staff', 'Administrators'],
                     datasets: [{
-                        data: [olevelStudents, alevelStudents, teachingStaffCount, nonTeachingStaffCount, supportStaffCount, alumniCount],
+                        data: [olevelStudents, alevelStudents, teachingStaffCount, nonTeachingStaffCount, supportStaffCount, administratorCount],
                         backgroundColor: [
                             '#3B82F6', // Blue for O'Level Students
                             '#DC2626', // Red for A'Level Students
                             '#10B981', // Green for Teaching Staff
                             '#F59E0B', // Amber for Non-Teaching Staff
                             '#8B5CF6', // Purple for Support Staff
-                            '#EC4899'  // Pink for Alumni
+                            '#EC4899'  // Pink for Administrators
                         ],
                         borderColor: [
                             '#1E40AF', // Darker Blue

@@ -98,7 +98,7 @@
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                 <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>Anomalies Detected
             </h2>
-            <div id="anomaliesContainer" class="space-y-3 max-h-96 overflow-y-auto">
+            <div id="anomaliesContainer" class="space-y-3">
                 <p class="text-gray-500 dark:text-gray-400">Loading anomalies...</p>
             </div>
         </div>

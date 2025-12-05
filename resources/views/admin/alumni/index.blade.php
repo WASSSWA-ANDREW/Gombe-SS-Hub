@@ -133,9 +133,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-4">
-                    {{ $alumni->links() }}
-                </div>
             @else
                 <p class="text-gray-700 dark:text-gray-300 mt-4">No alumni records found.</p>
                 <p class="text-gray-800 dark:text-gray-400 text-sm">

@@ -169,7 +169,7 @@ class Report extends Model
      */
     public static function getTotalMaleStaff()
     {
-        return Staff::where('gender', 'Male')->count();
+        return Staff::where('sex', 'Male')->count();
     }
 
     /**
@@ -179,7 +179,7 @@ class Report extends Model
      */
     public static function getTotalFemaleStaff()
     {
-        return Staff::where('gender', 'Female')->count();
+        return Staff::where('sex', 'Female')->count();
     }
 
     /**
@@ -189,7 +189,18 @@ class Report extends Model
      */
     public static function getTotalAdministrators()
     {
-        return Staff::where('role', 'administrator')->count();
+        return Staff::whereIn('staff_designation', [
+            'HEADMASTER',
+            'DEPUTY HEADMASTER-ADMINISTRATION',
+            'DEPUTY HEADMASTER-ACADEMICS',
+            'DEPUTY HEADMASTER-DISCIPLINE',
+            'DIRECTOR OF STUDIES',
+            'DEAN OF STUDENTS',
+            'WARDEN',
+            'HEAD OF DEPARTMENT',
+            'MATRON',
+            'STAFF SECRETARY'
+        ])->count();
     }
 
     /**
@@ -269,20 +280,18 @@ class Report extends Model
      */
     public static function getStudentsByAgeGroup()
     {
-        $currentDate = date('Y-m-d');
-        
         return [
             'under_13' => DB::table('students')
-                ->whereRaw("(strftime('%Y', ?) - strftime('%Y', date_of_birth)) - (strftime('%m-%d', ?) < strftime('%m-%d', date_of_birth)) < 13", [$currentDate, $currentDate])
+                ->whereRaw("TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) < 13")
                 ->count(),
             '13_to_15' => DB::table('students')
-                ->whereRaw("(strftime('%Y', ?) - strftime('%Y', date_of_birth)) - (strftime('%m-%d', ?) < strftime('%m-%d', date_of_birth)) BETWEEN 13 AND 15", [$currentDate, $currentDate])
+                ->whereRaw("TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) BETWEEN 13 AND 15")
                 ->count(),
             '16_to_18' => DB::table('students')
-                ->whereRaw("(strftime('%Y', ?) - strftime('%Y', date_of_birth)) - (strftime('%m-%d', ?) < strftime('%m-%d', date_of_birth)) BETWEEN 16 AND 18", [$currentDate, $currentDate])
+                ->whereRaw("TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) BETWEEN 16 AND 18")
                 ->count(),
             'over_18' => DB::table('students')
-                ->whereRaw("(strftime('%Y', ?) - strftime('%Y', date_of_birth)) - (strftime('%m-%d', ?) < strftime('%m-%d', date_of_birth)) > 18", [$currentDate, $currentDate])
+                ->whereRaw("TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) > 18")
                 ->count(),
         ];
     }
@@ -294,27 +303,22 @@ class Report extends Model
      */
     public static function getStaffByYearsOfService()
     {
-        // For SQLite, we need to ensure the date format is correct
-        $currentDate = date('Y-m-d');
-        
-        // Check if the hire_date column exists in the staff table
         if (Schema::hasColumn('staff', 'hire_date')) {
             return [
                 'less_than_1' => DB::table('staff')
-                    ->whereRaw("(strftime('%Y', ?) - strftime('%Y', hire_date)) - (strftime('%m-%d', ?) < strftime('%m-%d', hire_date)) < 1", [$currentDate, $currentDate])
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) < 1")
                     ->count(),
                 '1_to_5' => DB::table('staff')
-                    ->whereRaw("(strftime('%Y', ?) - strftime('%Y', hire_date)) - (strftime('%m-%d', ?) < strftime('%m-%d', hire_date)) BETWEEN 1 AND 5", [$currentDate, $currentDate])
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) BETWEEN 1 AND 5")
                     ->count(),
                 '6_to_10' => DB::table('staff')
-                    ->whereRaw("(strftime('%Y', ?) - strftime('%Y', hire_date)) - (strftime('%m-%d', ?) < strftime('%m-%d', hire_date)) BETWEEN 6 AND 10", [$currentDate, $currentDate])
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) BETWEEN 6 AND 10")
                     ->count(),
                 'more_than_10' => DB::table('staff')
-                    ->whereRaw("(strftime('%Y', ?) - strftime('%Y', hire_date)) - (strftime('%m-%d', ?) < strftime('%m-%d', hire_date)) > 10", [$currentDate, $currentDate])
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) > 10")
                     ->count(),
             ];
         } else {
-            // Fallback if hire_date column doesn't exist
             return [
                 'less_than_1' => 0,
                 '1_to_5' => 0,

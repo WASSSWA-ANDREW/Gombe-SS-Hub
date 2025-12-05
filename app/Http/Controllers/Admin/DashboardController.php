@@ -108,6 +108,9 @@ class DashboardController extends Controller
         $maleStaff = Report::getTotalMaleStaff();
         $femaleStaff = Report::getTotalFemaleStaff();
         
+        // School administrators (staff with administrative designations)
+        $totalAdministrators = Report::getTotalAdministrators();
+        
         // Students by class/level
         $studentsByLevel = Student::select('level', DB::raw('count(*) as count'))
                                 ->groupBy('level')
@@ -297,6 +300,7 @@ class DashboardController extends Controller
             'femaleStudents',
             'maleStaff',
             'femaleStaff',
+            'totalAdministrators',
             'studentsByLevel',
             'studentsByReligion',
             'studentsByDistrict',

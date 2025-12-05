@@ -253,7 +253,11 @@ class PWACompatibility {
     }
 
     checkPWAInstallable() {
-        return this.capabilities.serviceWorker && this.capabilities.webManifest;
+        const hasServiceWorker = this.capabilities.serviceWorker;
+        const hasManifest = this.capabilities.webManifest;
+        const isNotStandalone = window.navigator.standalone !== true && !document.referrer.includes('android-app://');
+        
+        return hasServiceWorker && hasManifest && isNotStandalone;
     }
 
     checkIOSSupport() {

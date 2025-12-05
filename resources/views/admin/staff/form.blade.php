@@ -156,6 +156,8 @@
                             <option value="HEAD OF DEPARTMENT" {{ old('staff_designation', $staff->staff_designation ?? '') == 'HEAD OF DEPARTMENT' ? 'selected' : '' }}>HEAD OF DEPARTMENT</option>
                             <option value="LAB TECHNICIAN" {{ old('staff_designation', $staff->staff_designation ?? '') == 'LAB TECHNICIAN' ? 'selected' : '' }}>LAB TECHNICIAN</option>
                             <option value="LIBRARY OFFICER" {{ old('staff_designation', $staff->staff_designation ?? '') == 'LIBRARY OFFICER' ? 'selected' : '' }}>LIBRARY OFFICER</option>
+                            <option value="MATRON" {{ old('staff_designation', $staff->staff_designation ?? '') == 'MATRON' ? 'selected' : '' }}>MATRON</option>
+                            <option value="STAFF SECRETARY" {{ old('staff_designation', $staff->staff_designation ?? '') == 'STAFF SECRETARY' ? 'selected' : '' }}>STAFF SECRETARY</option>
                         </select>
                     </div>
                     <div class="md:col-span-2">

@@ -179,11 +179,6 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Pagination -->
-        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700">
-            {{ $users->links() }}
-        </div>
     </div>
 </div>
 

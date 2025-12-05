@@ -25,7 +25,7 @@
                         placeholder="Search student..." 
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                    <div id="studentList" class="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg mt-1 max-h-64 overflow-y-auto hidden shadow-lg">
+                    <div id="studentList" class="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg mt-1 hidden shadow-lg">
                         @foreach($students as $student)
                         <button 
                             type="button"

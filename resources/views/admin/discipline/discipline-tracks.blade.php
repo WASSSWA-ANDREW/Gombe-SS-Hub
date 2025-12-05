@@ -114,8 +114,8 @@
                                         <div>
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $record->case_name }}</div>
                                             @if($record->description)
-                                                <div class="text-sm text-gray-800 dark:text-gray-400 truncate max-w-xs">
-                                                    {{ Str::limit($record->description, 50) }}
+                                                <div class="text-sm text-gray-800 dark:text-gray-400">
+                                                    {{ $record->description }}
                                                 </div>
                                             @endif
                                         </div>
@@ -160,11 +160,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Pagination -->
-                <div class="mt-6 flex justify-center">
-                    {{ $disciplineTracks->appends(request()->query())->links() }}
                 </div>
             @else
                 <div class="text-center py-20">
